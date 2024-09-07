@@ -4,8 +4,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
 {
     public class Reservation_Equipment
     {
-        int Reservation_ID { get; set; }
-        int Equipment_ID { get; set; }
-        int Quantity { get; set; }
+        public int ReservationE_ID { get; set; }
+        public virtual required Reservation Reservation { get; set; }
+        public virtual required Equipment Equipment { get; set; }
+        public int Quantity { get; set; }
     }
 }

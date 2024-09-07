@@ -15,6 +15,33 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contex
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>()
                 .HasKey(u => u.User_ID);
+
+            modelBuilder.Entity<Equipment>()
+                .HasKey(e => e.Equipment_ID);
+
+            modelBuilder.Entity<Inventory>()
+            .HasKey(i => i.Inventory_ID);
+
+            modelBuilder.Entity<Laboratory>()
+            .HasKey(l => l.Laboratory_ID);
+
+            modelBuilder.Entity<Reservation>()
+            .HasKey(r => r.Reservation_ID);
+
+            modelBuilder.Entity<Reservation_History>()
+            .HasKey(rh => rh.History_ID);
+
+            modelBuilder.Entity<Status_Equipment>()
+            .HasKey(se => se.StatusE_ID);
+
+            modelBuilder.Entity<Status_Reservation>()
+            .HasKey(sr => sr.StatusR_ID);
+
+            modelBuilder.Entity<User_Type>()
+            .HasKey(ut => ut.User_Type_ID);
+
+            modelBuilder.Entity<Reservation_Equipment>()
+            .HasKey(re => re.ReservationE_ID);
         }
 
         public DbSet<User> users { get; set; }

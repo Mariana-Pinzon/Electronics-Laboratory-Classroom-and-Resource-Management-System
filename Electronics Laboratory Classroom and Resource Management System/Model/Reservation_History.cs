@@ -4,10 +4,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
 {
     public class Reservation_History
     {
-        [Key]
-        int History_ID { get; set; }
-        int Reservation_ID { get; set; }
-        int StatusR_ID { get; set; }
-        DateTime Modification_date { get; set; }
+        public int History_ID { get; set; }
+        public virtual required Reservation Reservation { get; set; }
+        public virtual required Status_Reservation Status_Reservation { get; set; }
+        public DateTime Modification_date { get; set; }
     }
 }
