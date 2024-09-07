@@ -1,0 +1,6 @@
+@Electronics_Laboratory_Classroom_and_Resource_Management_System_HostAddress = http://localhost:5147
+
+GET {{Electronics_Laboratory_Classroom_and_Resource_Management_System_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
