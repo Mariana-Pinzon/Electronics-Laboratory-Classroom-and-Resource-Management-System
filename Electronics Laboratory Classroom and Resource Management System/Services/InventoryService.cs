@@ -3,10 +3,10 @@ using Electronics_Laboratory_Classroom_and_Resource_Management_System.Repositori
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Services
 {
-    public interface IInventoryService
+    public interface ILaboratoryService
     {
-        Task<IEnumerable<Inventory>> GetAllInventoryAsync();
-        Task<Inventory> GetInventoryByIdAsync(int id);
+        Task<IEnumerable<Laboratory>> GetAllLaboratoryAsync();
+        Task<Laboratory> GetLaboratByIdAsync(int id);
         Task CreateInventoryAsync(Inventory inventory);
         Task UpdateInventoryAsync(Inventory inventory);
         Task SoftDeleteInventoryAsync(int id);
