@@ -1,14 +1,23 @@
 using Electronics_Laboratory_Classroom_and_Resource_Management_System.Context;
+using Electronics_Laboratory_Classroom_and_Resource_Management_System.Repository;
+using Electronics_Laboratory_Classroom_and_Resource_Management_System.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var conString = builder.Configuration.GetConnectionString("Connection");
-builder.Services.AddDbContext<ElectronicsLaboratoryClassroomandResourceDBContext>(options => options.UseSqlServer(conString));
+builder.Services.AddDbContext<ElectronicsLaboratoryClassroomandResourceDBContext>(options =>
+    options.UseSqlServer(conString));
 
+// Registrar los servicios en el contenedor de inyección de dependencias
+builder.Services.AddScoped<IUser_TypeService, User_TypeService>(); // Servicio para User_Type
+builder.Services.AddScoped<IUser_Type_Repository, User_Type_Repository>(); // Repositorio para User_Type
+
+// Add controllers
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Swagger para la documentación de la API
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

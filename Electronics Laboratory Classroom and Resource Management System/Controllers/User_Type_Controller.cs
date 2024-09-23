@@ -7,8 +7,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
     [Route("api/[controller]")]
     public class User_Type_Controller : ControllerBase
     {
-        private readonly IUser_TypeService _user_typeServise;
-        public User_Type_Controller (IUser_TypeService user_typeService)
+        private readonly Services.IUser_TypeService _user_typeServise;
+        public User_Type_Controller (Services.IUser_TypeService user_typeService)
         {
             _user_typeServise = user_typeService;
         }
