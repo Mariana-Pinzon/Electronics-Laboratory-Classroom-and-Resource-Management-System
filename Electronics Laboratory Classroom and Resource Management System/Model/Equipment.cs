@@ -10,7 +10,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
         public virtual required Status_Equipment Status_Equipment { get; set; }
         public DateTime Acquisition_date { get; set; }
         public virtual required Laboratory Laboratory { get; set; }
-
+        public bool IsDeleted { get; set; }
 
 
     }

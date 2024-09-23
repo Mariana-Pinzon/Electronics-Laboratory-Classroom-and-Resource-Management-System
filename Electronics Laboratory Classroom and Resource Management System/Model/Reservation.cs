@@ -10,5 +10,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
         public DateTime Reservation_date { get; set; }
         public TimeOnly Start_time { get; set; }
         public TimeOnly End_time { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
