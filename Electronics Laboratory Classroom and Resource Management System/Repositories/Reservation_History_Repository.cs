@@ -41,14 +41,13 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
         }
 
-        // Implementación del método para crear un nuevo tipo de usuario
         public async Task CreateReservation_HistoryAsync(Reservation_History reservation_history)
         {
             _context.reservations_history.Add(reservation_history);
             await _context.SaveChangesAsync();
         }
 
-        // Implementación del método para actualizar un tipo de usuario
+
         public async Task UpdateReservation_HistoryAsync(Reservation_History reservation_history)
         {
             _context.reservations_history.Update(reservation_history);

@@ -41,14 +41,13 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
         }
 
-        // Implementación del método para crear un nuevo tipo de usuario
         public async Task CreatePermissionAsync(Permission permission)
         {
             _context.permissions.Add(permission);
             await _context.SaveChangesAsync();
         }
 
-        // Implementación del método para actualizar un tipo de usuario
+
         public async Task UpdatePermissionAsync(Permission permission)
         {
             _context.permissions.Update(permission);

@@ -42,14 +42,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
         }
 
-        // Implementación del método para crear un nuevo tipo de usuario
+
         public async Task CreateUserAsync(User user)
         {
             _context.users.Add(user);
             await _context.SaveChangesAsync();
         }
 
-        // Implementación del método para actualizar un tipo de usuario
+
         public async Task UpdateUserAsync(User user)
         {
             _context.users.Update(user);
