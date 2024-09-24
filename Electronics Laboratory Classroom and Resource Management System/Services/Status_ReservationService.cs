@@ -25,9 +25,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _status_reservationRepository.GetAllStatus_ReservationAsync();
         }
 
-        public async Task<Status_Reservation> GetStatus_ReservationByIdAsync(int History_ID)
+        public async Task<Status_Reservation> GetStatus_ReservationByIdAsync(int StatusR_ID)
         {
-            return await _status_reservationRepository.GetStatus_ReservationByIdAsync(History_ID);
+            return await _status_reservationRepository.GetStatus_ReservationByIdAsync(StatusR_ID);
         }
 
         public async Task CreateStatus_ReservationAsync(Status_Reservation status_reservation)
@@ -40,9 +40,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             await _status_reservationRepository.UpdateStatus_ReservationAsync(status_reservation);
         }
 
-        public async Task SoftDeleteReservation_HistoryAsync(int History_ID)
+        public async Task SoftDeleteReservation_Status_ReservationAsync(int StatusR_ID)
         {
-            await _status_reservationRepository.SoftDeleteStatus_ReservationAsync(History_ID);
+            await _status_reservationRepository.SoftDeleteStatus_ReservationAsync(StatusR_ID);
         }
 
         public Task SoftDeleteStatus_ReservationAsync(int id)
