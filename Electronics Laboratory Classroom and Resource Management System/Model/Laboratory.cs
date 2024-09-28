@@ -7,5 +7,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
         public int Laboratory_ID { get; set; }
         public int Laboratory_Num { get; set; }
         public int Capacity { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

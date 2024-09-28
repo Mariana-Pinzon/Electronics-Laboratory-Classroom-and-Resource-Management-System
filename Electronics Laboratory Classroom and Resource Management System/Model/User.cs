@@ -10,6 +10,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
         public required string Email { get; set; }
         public required string Password { get; set; }
         public virtual required User_Type User_Type { get; set; }
+        public bool IsDeleted { get; set; }
 
     }
 }
