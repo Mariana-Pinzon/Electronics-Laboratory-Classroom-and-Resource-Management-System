@@ -52,11 +52,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
                 _context.status_equipments.Update(status_equipment);
                 await _context.SaveChangesAsync();
             }
-
-            public Task CreateStatus_EquipmentAsync(Status_Equipment status_equipment)
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 }

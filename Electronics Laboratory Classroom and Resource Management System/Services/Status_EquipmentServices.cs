@@ -10,9 +10,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
         Task CreateStatus_EquipmentAsync(Status_Equipment status_equipment);
         Task UpdateStatus_EquipmentAsync(Status_Equipment status_equipment);
         Task SoftDeleteStatus_EquipmentAsync(int id);
-        Task CreateStatus_EquipmentAsync(Model.Status_Equipment status_equipment);
-        Task UpdateStatus_EquipmentAsync(Model.Status_Equipment status_equipment);
-
     }
     public class Status_Equipment : IStatus_Equipment
     {
@@ -48,29 +45,5 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
         {
             await _status_equipmentRepository.SoftDeletestatus_equipmentAsync(StatusE_ID);
         }
-
-        public Task Createstatus_equipmentAsync(Status_Equipment status_equipment)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task SoftDeletestatus_equipmentAsync(int statusE_ID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateequipmentAsync(Status_Equipment status_equipment)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public interface IStatus_Equipment
-    {
-        Task Createstatus_equipmentAsync(Status_Equipment status_equipment);
-        Task<IEnumerable<Status_Equipment>> GetAllStatus_EquipmentAsync();
-        Task<Status_Equipment> GetStatus_EquipmentByIdAsync(int statusE_ID);
-        Task SoftDeletestatus_equipmentAsync(int statusE_ID);
-        Task UpdateequipmentAsync(Status_Equipment status_equipment);
     }
 }
