@@ -5,7 +5,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 {
     public interface IReservationService
     {
-        Task<IEnumerable<Reservation>> GetAllReservationAsync();
+        Task<IEnumerable<Reservation>> GetAllreservationsAsync();
         Task<Reservation> GetReservationByIdAsync(int id);
         Task CreateReservationAsync(Reservation reservation);
         Task UpdateReservationAsync(Reservation reservation);
@@ -20,19 +20,19 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             _reservationRepository = reservationRepository;
         }
 
-        public async Task<IEnumerable<Reservation>> GetAllReservationAsync()
+        public async Task<IEnumerable<Reservation>> GetAllreservationsAsync()
         {
-            return await _reservationRepository.GetAllReservationAsync();
+            return await _reservationRepository.GetAllreservationsAsync();
         }
 
-        public async Task<Reservation> GetReservationByIdAsync(int Reservation_ID)
+        public async Task<Reservation> GetReservationByIdAsync(int id)
         {
-            return await _reservationRepository.GetReservationByIdAsync(Reservation_ID);
+            return await _reservationRepository.GetReservationByIdAsync(id);
         }
 
-        public async Task CreateReservationAsync(Reservation reservations)
+        public async Task CreateReservationAsync(Reservation reservation)
         {
-            await _reservationRepository.CreateReservationAsync(reservations);
+            await _reservationRepository.CreateReservationAsync(reservation);
         }
 
         public async Task UpdateReservationAsync(Reservation reservation)
@@ -40,9 +40,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             await _reservationRepository.UpdateReservationAsync(reservation);
         }
 
-        public async Task SoftDeleteReservationAsync(int Reservation_ID)
+        public async Task SoftDeleteReservationAsync(int id)
         {
-            await _reservationRepository.SoftDeleteReservationAsync(Reservation_ID);
+            await _reservationRepository.SoftDeleteReservationAsync(id);
         }
     }
 }

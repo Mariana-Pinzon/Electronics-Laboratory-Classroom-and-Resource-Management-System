@@ -6,11 +6,12 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
 {
     public interface IStatus_Reservation_Repository
     {
-        Task<IEnumerable<Status_Reservation>> GetAllStatus_ReservationAsync();
+        Task<IEnumerable<Status_Reservation>> GetAllstatus_reservationsAsync();
         Task<Status_Reservation> GetStatus_ReservationByIdAsync(int id);
         Task CreateStatus_ReservationAsync(Status_Reservation status_reservation);
         Task UpdateStatus_ReservationAsync(Status_Reservation status_reservation);
         Task SoftDeleteStatus_ReservationAsync(int id);
+    }
         public class Status_Reservation_Repository : IStatus_Reservation_Repository
         {
             private readonly ElectronicsLaboratoryClassroomandResourceDBContext _context;
@@ -18,7 +19,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             {
                 _context = context;
             }
-            public async Task<IEnumerable<Status_Reservation>> GetAllStatus_ReservationAsync()
+            public async Task<IEnumerable<Status_Reservation>> GetAllstatus_reservationsAsync()
             {
                 return await _context.status_reservations
                     .Where(sr => !sr.IsDeleted)
@@ -53,6 +54,5 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
                 await _context.SaveChangesAsync();
             }
         }
-    }
-}
+ }
 

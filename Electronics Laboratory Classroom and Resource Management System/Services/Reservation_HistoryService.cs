@@ -1,12 +1,11 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
 using Electronics_Laboratory_Classroom_and_Resource_Management_System.Repositories;
-using Electronics_Laboratory_Classroom_and_Resource_Management_System.Repository;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Services
 {
     public interface IReservation_HistoryService
     {
-        Task<IEnumerable<Reservation_History>> GetAllReservation_HistoryAsync();
+        Task<IEnumerable<Reservation_History>> GetAllreservations_historyAsync();
         Task<Reservation_History> GetReservation_HistoryByIdAsync(int id);
         Task CreateReservation_HistoryAsync(Reservation_History reservation_history);
         Task UpdateReservation_HistoryAsync(Reservation_History reservation_history);
@@ -21,14 +20,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             _reservation_historyRepository = reservation_historyRepository;
         }
 
-        public async Task<IEnumerable<Reservation_History>> GetAllReservation_HistoryAsync()
+        public async Task<IEnumerable<Reservation_History>> GetAllreservations_historyAsync()
         {
-            return await _reservation_historyRepository.GetAllReservation_HistoryAsync();
+            return await _reservation_historyRepository.GetAllreservations_historyAsync();
         }
 
-        public async Task<Reservation_History> GetReservation_HistoryByIdAsync(int History_ID)
+        public async Task<Reservation_History> GetReservation_HistoryByIdAsync(int id)
         {
-            return await _reservation_historyRepository.GetReservation_HistoryByIdAsync(History_ID);
+            return await _reservation_historyRepository.GetReservation_HistoryByIdAsync(id);
         }
 
         public async Task CreateReservation_HistoryAsync(Reservation_History reservation_history)
@@ -41,9 +40,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             await _reservation_historyRepository.UpdateReservation_HistoryAsync(reservation_history);
         }
 
-        public async Task SoftDeleteReservation_HistoryAsync(int History_ID)
+        public async Task SoftDeleteReservation_HistoryAsync(int id)
         {
-            await _reservation_historyRepository.SoftDeleteReservation_HistoryAsync(History_ID);
+            await _reservation_historyRepository.SoftDeleteReservation_HistoryAsync(id);
         }
     }
 }

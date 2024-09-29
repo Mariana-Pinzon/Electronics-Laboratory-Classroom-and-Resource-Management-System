@@ -1,13 +1,12 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Context;
 using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
-using Electronics_Laboratory_Classroom_and_Resource_Management_System.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Repositories
 {
     public interface IUser_Repository
     {
-        Task<IEnumerable<User>> GetAllUserAsync();
+        Task<IEnumerable<User>> GetAllusersAsync();
         Task<User> GetUserByIdAsync(int id);
         Task CreateUserAsync(User user);
         Task UpdateUserAsync(User user);
@@ -20,7 +19,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         {
             _context = context;
         }
-        public async Task<IEnumerable<User>> GetAllUserAsync()
+        public async Task<IEnumerable<User>> GetAllusersAsync()
         {
             return await _context.users
                 .Where(u => !u.IsDeleted)

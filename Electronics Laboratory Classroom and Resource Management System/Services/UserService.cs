@@ -1,12 +1,12 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
 using Electronics_Laboratory_Classroom_and_Resource_Management_System.Repositories;
-using Electronics_Laboratory_Classroom_and_Resource_Management_System.Repository;
+
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Services
 {
     public interface IUserService
     {
-        Task<IEnumerable<User>> GetAllUserAsync();
+        Task<IEnumerable<User>> GetAllusersAsync();
         Task<User> GetUserByIdAsync(int id);
         Task CreateUserAsync(User user);
         Task UpdateUserAsync(User user);
@@ -21,14 +21,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             _userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<User>> GetAllUserAsync()
+        public async Task<IEnumerable<User>> GetAllusersAsync()
         {
-            return await _userRepository.GetAllUserAsync();
+            return await _userRepository.GetAllusersAsync();
         }
 
-        public async Task<User> GetUserByIdAsync(int User_ID)
+        public async Task<User> GetUserByIdAsync(int id)
         {
-            return await _userRepository.GetUserByIdAsync(User_ID);
+            return await _userRepository.GetUserByIdAsync(id);
         }
 
         public async Task CreateUserAsync(User user)
@@ -41,9 +41,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             await _userRepository.UpdateUserAsync(user);
         }
 
-        public async Task SoftDeleteUserAsync(int User_ID)
+        public async Task SoftDeleteUserAsync(int id)
         {
-            await _userRepository.SoftDeleteUserAsync(User_ID);
+            await _userRepository.SoftDeleteUserAsync(id);
         }
     }
 }

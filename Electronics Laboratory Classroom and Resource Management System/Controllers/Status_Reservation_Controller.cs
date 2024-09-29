@@ -1,4 +1,6 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
+using Electronics_Laboratory_Classroom_and_Resource_Management_System.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Controllers
@@ -7,18 +9,18 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
     [Route("api/[controller]")]
     public class Status_Reservation_Controller : ControllerBase
     {
-        private readonly Services.IStatus_ReservationService _status_reservationServise;
-        public Status_Reservation_Controller(Services.IStatus_ReservationService status_reservationService)
+        private readonly IStatus_ReservationService _status_reservationService;
+        public Status_Reservation_Controller(IStatus_ReservationService status_reservationService)
         {
-            _status_reservationServise = status_reservationService;
+            _status_reservationService = status_reservationService;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
-        public async Task<ActionResult<IEnumerable<Status_Reservation>>> GetAllStatus_Reservation()
+        public async Task<ActionResult<IEnumerable<Status_Reservation>>> GetAllstatus_reservations()
         {
-            var status_reservation = await _status_reservationServise.GetAllStatus_ReservationAsync();
+            var status_reservation = await _status_reservationService.GetAllstatus_reservationsAsync();
             return Ok(status_reservation);
         }
 
@@ -27,7 +29,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Status_Reservation>> GetStatus_ReservationById(int id)
         {
-            var status_reservation = await _status_reservationServise.GetStatus_ReservationByIdAsync(id);
+            var status_reservation = await _status_reservationService.GetStatus_ReservationByIdAsync(id);
             if (status_reservation == null)
                 return NotFound();
 
@@ -42,7 +44,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _status_reservationServise.CreateStatus_ReservationAsync(status_reservation);
+            await _status_reservationService.CreateStatus_ReservationAsync(status_reservation);
             return CreatedAtAction(nameof(GetStatus_ReservationById), new { id = status_reservation.StatusR_ID }, status_reservation);
         }
 
@@ -56,11 +58,11 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
             if (id != status_reservation.StatusR_ID)
                 return BadRequest();
 
-            var existingstatus_reservation = await _status_reservationServise.GetStatus_ReservationByIdAsync(id);
+            var existingstatus_reservation = await _status_reservationService.GetStatus_ReservationByIdAsync(id);
             if (existingstatus_reservation == null)
                 return NotFound();
 
-            await _status_reservationServise.UpdateStatus_ReservationAsync(status_reservation);
+            await _status_reservationService.UpdateStatus_ReservationAsync(status_reservation);
             return NoContent();
         }
 
@@ -70,11 +72,11 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
         public async Task<IActionResult> SoftDeleteStatus_Reservation(int id)
         {
-            var status_reservation = await _status_reservationServise.GetStatus_ReservationByIdAsync(id);
+            var status_reservation = await _status_reservationService.GetStatus_ReservationByIdAsync(id);
             if (status_reservation == null)
                 return NotFound();
 
-            await _status_reservationServise.SoftDeleteStatus_ReservationAsync(id);
+            await _status_reservationService.SoftDeleteStatus_ReservationAsync(id);
             return NoContent();
         }
     }

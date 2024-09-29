@@ -1,4 +1,6 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
+using Electronics_Laboratory_Classroom_and_Resource_Management_System.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Controllers
@@ -7,18 +9,18 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
     [Route("api/[controller]")]
     public class Status_Equipment_Controller : ControllerBase
     {
-        private readonly Services.IStatus_EquipmentService _status_equipmentServise;
-        public Status_Equipment_Controller(Services.IStatus_EquipmentService status_equipmentService)
+        private readonly IStatus_EquipmentService _status_equipmentService;
+        public Status_Equipment_Controller(IStatus_EquipmentService status_equipmentService)
         {
-            _status_equipmentServise = status_equipmentService;
+            _status_equipmentService = status_equipmentService;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
-        public async Task<ActionResult<IEnumerable<Status_Equipment>>> GetAllStatus_Equipment()
+        public async Task<ActionResult<IEnumerable<Status_Equipment>>> GetAllstatus_equipments()
         {
-            var status_equipment = await _status_equipmentServise.GetAllStatus_EquipmentAsync();
+            var status_equipment = await _status_equipmentService.GetAllstatus_equipmentsAsync();
             return Ok(status_equipment);
         }
 
@@ -27,7 +29,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Status_Equipment>> GetStatus_EquipmentById(int id)
         {
-            var status_equipment = await _status_equipmentServise.GetStatus_EquipmentByIdAsync(id);
+            var status_equipment = await _status_equipmentService.GetStatus_EquipmentByIdAsync(id);
             if (status_equipment == null)
                 return NotFound();
 
@@ -42,7 +44,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _status_equipmentServise.CreateStatus_EquipmentAsync(status_equipment);
+            await _status_equipmentService.CreateStatus_EquipmentAsync(status_equipment);
             return CreatedAtAction(nameof(GetStatus_EquipmentById), new { id = status_equipment.StatusE_ID }, status_equipment);
         }
 
@@ -56,11 +58,11 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
             if (id != status_equipment.StatusE_ID)
                 return BadRequest();
 
-            var existingstatus_equipment = await _status_equipmentServise.GetStatus_EquipmentByIdAsync(id);
+            var existingstatus_equipment = await _status_equipmentService.GetStatus_EquipmentByIdAsync(id);
             if (existingstatus_equipment == null)
                 return NotFound();
 
-            await _status_equipmentServise.UpdateStatus_EquipmentAsync(status_equipment);
+            await _status_equipmentService.UpdateStatus_EquipmentAsync(status_equipment);
             return NoContent();
         }
 
@@ -70,11 +72,11 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
         public async Task<IActionResult> SoftDeleteStatus_Equipment(int id)
         {
-            var status_equipment = await _status_equipmentServise.GetStatus_EquipmentByIdAsync(id);
+            var status_equipment = await _status_equipmentService.GetStatus_EquipmentByIdAsync(id);
             if (status_equipment == null)
                 return NotFound();
 
-            await _status_equipmentServise.SoftDeleteStatus_EquipmentAsync(id);
+            await _status_equipmentService.SoftDeleteStatus_EquipmentAsync(id);
             return NoContent();
         }
     }
