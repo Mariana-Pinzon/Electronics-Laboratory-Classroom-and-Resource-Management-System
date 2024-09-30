@@ -62,6 +62,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contex
         public DbSet<Status_Reservation> status_reservations { get; set; }
         public DbSet<Permission> permissions { get; set; }
         public DbSet<User_Permission> user_permissions { get; set; }
-
+        
     }
 }
