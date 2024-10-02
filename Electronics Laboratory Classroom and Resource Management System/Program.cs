@@ -26,6 +26,8 @@ internal class Program
         builder.Services.AddScoped<IUser_Permission_Repository, User_Permission_Repository>();
         builder.Services.AddScoped<IUser_Repository, User_Repository>();
         builder.Services.AddScoped<IUser_Type_Repository, User_Type_Repository>();
+        builder.Services.AddScoped<IUser_History_Repository, User_History_Repository>();
+        builder.Services.AddScoped<IInventory_History_Repository, Inventory_History_Repository>();
         #endregion
         #region Services
         builder.Services.AddScoped<IEquipmentService, EquipmentService>();
@@ -40,6 +42,8 @@ internal class Program
         builder.Services.AddScoped<IUser_PermissionService, User_PermissionService>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IUser_TypeService, User_TypeService>();
+        builder.Services.AddScoped<IUser_HistoryService, User_HistoryService>();
+        builder.Services.AddScoped<IInventory_HistoryService, Inventory_HistoryService>();
         #endregion
 
         // Add controllers
