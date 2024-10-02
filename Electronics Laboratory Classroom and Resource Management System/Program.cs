@@ -29,6 +29,7 @@ internal class Program
         builder.Services.AddScoped<IReservation_History_Repository, Reservation_History_Repository>();
         builder.Services.AddScoped<IInventory_History_Repository, Inventory_History_Repository>();
         #endregion
+
         #region Services
         builder.Services.AddScoped<IEquipmentService, EquipmentService>();
         builder.Services.AddScoped<IInventoryService, InventoryService>();
