@@ -1,5 +1,6 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Context
 {
@@ -53,7 +54,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contex
             .HasKey(uh => uh.User_History_ID);
 
             modelBuilder.Entity<Inventory_History>()
-           .HasKey(ih => ih.Inventory_History_ID);
+            .HasKey(ih => ih.Inventory_History_ID);
+
+            modelBuilder.Entity<Status_Equipment_History>()
+            .HasKey(seh => seh.Status_Equipment_History_ID);
+
+            modelBuilder.Entity<Status_Reservation_History>()
+            .HasKey(srh => srh.Status_Reservation_History_ID);
+
         }
 
         public DbSet<User> users { get; set; }
@@ -70,6 +78,10 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contex
         public DbSet<User_Permission> user_permissions { get; set; }
         public DbSet<User_History> users_history { get; set; }
         public DbSet<Inventory_History> inventories_history { get; set; }
+        public DbSet<Status_Equipment_History> status_equipments_history { get; set; }
+        public DbSet<Status_Reservation_History> status_reservations_history { get; set; }
 
     }
 }
+
+

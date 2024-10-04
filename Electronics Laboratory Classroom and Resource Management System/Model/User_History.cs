@@ -3,12 +3,15 @@
     public class User_History
     {
         public int User_History_ID { get; set; }
-        public virtual required User User { get; set; }
+        public int User_ID { get; set; }
+        public required string First_Name { get; set; }
+        public required string Last_Name { get; set; }
+        public required string Email { get; set; }
         public required string Password { get; set; }
-        public virtual required User_Type User_Type { get; set; }
+        public required string User_Type_ID { get; set; }
         public required DateTime Date { get; set; }
         public required DateTime ModifiedDate { get; set; }
         public required int ModifiedBy { get; set; }
-        public bool IsDeleted { get; set; }
+
     }
 }
