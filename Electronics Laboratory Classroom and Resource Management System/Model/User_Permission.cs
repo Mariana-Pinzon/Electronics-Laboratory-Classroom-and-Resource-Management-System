@@ -5,6 +5,6 @@
         public int UserP_ID { get; set; }
         public virtual required User_Type User_Type{ get; set; }
         public virtual required Permission Permission { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }
