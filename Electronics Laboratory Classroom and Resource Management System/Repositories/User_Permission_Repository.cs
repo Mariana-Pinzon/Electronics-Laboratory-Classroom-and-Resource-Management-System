@@ -11,6 +11,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         Task CreateUser_PermissionAsync(User_Permission user_permission);
         Task UpdateUser_PermissionAsync(User_Permission user_permission);
         Task SoftDeleteUser_PermissionAsync(int id);
+        Task<bool> HasPermissions(int UserTypeId, int permissionId);
+        
     }
     public class User_Permission_Repository : IUser_Permission_Repository
     {
@@ -52,6 +54,16 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         {
             _context.user_permissions.Update(user_permission);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> HasPermissions(int UserTypeId, int permissionId)
+        {
+            User_Permission? up = await _context.user_permissions
+                .Where(up => up.Permission.Permission_ID == permissionId &&
+                 up.User_Type.User_Type_ID == UserTypeId
+                ).FirstOrDefaultAsync();
+
+            return up != null? true: false;
         }
     }
 }

@@ -25,7 +25,6 @@ internal class Program
         builder.Services.AddScoped<IUser_Permission_Repository, User_Permission_Repository>();
         builder.Services.AddScoped<IUser_Repository, User_Repository>();
         builder.Services.AddScoped<IUser_Type_Repository, User_Type_Repository>();
-        builder.Services.AddScoped<IReservation_History_Repository, Reservation_History_Repository>();
         #endregion
 
         #region Services
@@ -40,7 +39,7 @@ internal class Program
         builder.Services.AddScoped<IUser_PermissionService, User_PermissionService>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IUser_TypeService, User_TypeService>();
-        builder.Services.AddScoped<IReservation_HistoryService, Reservation_HistoryService>();
+
         #endregion
 
         // Add controllers

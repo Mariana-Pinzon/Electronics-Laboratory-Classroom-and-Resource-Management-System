@@ -9,7 +9,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
         public virtual required Reservation Reservation { get; set; }
         public virtual required Equipment Equipment { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Quantity must be a positive number.")]
         public required int Quantity { get; set; }
         public bool IsDeleted { get; set; } = false;
     }

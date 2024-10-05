@@ -11,6 +11,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
         Task CreateUser_PermissionAsync(User_Permission user_permission);
         Task UpdateUser_PermissionAsync(User_Permission user_permission);
         Task SoftDeleteUser_PermissionAsync(int id);
+        Task<bool> HasPermissionsAsync(int userTypeId, int permissionId);
     }
     public class User_PermissionService : IUser_PermissionService
     {
@@ -44,6 +45,11 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
         public async Task SoftDeleteUser_PermissionAsync(int id)
         {
             await _userPermissionRepository.SoftDeleteUser_PermissionAsync(id);
+        }
+
+        public async Task<bool> HasPermissionsAsync(int userTypeId, int permissionId)
+        {
+            return await _userPermissionRepository.HasPermissions(userTypeId, permissionId);
         }
     }
 }

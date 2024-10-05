@@ -4,6 +4,7 @@ using Electronics_Laboratory_Classroom_and_Resource_Management_System.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrations
 {
     [DbContext(typeof(ElectronicsLaboratoryClassroomandResourceDBContext))]
-    partial class ElectronicsLaboratoryClassroomandResourceDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241005051851_changes")]
+    partial class changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,6 +82,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                     b.Property<int>("Laboratory_ID")
                         .HasColumnType("int");
 
+                    b.Property<int>("Total_quantity")
+                        .HasColumnType("int");
+
                     b.HasKey("Inventory_ID");
 
                     b.HasIndex("Equipment_ID");
@@ -116,6 +122,10 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ModifiedDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Total_quantity")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -189,17 +199,12 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                     b.Property<TimeOnly>("Start_time")
                         .HasColumnType("time");
 
-                    b.Property<int>("Status_ReservationStatusR_ID")
-                        .HasColumnType("int");
-
                     b.Property<int>("User_ID")
                         .HasColumnType("int");
 
                     b.HasKey("Reservation_ID");
 
                     b.HasIndex("Laboratory_ID");
-
-                    b.HasIndex("Status_ReservationStatusR_ID");
 
                     b.HasIndex("User_ID");
 
@@ -233,6 +238,32 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                     b.HasIndex("Reservation_ID");
 
                     b.ToTable("reservations_equipment");
+                });
+
+            modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation_History", b =>
+                {
+                    b.Property<int>("History_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("History_ID"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Reservation_ID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status_ReservationStatusR_ID")
+                        .HasColumnType("int");
+
+                    b.HasKey("History_ID");
+
+                    b.HasIndex("Reservation_ID");
+
+                    b.HasIndex("Status_ReservationStatusR_ID");
+
+                    b.ToTable("reservations_history");
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Equipment", b =>
@@ -504,12 +535,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Reservation", "Status_Reservation")
-                        .WithMany()
-                        .HasForeignKey("Status_ReservationStatusR_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("User_ID")
@@ -517,8 +542,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                         .IsRequired();
 
                     b.Navigation("Laboratory");
-
-                    b.Navigation("Status_Reservation");
 
                     b.Navigation("User");
                 });
@@ -540,6 +563,25 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                     b.Navigation("Equipment");
 
                     b.Navigation("Reservation");
+                });
+
+            modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation_History", b =>
+                {
+                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation", "Reservation")
+                        .WithMany()
+                        .HasForeignKey("Reservation_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Reservation", "Status_Reservation")
+                        .WithMany()
+                        .HasForeignKey("Status_ReservationStatusR_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Reservation");
+
+                    b.Navigation("Status_Reservation");
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User", b =>

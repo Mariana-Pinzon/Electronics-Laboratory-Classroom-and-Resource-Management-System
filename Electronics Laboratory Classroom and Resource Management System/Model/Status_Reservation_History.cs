@@ -5,8 +5,7 @@
         public int Status_Reservation_History_ID { get; set; }
         public int StatusR_ID { get; set; }
         public required string StatusR { get; set; }
-        public required DateTime Date { get; set; }
-        public required DateTime ModifiedDate { get; set; }
-        public required int ModifiedBy { get; set; }
+        public required string ModifiedDate { get; set; }
+        public required string ModifiedBy { get; set; }
     }
 }

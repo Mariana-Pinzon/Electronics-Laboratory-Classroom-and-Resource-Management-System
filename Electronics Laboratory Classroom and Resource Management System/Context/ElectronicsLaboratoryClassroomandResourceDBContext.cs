@@ -29,9 +29,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contex
             modelBuilder.Entity<Reservation>()
             .HasKey(r => r.Reservation_ID);
 
-            modelBuilder.Entity<Reservation_History>()
-            .HasKey(rh => rh.History_ID);
-
             modelBuilder.Entity<Status_Equipment>()
             .HasKey(se => se.StatusE_ID);
 
@@ -72,7 +69,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contex
         public DbSet<Status_Equipment> status_equipments { get; set;}
         public DbSet<Reservation_Equipment> reservations_equipment { get; set; }
         public DbSet<Reservation> reservations { get; set; }
-        public DbSet<Reservation_History> reservations_history { get; set; }
         public DbSet<Status_Reservation> status_reservations { get; set; }
         public DbSet<Permission> permissions { get; set; }
         public DbSet<User_Permission> user_permissions { get; set; }
