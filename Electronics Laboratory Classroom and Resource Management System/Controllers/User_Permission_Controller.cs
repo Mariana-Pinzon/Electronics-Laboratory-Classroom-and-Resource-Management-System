@@ -79,5 +79,21 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
             await _user_permissionService.SoftDeleteUser_PermissionAsync(id);
             return NoContent();
         }
+
+        [HttpGet("check-permission")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CheckPermission([FromQuery] int userTypeId, [FromQuery] int permissionId)
+        {
+            if (userTypeId <= 0 || permissionId <= 0)
+                return BadRequest("Invalid parameters");
+
+            var hasPermission = await _user_permissionService.HasPermissionsAsync(userTypeId, permissionId);
+
+            if (hasPermission)
+                return Ok(new { Message = "User has the permission." });
+            else
+                return Ok(new { Message = "User does not have the permission." });
+        }
     }
 }
