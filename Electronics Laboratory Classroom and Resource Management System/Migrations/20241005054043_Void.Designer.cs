@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrations
 {
     [DbContext(typeof(ElectronicsLaboratoryClassroomandResourceDBContext))]
-    [Migration("20241004184941_Void")]
+    [Migration("20241005054043_Void")]
     partial class Void
     {
         /// <inheritdoc />
@@ -82,9 +82,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                     b.Property<int>("Laboratory_ID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Last_update")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Total_quantity")
                         .HasColumnType("int");
 
@@ -105,11 +102,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Inventory_History_ID"));
 
-                    b.Property<int>("Available_quantity")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Available_quantity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Equipment_ID")
                         .IsRequired()
@@ -122,17 +117,17 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Last_update")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                    b.Property<string>("ModifiedDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Total_quantity")
-                        .HasColumnType("int");
+                    b.Property<string>("Total_quantity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Inventory_History_ID");
 
@@ -299,14 +294,13 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Status_Equipment_History_ID"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ModifiedDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -348,14 +342,13 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Status_Reservation_History_ID"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ModifiedDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StatusR")
                         .IsRequired()
@@ -414,9 +407,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("User_History_ID"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -429,11 +419,13 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("ModifiedDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()

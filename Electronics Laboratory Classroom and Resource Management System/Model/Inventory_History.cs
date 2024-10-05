@@ -10,8 +10,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
 
         public required string Available_quantity { get; set; }
 
-        public required string Total_quantity { get; set; }
-
         public required string Laboratory_ID { get; set; }
 
         public required string ModifiedDate { get; set; }

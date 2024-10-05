@@ -9,8 +9,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
 
         public required int Available_quantity { get; set; }
 
-        public required int Total_quantity { get; set; }
-
         public virtual required Laboratory Laboratory { get; set; }
         public bool IsDeleted { get; set; } = false;
 
