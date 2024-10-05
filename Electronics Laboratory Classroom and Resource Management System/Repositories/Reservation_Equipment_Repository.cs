@@ -1,13 +1,12 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Context;
 using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
-using Electronics_Laboratory_Classroom_and_Resource_Management_System.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Repositories
 {
     public interface IReservation_Equipment_Repository
     {
-        Task<IEnumerable<Reservation_Equipment>> GetAllReservation_EquipmentAsync();
+        Task<IEnumerable<Reservation_Equipment>> GetAllreservations_equipmentAsync();
         Task<Reservation_Equipment> GetReservation_EquipmentByIdAsync(int id);
         Task CreateReservation_EquipmentAsync(Reservation_Equipment reservation_equipment);
         Task UpdateReservation_EquipmentAsync(Reservation_Equipment reservation_equipment);
@@ -20,7 +19,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         {
             _context = context;
         }
-        public async Task<IEnumerable<Reservation_Equipment>> GetAllReservation_EquipmentAsync()
+        public async Task<IEnumerable<Reservation_Equipment>> GetAllreservations_equipmentAsync()
         {
             return await _context.reservations_equipment
                 .Where(se => !se.IsDeleted)
@@ -42,14 +41,13 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
         }
 
-        // Implementación del método para crear un nuevo tipo de usuario
+       
         public async Task CreateReservation_EquipmentAsync(Reservation_Equipment reservation_equipment)
         {
             _context.reservations_equipment.Add(reservation_equipment);
             await _context.SaveChangesAsync();
         }
 
-        // Implementación del método para actualizar un tipo de usuario
         public async Task UpdateReservation_EquipmentAsync(Reservation_Equipment reservation_equipment)
         {
             _context.reservations_equipment.Update(reservation_equipment);

@@ -1,4 +1,6 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
+using Electronics_Laboratory_Classroom_and_Resource_Management_System.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Controllers
@@ -7,18 +9,18 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
     [Route("api/[controller]")]
     public class User_Controller : ControllerBase
     {
-        private readonly Services.IUserService _userServise;
-        public User_Controller(Services.IUserService userService)
+        private readonly IUserService _userService;
+        public User_Controller(IUserService userService)
         {
-            _userServise = userService;
+            _userService = userService;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
-        public async Task<ActionResult<IEnumerable<User>>> GetAllUser()
+        public async Task<ActionResult<IEnumerable<User>>> GetAllusers()
         {
-            var users = await _userServise.GetAllUserAsync();
+            var users = await _userService.GetAllusersAsync();
             return Ok(users);
         }
 
@@ -27,7 +29,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<User>> GetUserById(int id)
         {
-            var user = await _userServise.GetUserByIdAsync(id);
+            var user = await _userService.GetUserByIdAsync(id);
             if (user == null)
                 return NotFound();
 
@@ -42,7 +44,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _userServise.CreateUserAsync(user);
+            await _userService.CreateUserAsync(user);
             return CreatedAtAction(nameof(GetUserById), new { id = user.User_ID }, user);
         }
 
@@ -56,11 +58,11 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
             if (id != user.User_ID)
                 return BadRequest();
 
-            var existingUser = await _userServise.GetUserByIdAsync(id);
+            var existingUser = await _userService.GetUserByIdAsync(id);
             if (existingUser == null)
                 return NotFound();
 
-            await _userServise.UpdateUserAsync(user);
+            await _userService.UpdateUserAsync(user);
             return NoContent();
         }
 
@@ -70,11 +72,11 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
         public async Task<IActionResult> SoftDeleteUser(int id)
         {
-            var user = await _userServise.GetUserByIdAsync(id);
+            var user = await _userService.GetUserByIdAsync(id);
             if (user == null)
                 return NotFound();
 
-            await _userServise.SoftDeleteUserAsync(id);
+            await _userService.SoftDeleteUserAsync(id);
             return NoContent();
         }
     }

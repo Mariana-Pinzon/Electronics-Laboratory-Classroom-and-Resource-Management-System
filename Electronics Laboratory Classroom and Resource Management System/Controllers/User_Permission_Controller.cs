@@ -1,4 +1,6 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
+using Electronics_Laboratory_Classroom_and_Resource_Management_System.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Controllers
@@ -7,18 +9,18 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
     [Route("api/[controller]")]
     public class User_Permission_Controller : ControllerBase
     {
-        private readonly Services.IUser_PermissionService _user_permissionServise;
-        public User_Permission_Controller(Services.IUser_PermissionService user_permissionService)
+        private readonly IUser_PermissionService _user_permissionService;
+        public User_Permission_Controller(IUser_PermissionService user_permissionService)
         {
-            _user_permissionServise = user_permissionService;
+            _user_permissionService = user_permissionService;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
-        public async Task<ActionResult<IEnumerable<User_Permission>>> GetAllUser_Permission()
+        public async Task<ActionResult<IEnumerable<User_Permission>>> GetAlluser_permissions()
         {
-            var user_permissions = await _user_permissionServise.GetAllUser_PermissionAsync();
+            var user_permissions = await _user_permissionService.GetAlluser_permissionsAsync();
             return Ok(user_permissions);
         }
 
@@ -27,7 +29,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<User_Permission>> GetUser_PermissionById(int id)
         {
-            var user_permission = await _user_permissionServise.GetUser_PermissionByIdAsync(id);
+            var user_permission = await _user_permissionService.GetUser_PermissionByIdAsync(id);
             if (user_permission == null)
                 return NotFound();
 
@@ -42,7 +44,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _user_permissionServise.CreateUser_PermissionAsync(user_permission);
+            await _user_permissionService.CreateUser_PermissionAsync(user_permission);
             return CreatedAtAction(nameof(GetUser_PermissionById), new { id = user_permission.UserP_ID }, user_permission);
         }
 
@@ -56,11 +58,11 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
             if (id != user_permission.UserP_ID)
                 return BadRequest();
 
-            var existingUser_Permission = await _user_permissionServise.GetUser_PermissionByIdAsync(id);
+            var existingUser_Permission = await _user_permissionService.GetUser_PermissionByIdAsync(id);
             if (existingUser_Permission == null)
                 return NotFound();
 
-            await _user_permissionServise.UpdateUser_PermissionAsync(user_permission);
+            await _user_permissionService.UpdateUser_PermissionAsync(user_permission);
             return NoContent();
         }
 
@@ -70,11 +72,11 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
         public async Task<IActionResult> SoftDeleteUser_Permission(int id)
         {
-            var user_permission = await _user_permissionServise.GetUser_PermissionByIdAsync(id);
+            var user_permission = await _user_permissionService.GetUser_PermissionByIdAsync(id);
             if (user_permission == null)
                 return NotFound();
 
-            await _user_permissionServise.SoftDeleteUser_PermissionAsync(id);
+            await _user_permissionService.SoftDeleteUser_PermissionAsync(id);
             return NoContent();
         }
     }

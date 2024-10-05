@@ -5,7 +5,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 {
     public interface IInventoryService
     {
-        Task<IEnumerable<Inventory>> GetAllInventoryAsync();
+        Task<IEnumerable<Inventory>> GetAllinventoriesAsync();
         Task<Inventory> GetInventoryByIdAsync(int id);
         Task CreateInventoryAsync(Inventory inventory);
         Task UpdateInventoryAsync(Inventory inventory);
@@ -20,14 +20,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             _inventoryRepository = inventoryRepository;
         }
 
-        public async Task<IEnumerable<Inventory>> GetAllInventoryAsync()
+        public async Task<IEnumerable<Inventory>> GetAllinventoriesAsync()
         {
-            return await _inventoryRepository.GetAllInventoryAsync();
+            return await _inventoryRepository.GetAllinventoriesAsync();
         }
 
-        public async Task<Inventory> GetInventoryByIdAsync(int Inventory_ID)
+        public async Task<Inventory> GetInventoryByIdAsync(int id)
         {
-            return await _inventoryRepository.GetInventoryByIdAsync(Inventory_ID);
+            return await _inventoryRepository.GetInventoryByIdAsync(id);
         }
 
         public async Task CreateInventoryAsync(Inventory inventory)
@@ -40,9 +40,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             await _inventoryRepository.UpdateInventoryAsync(inventory);
         }
 
-        public async Task SoftDeleteInventoryAsync(int Inventory_ID)
+        public async Task SoftDeleteInventoryAsync(int id)
         {
-            await _inventoryRepository.SoftDeleteInventoryAsync(Inventory_ID);
+            await _inventoryRepository.SoftDeleteInventoryAsync(id);
         }
     }
 }

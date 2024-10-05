@@ -6,7 +6,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
 {
     public interface IInventory_Repository
     {
-        Task<IEnumerable<Inventory>> GetAllInventoryAsync();
+        Task<IEnumerable<Inventory>> GetAllinventoriesAsync();
         Task<Inventory> GetInventoryByIdAsync(int id);
         Task CreateInventoryAsync(Inventory inventory);
         Task UpdateInventoryAsync(Inventory inventory);
@@ -19,7 +19,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         {
             _context = context;
         }
-        public async Task<IEnumerable<Inventory>> GetAllInventoryAsync()
+        public async Task<IEnumerable<Inventory>> GetAllinventoriesAsync()
         {
             return await _context.inventories
                 .Where(i => !i.IsDeleted)

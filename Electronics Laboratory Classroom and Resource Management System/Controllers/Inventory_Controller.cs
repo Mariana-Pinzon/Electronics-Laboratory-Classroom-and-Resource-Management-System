@@ -1,4 +1,6 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
+using Electronics_Laboratory_Classroom_and_Resource_Management_System.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Controllers
@@ -7,8 +9,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
     [Route("api/[controller]")]
     public class Inventory_Controller : ControllerBase
     {
-        private readonly Services.IInventoryService _inventoryServise;
-        public Inventory_Controller(Services.IInventoryService inventoryService)
+        private readonly IInventoryService _inventoryServise;
+        public Inventory_Controller(IInventoryService inventoryService)
         {
             _inventoryServise = inventoryService;
         }
@@ -16,9 +18,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
-        public async Task<ActionResult<IEnumerable<Inventory>>> GetAllInventory()
+        public async Task<ActionResult<IEnumerable<Inventory>>> GetAllinventories()
         {
-            var inventories = await _inventoryServise.GetAllInventoryAsync();
+            var inventories = await _inventoryServise.GetAllinventoriesAsync();
             return Ok(inventories);
         }
 

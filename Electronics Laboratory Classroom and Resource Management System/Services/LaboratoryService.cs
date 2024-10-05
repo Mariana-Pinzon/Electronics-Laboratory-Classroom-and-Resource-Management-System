@@ -5,7 +5,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 {
     public interface ILaboratoryService
     {
-        Task<IEnumerable<Laboratory>> GetAllLaboratoryAsync();
+        Task<IEnumerable<Laboratory>> GetAlllaboratoriesAsync();
         Task<Laboratory> GetLaboratoryByIdAsync(int id);
         Task CreateLaboratoryAsync(Laboratory laboratory);
         Task UpdateLaboratoryAsync(Laboratory laboratory);
@@ -20,14 +20,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             _laboratoryRepository = laboratoryRepository;
         }
 
-        public async Task<IEnumerable<Laboratory>> GetAllLaboratoryAsync()
+        public async Task<IEnumerable<Laboratory>> GetAlllaboratoriesAsync()
         {
-            return await _laboratoryRepository.GetAllLaboratoryAsync();
+            return await _laboratoryRepository.GetAlllaboratoriesAsync();
         }
 
-        public async Task<Laboratory> GetLaboratoryByIdAsync(int Laboratory_ID)
+        public async Task<Laboratory> GetLaboratoryByIdAsync(int id)
         {
-            return await _laboratoryRepository.GetLaboratoryByIdAsync(Laboratory_ID);
+            return await _laboratoryRepository.GetLaboratoryByIdAsync(id);
         }
 
         public async Task CreateLaboratoryAsync(Laboratory laboratory)
@@ -40,9 +40,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             await _laboratoryRepository.UpdateLaboratoryAsync(laboratory);
         }
 
-        public async Task SoftDeleteLaboratoryAsync(int Laboratory_ID)
+        public async Task SoftDeleteLaboratoryAsync(int id)
         {
-            await _laboratoryRepository.SoftDeleteLaboratoryAsync(Laboratory_ID);
+            await _laboratoryRepository.SoftDeleteLaboratoryAsync(id);
         }
     }
 }
