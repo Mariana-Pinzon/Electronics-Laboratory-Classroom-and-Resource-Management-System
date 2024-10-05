@@ -8,10 +8,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
         public required string First_Name { get; set; }
         public required string Last_Name { get; set;}
 
-        [EmailAddress]
         public required string Email { get; set; }
 
-        [MinLength(8)]
         public required string Password { get; set; }
         public virtual required User_Type User_Type { get; set; }
         public bool IsDeleted { get; set; } = false;
