@@ -56,7 +56,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasIndex("Status_EquipmentStatusE_ID");
 
-                    b.ToTable("equipments");
+                    b.ToTable("equipments", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Inventory", b =>
@@ -91,7 +91,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasIndex("Laboratory_ID");
 
-                    b.ToTable("inventories");
+                    b.ToTable("inventories", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Inventory_History", b =>
@@ -133,7 +133,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasKey("Inventory_History_ID");
 
-                    b.ToTable("inventories_history");
+                    b.ToTable("inventories_history", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Laboratory", b =>
@@ -155,7 +155,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasKey("Laboratory_ID");
 
-                    b.ToTable("laboratories");
+                    b.ToTable("laboratories", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Permission", b =>
@@ -175,7 +175,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasKey("Permission_ID");
 
-                    b.ToTable("permissions");
+                    b.ToTable("permissions", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation", b =>
@@ -210,7 +210,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasIndex("User_ID");
 
-                    b.ToTable("reservations");
+                    b.ToTable("reservations", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation_Equipment", b =>
@@ -239,7 +239,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasIndex("Reservation_ID");
 
-                    b.ToTable("reservations_equipment");
+                    b.ToTable("reservations_equipment", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation_History", b =>
@@ -265,7 +265,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasIndex("Status_ReservationStatusR_ID");
 
-                    b.ToTable("reservations_history");
+                    b.ToTable("reservations_history", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Equipment", b =>
@@ -285,7 +285,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasKey("StatusE_ID");
 
-                    b.ToTable("status_equipments");
+                    b.ToTable("status_equipments", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Equipment_History", b =>
@@ -314,7 +314,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasKey("Status_Equipment_History_ID");
 
-                    b.ToTable("status_equipments_history");
+                    b.ToTable("status_equipments_history", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Reservation", b =>
@@ -334,7 +334,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasKey("StatusR_ID");
 
-                    b.ToTable("status_reservations");
+                    b.ToTable("status_reservations", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Reservation_History", b =>
@@ -363,7 +363,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasKey("Status_Reservation_History_ID");
 
-                    b.ToTable("status_reservations_history");
+                    b.ToTable("status_reservations_history", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User", b =>
@@ -400,7 +400,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasIndex("User_Type_ID");
 
-                    b.ToTable("users");
+                    b.ToTable("users", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User_History", b =>
@@ -445,7 +445,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasKey("User_History_ID");
 
-                    b.ToTable("users_history");
+                    b.ToTable("users_history", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User_Permission", b =>
@@ -471,7 +471,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasIndex("User_Type_ID");
 
-                    b.ToTable("user_permissions");
+                    b.ToTable("user_permissions", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User_Type", b =>
@@ -491,7 +491,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.HasKey("User_Type_ID");
 
-                    b.ToTable("user_types");
+                    b.ToTable("user_types", (string)null);
                 });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Equipment", b =>

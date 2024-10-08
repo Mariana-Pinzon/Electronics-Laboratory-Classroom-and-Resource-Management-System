@@ -1,5 +1,6 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Context;
 using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Repositories
@@ -53,6 +54,16 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         {
             _context.users.Update(user);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> ValidateUserAsync(string email, string password)
+        {
+            var user = await _context.users.FirstOrDefaultAsync(u => u.Email == email) ?? throw new Exception
+                if  (user == null) return false;
+                var passwordHasher = new PasswordHasher<User>();
+                var userVerification = passwordHasher.VerifyHashedPassword(user, user.Password, password);
+                if (userVerification == PasswordVerificationResult.Success) return true;
+                return false;
         }
 
     }
