@@ -1,9 +1,5 @@
-# Sistema de Gestión de Recursos y Laboratorios para el CADI
+# Sistema de Gestión de Recursos y Laboratorios de Electronica
 Back End created using .Net8, Entity Framework y Somee
-
-# Sistema de Gestión de Recursos y Laboratorios para el CADI
-## Proyecto desarrollado en .NET
-
 ### Descripción general
 Este proyecto tiene como objetivo desarrollar un sistema de gestión de recursos y laboratorios para el **Centro de Aprendizaje y Desarrollo de Ingeniería (CADI)**, enfocado en la asignatura **Fundamentos de Electrónica Digital**. El sistema permite administrar equipos, laboratorios, reservas, inventarios y permisos de acceso, facilitando la organización y control de los recursos disponibles en el CADI.
 
