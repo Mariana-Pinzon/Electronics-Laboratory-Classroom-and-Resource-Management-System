@@ -61,7 +61,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
                 return BadRequest(ModelState);
 
             await _userService.CreateUserAsync(user);
-            return CreatedAtAction(nameof(GetUserById), new { id = user.User_ID }, user); // Asumiendo que `UserId` es el ID del usuario.
+            return CreatedAtAction(nameof(GetUserById), new { id = user.User_ID }, user); 
         }
 
         [HttpPut("{id}")]
