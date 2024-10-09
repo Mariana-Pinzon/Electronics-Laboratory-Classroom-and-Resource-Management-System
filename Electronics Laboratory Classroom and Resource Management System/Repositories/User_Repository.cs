@@ -11,6 +11,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         Task CreateUserAsync(User user);
         Task UpdateUserAsync(User user);
         Task SoftDeleteUserAsync(int id);
+        Task<User> GetUserByEmailAsync(string email);
     }
     public class User_Repository : IUser_Repository
     {
@@ -53,6 +54,11 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         {
             _context.users.Update(user);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            return await _context.users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
     }

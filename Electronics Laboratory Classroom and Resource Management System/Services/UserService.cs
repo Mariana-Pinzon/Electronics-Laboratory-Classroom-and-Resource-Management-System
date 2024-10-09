@@ -1,5 +1,8 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
 using Electronics_Laboratory_Classroom_and_Resource_Management_System.Repositories;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Services
@@ -11,6 +14,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
         Task CreateUserAsync(User user);
         Task UpdateUserAsync(int userTypeId, int userPermissionId, User user);
         Task SoftDeleteUserAsync(int userTypeId, int userPermissionId,int id);
+        Task<bool> ValidateUserAsync(string email, string password);
+
     }
     public class UserService : IUserService
     {
@@ -66,6 +71,24 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar usuarios.");
             }
             await _userRepository.SoftDeleteUserAsync(id);
+        }
+
+        public async Task<bool> ValidateUserAsync(string email, string password)
+        {
+            var user = await _userRepository.GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            if (user == null) return false;
+
+            // Verifica la contraseña proporcionada con la contraseña hasheada almacenada en la base de datos
+            var passwordHasher = new PasswordHasher<User>();
+            var userVerification = passwordHasher.VerifyHashedPassword(user, user.Password, password);
+
+            // Si la verificación es exitosa, devuelve verdadero (autenticado)
+            return userVerification == PasswordVerificationResult.Success;
         }
     }
 }
