@@ -39,13 +39,21 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> CreateStatus_Reservation([FromBody] Status_Reservation status_reservation)
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
+        public async Task<ActionResult> CreateStatus_Reservation([FromQuery] int userTypeId, [FromQuery] int userPermissionId, [FromBody] Status_Reservation status_reservation)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _status_reservationService.CreateStatus_ReservationAsync(status_reservation);
-            return CreatedAtAction(nameof(GetStatus_ReservationById), new { id = status_reservation.StatusR_ID }, status_reservation);
+            try
+            {
+                await _status_reservationService.CreateStatus_ReservationAsync(userTypeId, userPermissionId, status_reservation);
+                return CreatedAtAction(nameof(GetStatus_ReservationById), new { id = status_reservation.StatusR_ID }, status_reservation);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid(); // Retorna 403 si no tiene permisos
+            }
         }
 
         [HttpPut("{id}")]
@@ -69,15 +77,22 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<IActionResult> SoftDeleteStatus_Reservation(int id)
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
+        public async Task<IActionResult> SoftDeleteStatus_Reservation(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId)
         {
             var status_reservation = await _status_reservationService.GetStatus_ReservationByIdAsync(id);
             if (status_reservation == null)
                 return NotFound();
 
-            await _status_reservationService.SoftDeleteStatus_ReservationAsync(id);
-            return NoContent();
+            try
+            {
+                await _status_reservationService.SoftDeleteStatus_ReservationAsync(userTypeId, userPermissionId,id);
+                return NoContent();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid(); // Retorna 403 si no tiene permisos
+            }
         }
     }
 }

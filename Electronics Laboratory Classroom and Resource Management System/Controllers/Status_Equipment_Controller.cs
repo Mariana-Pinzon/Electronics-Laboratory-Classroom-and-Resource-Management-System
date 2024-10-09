@@ -39,13 +39,21 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> CreateStatus_Equipment([FromBody] Status_Equipment status_equipment)
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
+        public async Task<ActionResult> CreateStatus_Equipment([FromQuery] int userTypeId, [FromQuery] int userPermissionId, [FromBody] Status_Equipment status_equipment)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _status_equipmentService.CreateStatus_EquipmentAsync(status_equipment);
-            return CreatedAtAction(nameof(GetStatus_EquipmentById), new { id = status_equipment.StatusE_ID }, status_equipment);
+            try
+            {
+                await _status_equipmentService.CreateStatus_EquipmentAsync(userTypeId, userPermissionId,status_equipment);
+                return CreatedAtAction(nameof(GetStatus_EquipmentById), new { id = status_equipment.StatusE_ID }, status_equipment);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid(); // Retorna 403 si no tiene permisos
+            }
         }
 
         [HttpPut("{id}")]
@@ -69,15 +77,22 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<IActionResult> SoftDeleteStatus_Equipment(int id)
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
+        public async Task<IActionResult> SoftDeleteStatus_Equipment(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId)
         {
             var status_equipment = await _status_equipmentService.GetStatus_EquipmentByIdAsync(id);
             if (status_equipment == null)
                 return NotFound();
 
-            await _status_equipmentService.SoftDeleteStatus_EquipmentAsync(id);
-            return NoContent();
+            try
+            {
+                await _status_equipmentService.SoftDeleteStatus_EquipmentAsync(userTypeId, userPermissionId, id);
+                return NoContent();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid(); // Retorna 403 si no tiene permisos
+            }
         }
     }
 }

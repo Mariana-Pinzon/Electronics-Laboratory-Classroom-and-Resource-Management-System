@@ -11,6 +11,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         Task CreateInventoryAsync(Inventory inventory);
         Task UpdateInventoryAsync(Inventory inventory);
         Task SoftDeleteInventoryAsync(int id);
+        Task<int> GetAvailableQuantityAsync(int equipmentId);
     }
     public class Inventory_Repository : IInventory_Repository
     {
@@ -52,6 +53,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         {
             _context.inventories.Update(inventory);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> GetAvailableQuantityAsync(int equipmentId)
+        {
+            var inventory = await _context.inventories
+                .FirstOrDefaultAsync(i => i.Equipment.Equipment_ID == equipmentId && !i.IsDeleted);
+
+            return inventory?.Available_quantity ?? 0;  // Si no existe el inventario, retorna 0.
         }
     }
 }

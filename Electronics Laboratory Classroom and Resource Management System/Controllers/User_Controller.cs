@@ -2,6 +2,8 @@
 using Electronics_Laboratory_Classroom_and_Resource_Management_System.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Controllers
 {
@@ -10,6 +12,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
     public class User_Controller : ControllerBase
     {
         private readonly IUserService _userService;
+
         public User_Controller(IUserService userService)
         {
             _userService = userService;
@@ -17,23 +20,36 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-
-        public async Task<ActionResult<IEnumerable<User>>> GetAllusers()
+        public async Task<ActionResult<IEnumerable<User>>> GetAllUsers([FromQuery] int userTypeId, [FromQuery] int userPermissionId)
         {
-            var users = await _userService.GetAllusersAsync();
-            return Ok(users);
+            try
+            {
+                var users = await _userService.GetAllusersAsync(userTypeId, userPermissionId);
+                return Ok(users);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid(); // Retorna 403 si no tiene permisos
+            }
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<User>> GetUserById(int id)
+        public async Task<ActionResult<User>> GetUserById([FromQuery] int userTypeId, [FromQuery] int userPermissionId, int id)
         {
-            var user = await _userService.GetUserByIdAsync(id);
-            if (user == null)
-                return NotFound();
+            try
+            {
+                var user = await _userService.GetUserByIdAsync(userTypeId, userPermissionId, id);
+                if (user == null)
+                    return NotFound();
 
-            return Ok(user);
+                return Ok(user);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid(); // Retorna 403 si no tiene permisos
+            }
         }
 
         [HttpPost]
@@ -45,39 +61,49 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
                 return BadRequest(ModelState);
 
             await _userService.CreateUserAsync(user);
-            return CreatedAtAction(nameof(GetUserById), new { id = user.User_ID }, user);
+            return CreatedAtAction(nameof(GetUserById), new { id = user.User_ID }, user); // Asumiendo que `UserId` es el ID del usuario.
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] User user)
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
+        public async Task<IActionResult> UpdateUser(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId, [FromBody] User user)
         {
-            if (id != user.User_ID)
+            if (id != user.User_ID) 
                 return BadRequest();
 
-            var existingUser = await _userService.GetUserByIdAsync(id);
-            if (existingUser == null)
-                return NotFound();
-
-            await _userService.UpdateUserAsync(user);
-            return NoContent();
+            try
+            {
+                await _userService.UpdateUserAsync(userTypeId, userPermissionId, user);
+                return NoContent();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid(); // Retorna 403 si no tiene permisos
+            }
         }
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<IActionResult> SoftDeleteUser(int id)
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
+        public async Task<IActionResult> SoftDeleteUser(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId)
         {
-            var user = await _userService.GetUserByIdAsync(id);
-            if (user == null)
-                return NotFound();
+            try
+            {
+                var user = await _userService.GetUserByIdAsync(userTypeId, userPermissionId, id);
+                if (user == null)
+                    return NotFound();
 
-            await _userService.SoftDeleteUserAsync(id);
-            return NoContent();
+                await _userService.SoftDeleteUserAsync(userTypeId, userPermissionId, id);
+                return NoContent();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid(); // Retorna 403 si no tiene permisos
+            }
         }
     }
 }
