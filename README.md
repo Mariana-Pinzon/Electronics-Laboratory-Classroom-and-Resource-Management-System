@@ -1,9 +1,13 @@
-# Sistema de Gestión de Recursos y Laboratorios de Electronica
-Back End created using .Net8, Entity Framework y Somee
+# Sistema de Gestión de Recursos y Laboratorios de Electrónica
+
+Back End creado usando .NET 8, Entity Framework y Somee.
+
 ### Descripción general
+
 Este proyecto tiene como objetivo desarrollar un sistema de gestión de recursos y laboratorios para el **Centro de Aprendizaje y Desarrollo de Ingeniería (CADI)**, enfocado en la asignatura **Fundamentos de Electrónica Digital**. El sistema permite administrar equipos, laboratorios, reservas, inventarios y permisos de acceso, facilitando la organización y control de los recursos disponibles en el CADI.
 
 ### Funcionalidades principales
+
 El sistema cuenta con las siguientes funcionalidades principales:
 
 1. **Gestión de usuarios**:
@@ -42,7 +46,7 @@ El sistema está construido utilizando el framework **ASP.NET Core**. Se impleme
    - Implementación de los repositorios correspondientes para cada entidad, asegurando la abstracción de la lógica de datos.
 
 3. **Capa de Servicios**:
-   - Implementa la lógica de negocio para el manejo de recursos, inventarios, reservas, y permisos.
+   - Implementa la lógica de negocio para el manejo de recursos, inventarios, reservas y permisos.
    - Los servicios utilizan los repositorios para interactuar con la base de datos y ofrecen métodos para ser utilizados en los controladores.
 
 4. **Capa de Controladores**:
@@ -72,7 +76,7 @@ El sistema utiliza un modelo de base de datos relacional, el cual incluye las si
 ### Ejecución del proyecto
 
 1. **Autenticación y autorización**: 
-   - Se implementó autenticación básica sin el uso de JWT o paquetes externos, utilizando sesiones para gestionar el acceso de usuarios autenticados.
+   - Se implementó autenticación básica utilizando sesiones para gestionar el acceso de usuarios autenticados.
    - Cada tipo de usuario (estudiante, profesor, administrador) tiene un conjunto de permisos que controla el acceso a diferentes funcionalidades.
 
 2. **Gestión de inventarios y laboratorios**: 
@@ -80,19 +84,10 @@ El sistema utiliza un modelo de base de datos relacional, el cual incluye las si
    - Los administradores pueden actualizar el inventario y gestionar los laboratorios asignados.
 
 3. **Reservas**: 
-   - Los estudiantes pueden reservar laboratorios y equipos a través del sistema. 
+   - Los estudiantes pueden reservar laboratorios y equipos a través del sistema.
    - Se realiza un seguimiento de las reservas y se permite la consulta de las reservas pasadas.
 
 ### Requisitos no funcionales
-
-- **Seguridad**: Se garantizan las restricciones de acceso a usuarios autorizados mediante la autenticación y control de permisos.
-- **Compatibilidad**: El sistema es compatible con diversos navegadores y dispositivos.
-- **Rendimiento**: El sistema está optimizado para soportar múltiples usuarios simultáneamente y manejar grandes volúmenes de datos de equipos y reservas.
-
-### Conclusión
-
-Este sistema de gestión de recursos y laboratorios proporciona una solución eficiente para administrar los recursos del CADI, ayudando tanto a estudiantes como a profesores a gestionar sus prácticas de laboratorio en la asignatura de **Fundamentos de Electrónica Digital**. La arquitectura modular y la integración de buenas prácticas de desarrollo aseguran la escalabilidad y mantenimiento del sistema en el tiempo.
-
 
 - **Seguridad**: Se garantizan las restricciones de acceso a usuarios autorizados mediante la autenticación y control de permisos.
 - **Compatibilidad**: El sistema es compatible con diversos navegadores y dispositivos.
