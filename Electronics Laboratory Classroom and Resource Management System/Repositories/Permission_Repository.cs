@@ -6,7 +6,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
 {
     public interface IPermission_Repository
     {
-        Task<IEnumerable<Permission>> GetAllPermissionAsync();
+        Task<IEnumerable<Permission>> GetAllpermissionsAsync();
         Task<Permission> GetPermissionByIdAsync(int id);
         Task CreatePermissionAsync(Permission permission);
         Task UpdatePermissionAsync(Permission permission);
@@ -19,7 +19,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         {
             _context = context;
         }
-        public async Task<IEnumerable<Permission>> GetAllPermissionAsync()
+        public async Task<IEnumerable<Permission>> GetAllpermissionsAsync()
         {
             return await _context.permissions
                 .Where(p => !p.IsDeleted)

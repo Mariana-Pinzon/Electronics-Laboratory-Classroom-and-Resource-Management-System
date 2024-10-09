@@ -1,4 +1,6 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
+using Electronics_Laboratory_Classroom_and_Resource_Management_System.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Controllers
@@ -7,8 +9,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
     [Route("api/[controller]")]
     public class Permission_Controller : ControllerBase
     {
-        private readonly Services.IPermissionService _permissionServise;
-        public Permission_Controller(Services.IPermissionService permissionService)
+        private readonly IPermissionService _permissionServise;
+        public Permission_Controller(IPermissionService permissionService)
         {
             _permissionServise = permissionService;
         }
@@ -16,9 +18,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
-        public async Task<ActionResult<IEnumerable<Permission>>> GetAllPermission()
+        public async Task<ActionResult<IEnumerable<Permission>>> GetAllpermissions()
         {
-            var permissions = await _permissionServise.GetAllPermissionAsync();
+            var permissions = await _permissionServise.GetAllpermissionsAsync();
             return Ok(permissions);
         }
 

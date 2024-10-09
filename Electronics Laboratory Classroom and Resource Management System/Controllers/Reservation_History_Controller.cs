@@ -1,4 +1,6 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
+using Electronics_Laboratory_Classroom_and_Resource_Management_System.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Controllers
@@ -7,8 +9,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
     [Route("api/[controller]")]
     public class Reservation_History_Controller : ControllerBase
     {
-        private readonly Services.IReservation_HistoryService _reservation_historyServise;
-        public Reservation_History_Controller (Services.IReservation_HistoryService reservation_historyService)
+        private readonly IReservation_HistoryService _reservation_historyServise;
+        public Reservation_History_Controller (IReservation_HistoryService reservation_historyService)
         {
             _reservation_historyServise = reservation_historyService;
         }
@@ -16,9 +18,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
-        public async Task<ActionResult<IEnumerable<Reservation_History>>> GetAllReservation_History()
+        public async Task<ActionResult<IEnumerable<Reservation_History>>> GetAllreservations_history()
         {
-            var reservation_history = await _reservation_historyServise.GetAllReservation_HistoryAsync();
+            var reservation_history = await _reservation_historyServise.GetAllreservations_historyAsync();
             return Ok(reservation_history);
         }
 

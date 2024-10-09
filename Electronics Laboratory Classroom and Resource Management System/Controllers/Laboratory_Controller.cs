@@ -1,4 +1,6 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
+using Electronics_Laboratory_Classroom_and_Resource_Management_System.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Controllers
@@ -7,8 +9,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
     [Route("api/[controller]")]
     public class Laboratory_Controller : ControllerBase
     {
-        private readonly Services.ILaboratoryService _laboratoryServise;
-        public Laboratory_Controller(Services.ILaboratoryService laboratoryService)
+        private readonly ILaboratoryService _laboratoryServise;
+        public Laboratory_Controller(ILaboratoryService laboratoryService)
         {
             _laboratoryServise = laboratoryService;
         }
@@ -16,9 +18,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
-        public async Task<ActionResult<IEnumerable<Laboratory>>> GetAllLaboratory()
+        public async Task<ActionResult<IEnumerable<Laboratory>>> GetAlllaboratories()
         {
-            var laboratories = await _laboratoryServise.GetAllLaboratoryAsync();
+            var laboratories = await _laboratoryServise.GetAlllaboratoriesAsync();
             return Ok(laboratories);
         }
 

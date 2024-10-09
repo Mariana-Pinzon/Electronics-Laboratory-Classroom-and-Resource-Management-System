@@ -1,4 +1,6 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
+using Electronics_Laboratory_Classroom_and_Resource_Management_System.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Controllers
@@ -7,18 +9,18 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
     [Route("api/[controller]")]
     public class User_Type_Controller : ControllerBase
     {
-        private readonly Services.IUser_TypeService _user_typeServise;
-        public User_Type_Controller (Services.IUser_TypeService user_typeService)
+        private readonly IUser_TypeService _user_typeService;
+        public User_Type_Controller (IUser_TypeService user_typeService)
         {
-            _user_typeServise = user_typeService;
+            _user_typeService = user_typeService;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
-        public async Task<ActionResult<IEnumerable<User_Type>>> GetAllUser_Type()
+        public async Task<ActionResult<IEnumerable<User_Type>>> GetAlluser_types()
         {
-            var user_types = await _user_typeServise.GetAllUser_TypeAsync();
+            var user_types = await _user_typeService.GetAlluser_typesAsync();
             return Ok(user_types);
         }
 
@@ -27,7 +29,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<User_Type>> GetUser_TypeById(int id)
         {
-            var user_type = await _user_typeServise.GetUser_TypeByIdAsync(id);
+            var user_type = await _user_typeService.GetUser_TypeByIdAsync(id);
             if (user_type == null)
                 return NotFound();
 
@@ -42,7 +44,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _user_typeServise.CreateUser_TypeAsync(user_type);
+            await _user_typeService.CreateUser_TypeAsync(user_type);
             return CreatedAtAction(nameof(GetUser_TypeById), new { id = user_type.User_Type_ID }, user_type);
         }
 
@@ -56,11 +58,11 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
             if(id != user_type.User_Type_ID)
                 return BadRequest();
 
-            var existingUser_Type = await _user_typeServise.GetUser_TypeByIdAsync(id);
+            var existingUser_Type = await _user_typeService.GetUser_TypeByIdAsync(id);
             if(existingUser_Type == null)
                 return NotFound();
 
-            await _user_typeServise.UpdateUser_TypeAsync(user_type);
+            await _user_typeService.UpdateUser_TypeAsync(user_type);
             return NoContent();
         }
 
@@ -70,11 +72,11 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
         public async Task<IActionResult> SoftDeleteUser_Type(int id)
         {
-            var user_type = await _user_typeServise.GetUser_TypeByIdAsync(id);
+            var user_type = await _user_typeService.GetUser_TypeByIdAsync(id);
             if (user_type == null)
                 return NotFound();
 
-            await _user_typeServise.SoftDeleteUser_TypeAsync(id);
+            await _user_typeService.SoftDeleteUser_TypeAsync(id);
             return NoContent();
         }
     }

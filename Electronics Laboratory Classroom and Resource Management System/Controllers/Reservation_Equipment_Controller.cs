@@ -1,4 +1,6 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
+using Electronics_Laboratory_Classroom_and_Resource_Management_System.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Controllers
@@ -7,8 +9,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
     [Route("api/[controller]")]
     public class Reservation_Equipment_Controller : ControllerBase
     {
-        private readonly Services.IReservation_EquipmentService _reservation_equipmentServise;
-        public Reservation_Equipment_Controller(Services.IReservation_EquipmentService reservation_equipmentService)
+        private readonly IReservation_EquipmentService _reservation_equipmentServise;
+        public Reservation_Equipment_Controller(IReservation_EquipmentService reservation_equipmentService)
         {
             _reservation_equipmentServise = reservation_equipmentService;
         }
@@ -16,9 +18,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
-        public async Task<ActionResult<IEnumerable<Reservation_Equipment>>> GetAllReservation_Equipment()
+        public async Task<ActionResult<IEnumerable<Reservation_Equipment>>> GetAllreservations_equipment()
         {
-            var reservation_equipment = await _reservation_equipmentServise.GetAllReservation_EquipmentAsync();
+            var reservation_equipment = await _reservation_equipmentServise.GetAllreservations_equipmentAsync();
             return Ok(reservation_equipment);
         }
 

@@ -6,7 +6,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
 {
     public interface ILaboratory_Repository
     {
-        Task<IEnumerable<Laboratory>> GetAllLaboratoryAsync();
+        Task<IEnumerable<Laboratory>> GetAlllaboratoriesAsync();
         Task<Laboratory> GetLaboratoryByIdAsync(int id);
         Task CreateLaboratoryAsync(Laboratory laboratory);
         Task UpdateLaboratoryAsync(Laboratory laboratory);
@@ -19,7 +19,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         {
             _context = context;
         }
-        public async Task<IEnumerable<Laboratory>> GetAllLaboratoryAsync()
+        public async Task<IEnumerable<Laboratory>> GetAlllaboratoriesAsync()
         {
             return await _context.laboratories
                 .Where(l => !l.IsDeleted)

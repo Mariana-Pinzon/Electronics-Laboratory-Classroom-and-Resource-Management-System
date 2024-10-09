@@ -1,13 +1,12 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Context;
 using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography.X509Certificates;
 
-namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Repository
+namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Repositories
 {
     public interface IUser_Type_Repository
     {
-        Task<IEnumerable<User_Type>> GetAllUser_TypeAsync();
+        Task<IEnumerable<User_Type>> GetAlluser_typesAsync();
         Task<User_Type> GetUser_TypeByIdAsync(int id);
         Task CreateUser_TypeAsync(User_Type user_type);
         Task UpdateUser_TypeAsync(User_Type user_type);
@@ -20,15 +19,15 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         {
             _context = context;
         }
-        public async Task<IEnumerable<User_Type>> GetAllUser_TypeAsync()
+        public async Task<IEnumerable<User_Type>> GetAlluser_typesAsync()
         {
             return await _context.user_types
                 .Where(ut => !ut.IsDeleted)
                 .ToListAsync();
         }
-        public async Task<User_Type> GetUser_TypeByIdAsync(int id)
+        public async Task<User_Type> GetUserTypeByIdAsync(int id)
         {
-            return await _context.user_types
+            return await _context.user_types.AsNoTracking()
                 .FirstOrDefaultAsync(ut => ut.User_Type_ID == id && !ut.IsDeleted);
         }
 
@@ -41,19 +40,23 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
                 await _context.SaveChangesAsync();
             }
         }
-
-        // Implementación del método para crear un nuevo tipo de usuario
         public async Task CreateUser_TypeAsync(User_Type user_type)
         {
             _context.user_types.Add(user_type);
             await _context.SaveChangesAsync();
         }
 
-        // Implementación del método para actualizar un tipo de usuario
+
         public async Task UpdateUser_TypeAsync(User_Type user_type)
         {
             _context.user_types.Update(user_type);
             await _context.SaveChangesAsync();
         }
+
+        public Task<User_Type> GetUser_TypeByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
+
