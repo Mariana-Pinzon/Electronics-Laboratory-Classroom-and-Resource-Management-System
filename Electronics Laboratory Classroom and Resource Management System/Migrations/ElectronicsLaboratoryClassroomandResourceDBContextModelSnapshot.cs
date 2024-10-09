@@ -23,581 +23,555 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Equipment", b =>
-                {
-                    b.Property<int>("Equipment_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Equipment_ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Equipment_ID"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Equipment_ID"));
 
-                    b.Property<DateTime>("Acquisition_date")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("Acquisition_date")
+                    .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Description")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Equipment_Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Equipment_Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                b.Property<bool>("IsDeleted")
+                    .HasColumnType("bit");
 
-                    b.Property<int>("Laboratory_ID")
-                        .HasColumnType("int");
+                b.Property<int>("Laboratory_ID")
+                    .HasColumnType("int");
 
-                    b.Property<int>("Status_EquipmentStatusE_ID")
-                        .HasColumnType("int");
+                b.Property<int>("Status_EquipmentStatusE_ID")
+                    .HasColumnType("int");
 
-                    b.HasKey("Equipment_ID");
+                b.HasKey("Equipment_ID");
 
-                    b.HasIndex("Laboratory_ID");
+                b.HasIndex("Laboratory_ID");
 
-                    b.HasIndex("Status_EquipmentStatusE_ID");
+                b.HasIndex("Status_EquipmentStatusE_ID");
 
-                    b.ToTable("equipments", (string)null);
-                });
+                b.ToTable("equipments");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Inventory", b =>
-                {
-                    b.Property<int>("Inventory_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Inventory_ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Inventory_ID"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Inventory_ID"));
 
-                    b.Property<int>("Available_quantity")
-                        .HasColumnType("int");
+                b.Property<int>("Available_quantity")
+                    .HasColumnType("int");
 
-                    b.Property<int>("Equipment_ID")
-                        .HasColumnType("int");
+                b.Property<int>("Equipment_ID")
+                    .HasColumnType("int");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                b.Property<bool>("IsDeleted")
+                    .HasColumnType("bit");
 
-                    b.Property<int>("Laboratory_ID")
-                        .HasColumnType("int");
+                b.Property<int>("Laboratory_ID")
+                    .HasColumnType("int");
 
-                    b.Property<DateTime>("Last_update")
-                        .HasColumnType("datetime2");
+                b.HasKey("Inventory_ID");
 
-                    b.Property<int>("Total_quantity")
-                        .HasColumnType("int");
+                b.HasIndex("Equipment_ID");
 
-                    b.HasKey("Inventory_ID");
+                b.HasIndex("Laboratory_ID");
 
-                    b.HasIndex("Equipment_ID");
-
-                    b.HasIndex("Laboratory_ID");
-
-                    b.ToTable("inventories", (string)null);
-                });
+                b.ToTable("inventories");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Inventory_History", b =>
-                {
-                    b.Property<int>("Inventory_History_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Inventory_History_ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Inventory_History_ID"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Inventory_History_ID"));
 
-                    b.Property<int>("Available_quantity")
-                        .HasColumnType("int");
+                b.Property<string>("Available_quantity")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                b.Property<string>("Equipment_ID")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Equipment_ID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<int>("Inventory_ID")
+                    .HasColumnType("int");
 
-                    b.Property<int>("Inventory_ID")
-                        .HasColumnType("int");
+                b.Property<string>("Laboratory_ID")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Laboratory_ID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("ModifiedBy")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Last_update")
-                        .HasColumnType("datetime2");
+                b.Property<string>("ModifiedDate")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                b.HasKey("Inventory_History_ID");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Total_quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Inventory_History_ID");
-
-                    b.ToTable("inventories_history", (string)null);
-                });
+                b.ToTable("inventories_history");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Laboratory", b =>
-                {
-                    b.Property<int>("Laboratory_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Laboratory_ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Laboratory_ID"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Laboratory_ID"));
 
-                    b.Property<int>("Capacity")
-                        .HasColumnType("int");
+                b.Property<int>("Capacity")
+                    .HasColumnType("int");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                b.Property<bool>("IsDeleted")
+                    .HasColumnType("bit");
 
-                    b.Property<int>("Laboratory_Num")
-                        .HasColumnType("int");
+                b.Property<int>("Laboratory_Num")
+                    .HasColumnType("int");
 
-                    b.HasKey("Laboratory_ID");
+                b.HasKey("Laboratory_ID");
 
-                    b.ToTable("laboratories", (string)null);
-                });
+                b.ToTable("laboratories");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Permission", b =>
-                {
-                    b.Property<int>("Permission_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Permission_ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Permission_ID"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Permission_ID"));
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                b.Property<bool>("IsDeleted")
+                    .HasColumnType("bit");
 
-                    b.Property<string>("PermissionName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("PermissionName")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Permission_ID");
+                b.HasKey("Permission_ID");
 
-                    b.ToTable("permissions", (string)null);
-                });
+                b.ToTable("permissions");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation", b =>
-                {
-                    b.Property<int>("Reservation_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Reservation_ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Reservation_ID"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Reservation_ID"));
 
-                    b.Property<TimeOnly>("End_time")
-                        .HasColumnType("time");
+                b.Property<TimeOnly>("End_time")
+                    .HasColumnType("time");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                b.Property<bool>("IsDeleted")
+                    .HasColumnType("bit");
 
-                    b.Property<int>("Laboratory_ID")
-                        .HasColumnType("int");
+                b.Property<int>("Laboratory_ID")
+                    .HasColumnType("int");
 
-                    b.Property<DateTime>("Reservation_date")
-                        .HasColumnType("datetime2");
+                b.Property<DateTime>("Reservation_date")
+                    .HasColumnType("datetime2");
 
-                    b.Property<TimeOnly>("Start_time")
-                        .HasColumnType("time");
+                b.Property<TimeOnly>("Start_time")
+                    .HasColumnType("time");
 
-                    b.Property<int>("User_ID")
-                        .HasColumnType("int");
+                b.Property<int>("Status_ReservationStatusR_ID")
+                    .HasColumnType("int");
 
-                    b.HasKey("Reservation_ID");
+                b.Property<int>("User_ID")
+                    .HasColumnType("int");
 
-                    b.HasIndex("Laboratory_ID");
+                b.HasKey("Reservation_ID");
 
-                    b.HasIndex("User_ID");
+                b.HasIndex("Laboratory_ID");
 
-                    b.ToTable("reservations", (string)null);
-                });
+                b.HasIndex("Status_ReservationStatusR_ID");
+
+                b.HasIndex("User_ID");
+
+                b.ToTable("reservations");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation_Equipment", b =>
-                {
-                    b.Property<int>("ReservationE_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("ReservationE_ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReservationE_ID"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReservationE_ID"));
 
-                    b.Property<int>("Equipment_ID")
-                        .HasColumnType("int");
+                b.Property<int>("Equipment_ID")
+                    .HasColumnType("int");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                b.Property<bool>("IsDeleted")
+                    .HasColumnType("bit");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                b.Property<int>("Quantity")
+                    .HasColumnType("int");
 
-                    b.Property<int>("Reservation_ID")
-                        .HasColumnType("int");
+                b.Property<int>("Reservation_ID")
+                    .HasColumnType("int");
 
-                    b.Property<int>("Status_ReservationStatusR_ID")
-                        .HasColumnType("int");
+                b.HasKey("ReservationE_ID");
 
+                b.HasIndex("Equipment_ID");
 
-                    b.HasKey("ReservationE_ID");
+                b.HasIndex("Reservation_ID");
 
-                    b.HasIndex("Equipment_ID");
-
-                    b.HasIndex("Reservation_ID");
-                    b.HasIndex("Status_ReservationStatusR_ID");
-
-                    b.ToTable("reservations_equipment", (string)null);
-                });
-
+                b.ToTable("reservations_equipment");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Equipment", b =>
-                {
-                    b.Property<int>("StatusE_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("StatusE_ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusE_ID"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusE_ID"));
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                b.Property<bool>("IsDeleted")
+                    .HasColumnType("bit");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Status")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("StatusE_ID");
+                b.HasKey("StatusE_ID");
 
-                    b.ToTable("status_equipments", (string)null);
-                });
+                b.ToTable("status_equipments");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Equipment_History", b =>
-                {
-                    b.Property<int>("Status_Equipment_History_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Status_Equipment_History_ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Status_Equipment_History_ID"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Status_Equipment_History_ID"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                b.Property<string>("ModifiedBy")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                b.Property<string>("ModifiedDate")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
+                b.Property<string>("Status")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<int>("StatusE_ID")
+                    .HasColumnType("int");
 
-                    b.Property<int>("StatusE_ID")
-                        .HasColumnType("int");
+                b.HasKey("Status_Equipment_History_ID");
 
-                    b.HasKey("Status_Equipment_History_ID");
-
-                    b.ToTable("status_equipments_history", (string)null);
-                });
+                b.ToTable("status_equipments_history");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Reservation", b =>
-                {
-                    b.Property<int>("StatusR_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("StatusR_ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusR_ID"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusR_ID"));
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                b.Property<bool>("IsDeleted")
+                    .HasColumnType("bit");
 
-                    b.Property<string>("StatusR")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("StatusR")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("StatusR_ID");
+                b.HasKey("StatusR_ID");
 
-                    b.ToTable("status_reservations", (string)null);
-                });
+                b.ToTable("status_reservations");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Reservation_History", b =>
-                {
-                    b.Property<int>("Status_Reservation_History_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("Status_Reservation_History_ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Status_Reservation_History_ID"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Status_Reservation_History_ID"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                b.Property<string>("ModifiedBy")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                b.Property<string>("ModifiedDate")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
+                b.Property<string>("StatusR")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StatusR")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<int>("StatusR_ID")
+                    .HasColumnType("int");
 
-                    b.Property<int>("StatusR_ID")
-                        .HasColumnType("int");
+                b.HasKey("Status_Reservation_History_ID");
 
-                    b.HasKey("Status_Reservation_History_ID");
-
-                    b.ToTable("status_reservations_history", (string)null);
-                });
+                b.ToTable("status_reservations_history");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User", b =>
-                {
-                    b.Property<int>("User_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("User_ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("User_ID"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("User_ID"));
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Email")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("First_Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("First_Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                b.Property<bool>("IsDeleted")
+                    .HasColumnType("bit");
 
-                    b.Property<string>("Last_Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Last_Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Password")
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("User_Type_ID")
-                        .HasColumnType("int");
+                b.Property<int>("User_Type_ID")
+                    .HasColumnType("int");
 
-                    b.HasKey("User_ID");
+                b.HasKey("User_ID");
 
-                    b.HasIndex("User_Type_ID");
+                b.HasIndex("User_Type_ID");
 
-                    b.ToTable("users", (string)null);
-                });
+                b.ToTable("users");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User_History", b =>
-                {
-                    b.Property<int>("User_History_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("User_History_ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("User_History_ID"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("User_History_ID"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                b.Property<string>("Email")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("First_Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("First_Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("Last_Name")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Last_Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("ModifiedBy")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ModifiedBy")
-                        .HasColumnType("int");
+                b.Property<string>("ModifiedDate")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
+                b.Property<string>("Password")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<int>("User_ID")
+                    .HasColumnType("int");
 
-                    b.Property<int>("User_ID")
-                        .HasColumnType("int");
+                b.Property<string>("User_Type_ID")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("User_Type_ID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.HasKey("User_History_ID");
 
-                    b.HasKey("User_History_ID");
-
-                    b.ToTable("users_history", (string)null);
-                });
+                b.ToTable("users_history");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User_Permission", b =>
-                {
-                    b.Property<int>("UserP_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("UserP_ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserP_ID"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserP_ID"));
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                b.Property<bool>("IsDeleted")
+                    .HasColumnType("bit");
 
-                    b.Property<int>("Permission_ID")
-                        .HasColumnType("int");
+                b.Property<int>("Permission_ID")
+                    .HasColumnType("int");
 
-                    b.Property<int>("User_Type_ID")
-                        .HasColumnType("int");
+                b.Property<int>("User_Type_ID")
+                    .HasColumnType("int");
 
-                    b.HasKey("UserP_ID");
+                b.HasKey("UserP_ID");
 
-                    b.HasIndex("Permission_ID");
+                b.HasIndex("Permission_ID");
 
-                    b.HasIndex("User_Type_ID");
+                b.HasIndex("User_Type_ID");
 
-                    b.ToTable("user_permissions", (string)null);
-                });
+                b.ToTable("user_permissions");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User_Type", b =>
-                {
-                    b.Property<int>("User_Type_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+            {
+                b.Property<int>("User_Type_ID")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("User_Type_ID"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("User_Type_ID"));
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                b.Property<bool>("IsDeleted")
+                    .HasColumnType("bit");
 
-                    b.Property<string>("UserType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                b.Property<string>("UserType")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("User_Type_ID");
+                b.HasKey("User_Type_ID");
 
-                    b.ToTable("user_types", (string)null);
-                });
+                b.ToTable("user_types");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Equipment", b =>
-                {
-                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Laboratory", "Laboratory")
-                        .WithMany()
-                        .HasForeignKey("Laboratory_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Laboratory", "Laboratory")
+                    .WithMany()
+                    .HasForeignKey("Laboratory_ID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Equipment", "Status_Equipment")
-                        .WithMany()
-                        .HasForeignKey("Status_EquipmentStatusE_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Equipment", "Status_Equipment")
+                    .WithMany()
+                    .HasForeignKey("Status_EquipmentStatusE_ID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Laboratory");
+                b.Navigation("Laboratory");
 
-                    b.Navigation("Status_Equipment");
-                });
+                b.Navigation("Status_Equipment");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Inventory", b =>
-                {
-                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Equipment", "Equipment")
-                        .WithMany()
-                        .HasForeignKey("Equipment_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Equipment", "Equipment")
+                    .WithMany()
+                    .HasForeignKey("Equipment_ID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Laboratory", "Laboratory")
-                        .WithMany()
-                        .HasForeignKey("Laboratory_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Laboratory", "Laboratory")
+                    .WithMany()
+                    .HasForeignKey("Laboratory_ID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Equipment");
+                b.Navigation("Equipment");
 
-                    b.Navigation("Laboratory");
-                });
+                b.Navigation("Laboratory");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation", b =>
-                {
-                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Laboratory", "Laboratory")
-                        .WithMany()
-                        .HasForeignKey("Laboratory_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Laboratory", "Laboratory")
+                    .WithMany()
+                    .HasForeignKey("Laboratory_ID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User", "User")
-                        .WithMany()
-                        .HasForeignKey("User_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Reservation", "Status_Reservation")
+                    .WithMany()
+                    .HasForeignKey("Status_ReservationStatusR_ID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Laboratory");
+                b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User", "User")
+                    .WithMany()
+                    .HasForeignKey("User_ID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("User");
-                });
+                b.Navigation("Laboratory");
+
+                b.Navigation("Status_Reservation");
+
+                b.Navigation("User");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation_Equipment", b =>
-                {
-                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Equipment", "Equipment")
-                        .WithMany()
-                        .HasForeignKey("Equipment_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Equipment", "Equipment")
+                    .WithMany()
+                    .HasForeignKey("Equipment_ID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation", "Reservation")
-                        .WithMany()
-                        .HasForeignKey("Reservation_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation", "Reservation")
+                    .WithMany()
+                    .HasForeignKey("Reservation_ID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Equipment");
+                b.Navigation("Equipment");
 
-                    b.Navigation("Reservation");
-                });
-
-            modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation_History", b =>
-                {
-                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation", "Reservation")
-                        .WithMany()
-                        .HasForeignKey("Reservation_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Reservation", "Status_Reservation")
-                        .WithMany()
-                        .HasForeignKey("Status_ReservationStatusR_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Reservation");
-
-                    b.Navigation("Status_Reservation");
-                });
+                b.Navigation("Reservation");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User", b =>
-                {
-                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User_Type", "User_Type")
-                        .WithMany()
-                        .HasForeignKey("User_Type_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User_Type", "User_Type")
+                    .WithMany()
+                    .HasForeignKey("User_Type_ID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("User_Type");
-                });
+                b.Navigation("User_Type");
+            });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User_Permission", b =>
-                {
-                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Permission", "Permission")
-                        .WithMany()
-                        .HasForeignKey("Permission_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Permission", "Permission")
+                    .WithMany()
+                    .HasForeignKey("Permission_ID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User_Type", "User_Type")
-                        .WithMany()
-                        .HasForeignKey("User_Type_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.User_Type", "User_Type")
+                    .WithMany()
+                    .HasForeignKey("User_Type_ID")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Permission");
+                b.Navigation("Permission");
 
-                    b.Navigation("User_Type");
-                });
+                b.Navigation("User_Type");
+            });
 #pragma warning restore 612, 618
         }
     }
