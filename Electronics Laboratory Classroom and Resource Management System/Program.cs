@@ -1,4 +1,4 @@
-using Electronics_Laboratory_Classroom_and_Resource_Management_System.Context;
+ï»¿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Context;
 using Electronics_Laboratory_Classroom_and_Resource_Management_System.Repositories;
 using Electronics_Laboratory_Classroom_and_Resource_Management_System.Services;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +25,6 @@ internal class Program
         builder.Services.AddScoped<IUser_Permission_Repository, User_Permission_Repository>();
         builder.Services.AddScoped<IUser_Repository, User_Repository>();
         builder.Services.AddScoped<IUser_Type_Repository, User_Type_Repository>();
-        builder.Services.AddScoped<IReservation_History_Repository, Reservation_History_Repository>();
         #endregion
 
         #region Services
@@ -40,13 +39,13 @@ internal class Program
         builder.Services.AddScoped<IUser_PermissionService, User_PermissionService>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IUser_TypeService, User_TypeService>();
-        builder.Services.AddScoped<IReservation_HistoryService, Reservation_HistoryService>();
+
         #endregion
 
         // Add controllers
         builder.Services.AddControllers();
 
-        // Swagger para la documentación de la API
+        // Swagger para la documentaciï¿½n de la API
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
@@ -68,5 +67,4 @@ internal class Program
         app.Run();
     }
 }
-
 

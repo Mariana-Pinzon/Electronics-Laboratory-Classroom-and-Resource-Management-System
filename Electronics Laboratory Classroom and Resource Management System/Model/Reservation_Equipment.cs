@@ -1,16 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
 {
-    public class Reservation_Equipment
+    public class Status_Equipment
     {
-        public int ReservationE_ID { get; set; }
-        public virtual required Reservation Reservation { get; set; }
-        public virtual required Equipment Equipment { get; set; }
-
-        [Range(1, int.MaxValue, ErrorMessage = "Quantity must be a positive number.")]
-        public required int Quantity { get; set; }
+        public int StatusE_ID { get; set; }
+        public required string Status { get; set; }
         public bool IsDeleted { get; set; } = false;
     }
 }

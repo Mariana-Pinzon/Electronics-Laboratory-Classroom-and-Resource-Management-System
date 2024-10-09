@@ -6,8 +6,7 @@
         public int StatusE_ID { get; set; }
         public required string Status { get; set; }
 
-        public required DateTime Date { get; set; }
-        public required DateTime ModifiedDate { get; set; }
-        public required int ModifiedBy { get; set; }
+        public required string ModifiedDate { get; set; }
+        public required string ModifiedBy { get; set; }
     }
 }

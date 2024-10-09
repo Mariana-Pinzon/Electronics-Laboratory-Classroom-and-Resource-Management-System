@@ -25,9 +25,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
                 .Where(ut => !ut.IsDeleted)
                 .ToListAsync();
         }
-        public async Task<User_Type> GetUserTypeByIdAsync(int id)
+        public async Task<User_Type> GetUser_TypeByIdAsync(int id)
         {
-            return await _context.user_types.AsNoTracking()
+            return await _context.user_types
                 .FirstOrDefaultAsync(ut => ut.User_Type_ID == id && !ut.IsDeleted);
         }
 
@@ -53,10 +53,5 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             await _context.SaveChangesAsync();
         }
 
-        public Task<User_Type> GetUser_TypeByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
-

@@ -41,7 +41,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
         }
 
-       
+
         public async Task CreateReservation_EquipmentAsync(Reservation_Equipment reservation_equipment)
         {
             _context.reservations_equipment.Add(reservation_equipment);

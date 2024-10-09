@@ -8,16 +8,18 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
         Task<IEnumerable<Reservation>> GetAllreservationsAsync();
         Task<Reservation> GetReservationByIdAsync(int id);
         Task CreateReservationAsync(Reservation reservation);
-        Task UpdateReservationAsync(Reservation reservation);
-        Task SoftDeleteReservationAsync(int id);
+        Task UpdateReservationAsync(int userTypeId, int userPermissionId, Reservation reservation);
+        Task SoftDeleteReservationAsync(int userTypeId, int userPermissionId, int id);
     }
     public class ReservationService : IReservationService
     {
         private readonly IReservation_Repository _reservationRepository;
+        private readonly IUser_Permission_Repository _userPermissionRepository;
 
-        public ReservationService(IReservation_Repository reservationRepository)
+        public ReservationService(IUser_Permission_Repository userPermissionRepository, IReservation_Repository reservationRepository)
         {
             _reservationRepository = reservationRepository;
+            _userPermissionRepository = userPermissionRepository;
         }
 
         public async Task<IEnumerable<Reservation>> GetAllreservationsAsync()
@@ -35,15 +37,24 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             await _reservationRepository.CreateReservationAsync(reservation);
         }
 
-        public async Task UpdateReservationAsync(Reservation reservation)
+        public async Task UpdateReservationAsync(int userTypeId, int userPermissionId, Reservation reservation)
         {
+            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 6); //Actualizar Reservación/Borrar
+            if (!hasPermission)
+            {
+                throw new UnauthorizedAccessException("No tienes permiso para actualizar la reservación.");
+            }
             await _reservationRepository.UpdateReservationAsync(reservation);
         }
 
-        public async Task SoftDeleteReservationAsync(int id)
+        public async Task SoftDeleteReservationAsync(int userTypeId, int userPermissionId, int id)
         {
+            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 6); //Actualizar Reservación/Borrar
+            if (!hasPermission)
+            {
+                throw new UnauthorizedAccessException("No tienes permiso para eliminar la reservación.");
+            }
             await _reservationRepository.SoftDeleteReservationAsync(id);
         }
     }
 }
-
