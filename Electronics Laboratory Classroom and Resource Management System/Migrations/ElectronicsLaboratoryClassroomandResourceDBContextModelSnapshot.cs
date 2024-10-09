@@ -233,40 +233,20 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                     b.Property<int>("Reservation_ID")
                         .HasColumnType("int");
 
+                    b.Property<int>("Status_ReservationStatusR_ID")
+                        .HasColumnType("int");
+
+
                     b.HasKey("ReservationE_ID");
 
                     b.HasIndex("Equipment_ID");
 
                     b.HasIndex("Reservation_ID");
+                    b.HasIndex("Status_ReservationStatusR_ID");
 
                     b.ToTable("reservations_equipment", (string)null);
                 });
 
-            modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation_History", b =>
-                {
-                    b.Property<int>("History_ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("History_ID"));
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Reservation_ID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status_ReservationStatusR_ID")
-                        .HasColumnType("int");
-
-                    b.HasKey("History_ID");
-
-                    b.HasIndex("Reservation_ID");
-
-                    b.HasIndex("Status_ReservationStatusR_ID");
-
-                    b.ToTable("reservations_history", (string)null);
-                });
 
             modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Equipment", b =>
                 {
