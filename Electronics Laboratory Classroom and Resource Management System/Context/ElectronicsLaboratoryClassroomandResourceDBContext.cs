@@ -1,5 +1,6 @@
 ﻿using Electronics_Laboratory_Classroom_and_Resource_Management_System.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Context
 {
@@ -28,9 +29,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contex
             modelBuilder.Entity<Reservation>()
             .HasKey(r => r.Reservation_ID);
 
-            modelBuilder.Entity<Reservation_History>()
-            .HasKey(rh => rh.History_ID);
-
             modelBuilder.Entity<Status_Equipment>()
             .HasKey(se => se.StatusE_ID);
 
@@ -48,6 +46,19 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contex
 
             modelBuilder.Entity<User_Permission>()
             .HasKey(up => up.UserP_ID);
+
+            modelBuilder.Entity<User_History>()
+            .HasKey(uh => uh.User_History_ID);
+
+            modelBuilder.Entity<Inventory_History>()
+            .HasKey(ih => ih.Inventory_History_ID);
+
+            modelBuilder.Entity<Status_Equipment_History>()
+            .HasKey(seh => seh.Status_Equipment_History_ID);
+
+            modelBuilder.Entity<Status_Reservation_History>()
+            .HasKey(srh => srh.Status_Reservation_History_ID);
+
         }
 
         public DbSet<User> users { get; set; }
@@ -58,10 +69,15 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contex
         public DbSet<Status_Equipment> status_equipments { get; set;}
         public DbSet<Reservation_Equipment> reservations_equipment { get; set; }
         public DbSet<Reservation> reservations { get; set; }
-        public DbSet<Reservation_History> reservations_history { get; set; }
         public DbSet<Status_Reservation> status_reservations { get; set; }
         public DbSet<Permission> permissions { get; set; }
         public DbSet<User_Permission> user_permissions { get; set; }
-        
+        public DbSet<User_History> users_history { get; set; }
+        public DbSet<Inventory_History> inventories_history { get; set; }
+        public DbSet<Status_Equipment_History> status_equipments_history { get; set; }
+        public DbSet<Status_Reservation_History> status_reservations_history { get; set; }
+
     }
 }
+
+

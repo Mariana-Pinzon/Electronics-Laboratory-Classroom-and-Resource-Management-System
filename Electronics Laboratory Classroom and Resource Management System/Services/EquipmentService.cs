@@ -5,44 +5,63 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 {
     public interface IEquipmentService
     {
-        Task<IEnumerable<Equipment>> GetAllEquipmentAsync();
+        Task<IEnumerable<Equipment>> GetAllequipmentsAsync();
         Task<Equipment> GetEquipmentByIdAsync(int id);
-        Task CreateEquipmentAsync(Equipment equipment);
-        Task UpdateEquipmentAsync(Equipment equipment);
-        Task SoftDeleteEquipmentAsync(int id);
-        public class EquipmentService : IEquipmentService
+        Task CreateEquipmentAsync(int userTypeId, int userPermissionId, Equipment equipment);
+        Task UpdateEquipmentAsync(int userTypeId, int userPermissionId, Equipment equipment);
+        Task SoftDeleteEquipmentAsync(int userTypeId, int userPermissionId, int id);
+    }
+
+    public class EquipmentService : IEquipmentService
+    {
+        private readonly IEquipment_Repository _equipmentRepository;
+        private readonly IUser_Permission_Repository _userPermissionRepository;
+
+        public EquipmentService(IUser_Permission_Repository userPermissionRepository, IEquipment_Repository equipmentRepository)
         {
-            private readonly IEquipment_Repository _equipmentRepository;
+            _equipmentRepository = equipmentRepository;
+            _userPermissionRepository = userPermissionRepository;
+        }
 
-            public EquipmentService(IEquipment_Repository equipmentRepository)
+        public async Task<IEnumerable<Equipment>> GetAllequipmentsAsync()
+        {
+            return await _equipmentRepository.GetAllequipmentsAsync();
+        }
+
+        public async Task<Equipment> GetEquipmentByIdAsync(int id)
+        {
+            return await _equipmentRepository.GetEquipmentByIdAsync(id);
+        }
+
+        public async Task CreateEquipmentAsync(int userTypeId, int userPermissionId, Equipment equipment)
+        {
+            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 1); //Crear Equipo/Actualizar/Borrar
+            if (!hasPermission)
             {
-                _equipmentRepository = equipmentRepository;
+                throw new UnauthorizedAccessException("No tienes permiso para crear equipos.");
             }
 
-            public async Task<IEnumerable<Equipment>> GetAllEquipmentAsync()
-            {
-                return await _equipmentRepository.GetAllEquipmentAsync();
-            }
-
-            public async Task<Equipment> GetEquipmentByIdAsync(int Equipment_ID)
-            {
-                return await _equipmentRepository.GetEquipmentByIdAsync(Equipment_ID);
-            }
-
-            public async Task CreateEquipmentAsync(Equipment equipment)
-            {
                 await _equipmentRepository.CreateEquipmentAsync(equipment);
-            }
+        }
 
-            public async Task UpdateEquipmentAsync(Equipment equipment)
+        public async Task UpdateEquipmentAsync(int userTypeId, int userPermissionId, Equipment equipment)
+        {
+            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 1); //Crear Equipo/Actualizar/Borrar
+            if (!hasPermission)
             {
-                await _equipmentRepository.UpdateEquipmentAsync(equipment);
+                throw new UnauthorizedAccessException("No tienes permiso para actualizar equipos.");
             }
+            await _equipmentRepository.UpdateEquipmentAsync(equipment);
+        }
 
-            public async Task SoftDeleteEquipmentAsync(int Equipment_ID)
+        public async Task SoftDeleteEquipmentAsync(int userTypeId, int userPermissionId, int id)
+        {
+            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 1); //Crear Equipo/Actualizar/Borrar
+            if (!hasPermission)
             {
-                await _equipmentRepository.SoftDeleteEquipmentAsync(Equipment_ID);
+                throw new UnauthorizedAccessException("No tienes permiso para eliminar equipos.");
             }
+                await _equipmentRepository.SoftDeleteEquipmentAsync(id);
         }
     }
 }

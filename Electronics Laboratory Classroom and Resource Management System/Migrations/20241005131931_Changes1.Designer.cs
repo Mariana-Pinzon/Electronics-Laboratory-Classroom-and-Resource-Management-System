@@ -4,6 +4,7 @@ using Electronics_Laboratory_Classroom_and_Resource_Management_System.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrations
 {
     [DbContext(typeof(ElectronicsLaboratoryClassroomandResourceDBContext))]
-    partial class ElectronicsLaboratoryClassroomandResourceDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241005131931_Changes1")]
+    partial class Changes1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -356,8 +359,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("User_Type_ID")
                         .HasColumnType("int");

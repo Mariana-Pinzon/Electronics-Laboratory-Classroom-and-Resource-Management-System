@@ -6,7 +6,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
 {
     public interface IReservation_Repository
     {
-        Task<IEnumerable<Reservation>> GetAllReservationAsync();
+        Task<IEnumerable<Reservation>> GetAllreservationsAsync();
         Task<Reservation> GetReservationByIdAsync(int id);
         Task CreateReservationAsync(Reservation reservation);
         Task UpdateReservationAsync(Reservation reservation);
@@ -19,7 +19,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         {
             _context = context;
         }
-        public async Task<IEnumerable<Reservation>> GetAllReservationAsync()
+        public async Task<IEnumerable<Reservation>> GetAllreservationsAsync()
         {
             return await _context.reservations
                 .Where(r => !r.IsDeleted)

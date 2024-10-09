@@ -6,7 +6,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
 {
     public interface IEquipment_Repository
     {
-        Task<IEnumerable<Equipment>> GetAllEquipmentAsync();
+        Task<IEnumerable<Equipment>> GetAllequipmentsAsync();
         Task<Equipment> GetEquipmentByIdAsync(int id);
         Task CreateEquipmentAsync(Equipment equipment);
         Task UpdateEquipmentAsync(Equipment equipment);
@@ -19,7 +19,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         {
             _context = context;
         }
-        public async Task<IEnumerable<Equipment>> GetAllEquipmentAsync()
+        public async Task<IEnumerable<Equipment>> GetAllequipmentsAsync()
         {
             return await _context.equipments
                 .Where(e => !e.IsDeleted)
@@ -41,9 +41,10 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
         }
 
-        public async Task CreateEquipmentsAsync(Equipment equipments)
+        public async Task CreateEquipmentAsync(Equipment equipment)
         {
-            _context.equipments.Add(equipments);
+
+            _context.equipments.Add(equipment);
             await _context.SaveChangesAsync();
         }
 
@@ -52,11 +53,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         {
             _context.equipments.Update(equipment);
             await _context.SaveChangesAsync();
-        }
-
-        public Task CreateEquipmentAsync(Equipment equipment)
-        {
-            throw new NotImplementedException();
         }
     }
 }
