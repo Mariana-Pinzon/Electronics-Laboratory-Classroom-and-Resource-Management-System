@@ -9,10 +9,10 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
     [Route("api/[controller]")]
     public class Reservation_Controller : ControllerBase
     {
-        private readonly IReservationService _reservationServise;
+        private readonly IReservationService _reservationService;
         public Reservation_Controller(IReservationService reservationService)
         {
-            _reservationServise = reservationService;
+            _reservationService = reservationService;
         }
 
         [HttpGet]
@@ -20,7 +20,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
         public async Task<ActionResult<IEnumerable<Reservation>>> GetAllreservations()
         {
-            var reservations = await _reservationServise.GetAllreservationsAsync();
+            var reservations = await _reservationService.GetAllreservationsAsync();
             return Ok(reservations);
         }
 
@@ -29,7 +29,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Reservation>> GetReservationById(int id)
         {
-            var reservation = await _reservationServise.GetReservationByIdAsync(id);
+            var reservation = await _reservationService.GetReservationByIdAsync(id);
             if (reservation == null)
                 return NotFound();
 
@@ -44,7 +44,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _reservationServise.CreateReservationAsync(reservation);
+            await _reservationService.CreateReservationAsync(reservation);
             return CreatedAtAction(nameof(GetReservationById), new { id = reservation.Reservation_ID }, reservation);
         }
 
@@ -52,32 +52,46 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<IActionResult> UpdateReservation(int id, [FromBody] Reservation reservation)
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
+        public async Task<IActionResult> UpdateReservation(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId, [FromBody] Reservation reservation)
         {
             if (id != reservation.Reservation_ID)
                 return BadRequest();
 
-            var existingReservation = await _reservationServise.GetReservationByIdAsync(id);
+            var existingReservation = await _reservationService.GetReservationByIdAsync(id);
             if (existingReservation == null)
                 return NotFound();
 
-            await _reservationServise.UpdateReservationAsync(reservation);
-            return NoContent();
+            try
+            {
+                await _reservationService.UpdateReservationAsync(userTypeId, userPermissionId, reservation);
+                return NoContent();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid(); // Retorna 403 si no tiene permisos
+            }
         }
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<IActionResult> SoftDeleteReservation(int id)
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
+        public async Task<IActionResult> SoftDeleteReservation(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId)
         {
-            var reservation = await _reservationServise.GetReservationByIdAsync(id);
+            var reservation = await _reservationService.GetReservationByIdAsync(id);
             if (reservation == null)
                 return NotFound();
 
-            await _reservationServise.SoftDeleteReservationAsync(id);
-            return NoContent();
+            try
+            {
+                await _reservationService.SoftDeleteReservationAsync(userTypeId, userPermissionId, id);
+                return NoContent();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid(); // Retorna 403 si no tiene permisos
+            }
         }
     }
 }

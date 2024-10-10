@@ -43,6 +43,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
 
         public async Task CreateEquipmentAsync(Equipment equipment)
         {
+
             _context.equipments.Add(equipment);
             await _context.SaveChangesAsync();
         }
