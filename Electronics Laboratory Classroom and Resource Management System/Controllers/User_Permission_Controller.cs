@@ -41,22 +41,24 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<ActionResult> CreateUserPermission(
-            [FromQuery] int userTypeId,
-            [FromQuery] int userPermissionId,
-            [FromBody] User_Permission user_permission)
+        public async Task<ActionResult> CreateUserPermission(int UserTypeId, int permissionId, [FromBody] User_Permission user_permission)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await _user_permissionService.CreateUser_PermissionAsync(userTypeId, userPermissionId,user_permission);
+                await _user_permissionService.CreateUser_PermissionAsync(UserTypeId, permissionId, user_permission);
                 return CreatedAtAction(nameof(GetUserPermissionById), new { id = user_permission.UserP_ID }, user_permission);
             }
+
             catch (UnauthorizedAccessException)
             {
-                return Forbid(); // Retorna 403 si no tiene permisos
+                return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
+            }
+            catch (Exception e)
+            {
+                return StatusCode(404, e.Message);
             }
         }
 
@@ -65,23 +67,26 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<IActionResult> UpdateUserPermission(int id,[FromQuery] int userTypeId,[FromQuery] int userPermissionId, [FromBody] User_Permission user_permission)
+        public async Task<IActionResult> UpdateUserPermission(int id, int UserTypeId, int permissionId)
         {
-            if (id != user_permission.UserP_ID)
-                return BadRequest();
 
-            var existingUser_Permission = await _user_permissionService.GetUser_PermissionByIdAsync(id);
-            if (existingUser_Permission == null)
-                return NotFound();
+            var existingUser = await _user_permissionService.GetUser_PermissionByIdAsync(id);
+            if (existingUser == null)
+                return NotFound(); // Retorna 404 si el usuario no existe
 
             try
             {
-                await _user_permissionService.UpdateUser_PermissionAsync(userTypeId, userPermissionId,user_permission);
-                return NoContent();
+                // Actualiza los datos del usuario
+                await _user_permissionService.UpdateUser_PermissionAsync(id, UserTypeId, permissionId);
+                return StatusCode(StatusCodes.Status200OK, "Updated Successfully"); // Retorna 200 si todo sale bien
             }
             catch (UnauthorizedAccessException)
             {
-                return Forbid(); // Retorna 403 si no tiene permisos
+                return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message); // Retorna 500 para errores generales
             }
         }
 
@@ -89,7 +94,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<IActionResult> SoftDeleteUserPermission(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId)
+        public async Task<IActionResult> SoftDeleteUserPermission(int id)
         {
             var user_permission = await _user_permissionService.GetUser_PermissionByIdAsync(id);
             if (user_permission == null)
@@ -97,12 +102,12 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
             try
             {
-                await _user_permissionService.SoftDeleteUser_PermissionAsync(userTypeId, userPermissionId,id);
+                await _user_permissionService.SoftDeleteUser_PermissionAsync(id);
                 return NoContent();
             }
             catch (UnauthorizedAccessException)
             {
-                return Forbid(); // Retorna 403 si no tiene permisos
+                return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
         }
     }

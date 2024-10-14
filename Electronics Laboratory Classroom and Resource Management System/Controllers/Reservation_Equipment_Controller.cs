@@ -39,12 +39,12 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> CreateReservation_Equipment([FromBody] Reservation_Equipment reservation_equipment)
+        public async Task<ActionResult> CreateReservation_Equipment(int Equipment_ID, int Quantity, [FromBody] Reservation_Equipment reservation_equipment)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _reservation_equipmentService.CreateReservation_EquipmentAsync(reservation_equipment);
+            await _reservation_equipmentService.CreateReservation_EquipmentAsync(Equipment_ID, Quantity, reservation_equipment);
             return CreatedAtAction(nameof(GetReservation_EquipmentById), new { id = reservation_equipment.ReservationE_ID }, reservation_equipment);
         }
 
@@ -53,10 +53,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
-        public async Task<IActionResult> UpdateReservationEquipment(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId, [FromBody] Reservation_Equipment reservationEquipment)
+        public async Task<IActionResult> UpdateReservationEquipment(int id, int Equipment_ID, int Quantity)
         {
-            if (id != reservationEquipment.ReservationE_ID)
-                return BadRequest();
 
             var existingReservationEquipment = await _reservation_equipmentService.GetReservation_EquipmentByIdAsync(id);
             if (existingReservationEquipment == null)
@@ -64,12 +62,12 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
             try
             {
-                await _reservation_equipmentService.UpdateReservation_EquipmentAsync(userTypeId, userPermissionId, reservationEquipment);
-                return NoContent();
+                await _reservation_equipmentService.UpdateReservation_EquipmentAsync( id, Equipment_ID, Quantity);
+                return StatusCode(StatusCodes.Status200OK, "Updated Successfully");
             }
             catch (UnauthorizedAccessException)
             {
-                return Forbid(); // Retorna 403 si no tiene permisos
+                return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
         }
 
@@ -77,7 +75,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
-        public async Task<IActionResult> SoftDeleteReservationEquipment(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId)
+        public async Task<IActionResult> SoftDeleteReservationEquipment(int id)
         {
             var reservationEquipment = await _reservation_equipmentService.GetReservation_EquipmentByIdAsync(id);
             if (reservationEquipment == null)
@@ -85,12 +83,12 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
             try
             {
-                await _reservation_equipmentService.SoftDeleteReservation_EquipmentAsync(userTypeId, userPermissionId, id);
+                await _reservation_equipmentService.SoftDeleteReservation_EquipmentAsync( id);
                 return NoContent();
             }
             catch (UnauthorizedAccessException)
             {
-                return Forbid(); // Retorna 403 si no tiene permisos
+                return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
         }
     }

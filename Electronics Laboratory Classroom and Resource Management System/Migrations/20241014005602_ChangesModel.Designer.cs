@@ -4,6 +4,7 @@ using Electronics_Laboratory_Classroom_and_Resource_Management_System.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrations
 {
     [DbContext(typeof(ElectronicsLaboratoryClassroomandResourceDBContext))]
-    partial class ElectronicsLaboratoryClassroomandResourceDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241014005602_ChangesModel")]
+    partial class ChangesModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,8 +33,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Equipment_ID"));
 
-                    b.Property<DateOnly>("Acquisition_date")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("Acquisition_date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -186,8 +189,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                     b.Property<int>("Reservation_EquipmentReservationE_ID")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("Reservation_date")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("Reservation_date")
+                        .HasColumnType("datetime2");
 
                     b.Property<TimeOnly>("Start_time")
                         .HasColumnType("time");

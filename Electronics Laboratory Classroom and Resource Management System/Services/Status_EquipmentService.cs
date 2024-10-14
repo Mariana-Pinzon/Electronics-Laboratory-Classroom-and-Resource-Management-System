@@ -7,9 +7,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<Status_Equipment>> GetAllstatus_equipmentsAsync();
         Task<Status_Equipment> GetStatus_EquipmentByIdAsync(int id);
-        Task CreateStatus_EquipmentAsync(int userTypeId, int userPermissionId, Status_Equipment status_Equipment);
-        Task UpdateStatus_EquipmentAsync(Status_Equipment status_Equipment);
-        Task SoftDeleteStatus_EquipmentAsync(int userTypeId, int userPermissionId, int id);
+        Task CreateStatus_EquipmentAsync(string Status, Status_Equipment status_equipment);
+        Task UpdateStatus_EquipmentAsync(int id, string Status);
+        Task SoftDeleteStatus_EquipmentAsync(int id);
     }
     public class Status_EquipmentService : IStatus_EquipmentService
     {
@@ -32,24 +32,24 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _status_equipmentRepository.GetStatus_EquipmentByIdAsync(id);
         }
 
-        public async Task CreateStatus_EquipmentAsync(int userTypeId, int userPermissionId, Status_Equipment status_equipment)
+        public async Task CreateStatus_EquipmentAsync(string Status, Status_Equipment status_equipment)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 7); //Crear Status de Equipo/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 7); //Crear Status de Equipo/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear un status de equipo.");
             }
-            await _status_equipmentRepository.CreateStatus_EquipmentAsync(status_equipment);
+            await _status_equipmentRepository.CreateStatus_EquipmentAsync(Status, status_equipment);
         }
 
-        public async Task UpdateStatus_EquipmentAsync(Status_Equipment status_equipment)
+        public async Task UpdateStatus_EquipmentAsync(int id, string Status)
         {
-            await _status_equipmentRepository.UpdateStatus_EquipmentAsync(status_equipment);
+            await _status_equipmentRepository.UpdateStatus_EquipmentAsync(id, Status);
         }
 
-        public async Task SoftDeleteStatus_EquipmentAsync(int userTypeId, int userPermissionId, int id)
+        public async Task SoftDeleteStatus_EquipmentAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 7); //Crear Status de Equipo/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 7); //Crear Status de Equipo/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar un status de equipo.");

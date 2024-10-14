@@ -7,9 +7,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<Equipment>> GetAllequipmentsAsync();
         Task<Equipment> GetEquipmentByIdAsync(int id);
-        Task CreateEquipmentAsync(int userTypeId, int userPermissionId, Equipment equipment);
-        Task UpdateEquipmentAsync(int userTypeId, int userPermissionId, Equipment equipment);
-        Task SoftDeleteEquipmentAsync(int userTypeId, int userPermissionId, int id);
+        Task CreateEquipmentAsync(string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID, Equipment equipment);
+        Task UpdateEquipmentAsync(int id, string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID);
+        Task SoftDeleteEquipmentAsync(int id);
     }
 
     public class EquipmentService : IEquipmentService
@@ -33,30 +33,30 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _equipmentRepository.GetEquipmentByIdAsync(id);
         }
 
-        public async Task CreateEquipmentAsync(int userTypeId, int userPermissionId, Equipment equipment)
+        public async Task CreateEquipmentAsync(string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID, Equipment equipment)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 1); //Crear Equipo/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 1); //Crear Equipo/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear equipos.");
             }
 
-                await _equipmentRepository.CreateEquipmentAsync(equipment);
+                await _equipmentRepository.CreateEquipmentAsync(Equipment_Name, Description, StatusE_ID, Acquisition_date, Laboratory_ID, equipment);
         }
 
-        public async Task UpdateEquipmentAsync(int userTypeId, int userPermissionId, Equipment equipment)
+        public async Task UpdateEquipmentAsync(int id, string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 1); //Crear Equipo/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 1); //Crear Equipo/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para actualizar equipos.");
             }
-            await _equipmentRepository.UpdateEquipmentAsync(equipment);
+            await _equipmentRepository.UpdateEquipmentAsync(id, Equipment_Name, Description, StatusE_ID, Acquisition_date, Laboratory_ID);
         }
 
-        public async Task SoftDeleteEquipmentAsync(int userTypeId, int userPermissionId, int id)
+        public async Task SoftDeleteEquipmentAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 1); //Crear Equipo/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 1); //Crear Equipo/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar equipos.");

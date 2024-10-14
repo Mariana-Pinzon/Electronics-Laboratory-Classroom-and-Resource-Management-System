@@ -8,9 +8,10 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
     {
         Task<IEnumerable<Equipment>> GetAllequipmentsAsync();
         Task<Equipment> GetEquipmentByIdAsync(int id);
-        Task CreateEquipmentAsync(Equipment equipment);
-        Task UpdateEquipmentAsync(Equipment equipment);
+        Task CreateEquipmentAsync(string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID, Equipment equipment);
+        Task UpdateEquipmentAsync(int id,string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID);
         Task SoftDeleteEquipmentAsync(int id);
+
     }
     public class Equipment_Repository : IEquipment_Repository
     {
@@ -41,18 +42,45 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
         }
 
-        public async Task CreateEquipmentAsync(Equipment equipment)
+        public async Task CreateEquipmentAsync(string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID, Equipment equipment)
         {
+            var Status = await _context.status_equipments.FindAsync(StatusE_ID) ?? throw new Exception("Status not found");
+            var Laboratory = await _context.laboratories.FindAsync(Laboratory_ID) ?? throw new Exception("Laboratory not found");
 
+            equipment.Equipment_Name = Equipment_Name;
+            equipment.Description = Description;
+            equipment.Status_Equipment = Status;
+            equipment.Acquisition_date = Acquisition_date;
+            equipment.Laboratory = Laboratory;
+           
+          
             _context.equipments.Add(equipment);
-            await _context.SaveChangesAsync();
+             await _context.SaveChangesAsync();
+           
+
         }
 
 
-        public async Task UpdateEquipmentAsync(Equipment equipment)
+        public async Task UpdateEquipmentAsync(int id, string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID)
         {
-            _context.equipments.Update(equipment);
-            await _context.SaveChangesAsync();
+            var Equipment = await _context.equipments.FindAsync(id) ?? throw new Exception("Equipment not found");
+            var Status = await _context.status_equipments.FindAsync(StatusE_ID) ?? throw new Exception("Status not found");
+            var Laboratory = await _context.laboratories.FindAsync(Laboratory_ID) ?? throw new Exception("Laboratory not found");
+
+            Equipment.Equipment_Name = Equipment_Name;
+            Equipment.Description = Description;
+            Equipment.Status_Equipment = Status;
+            Equipment.Acquisition_date = Acquisition_date;
+            Equipment.Laboratory = Laboratory;
+            try
+            {
+                _context.equipments.Update(Equipment);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
     }
 }

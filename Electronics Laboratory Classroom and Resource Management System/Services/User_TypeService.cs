@@ -8,9 +8,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<User_Type>> GetAlluser_typesAsync();
         Task<User_Type> GetUser_TypeByIdAsync(int id);
-        Task CreateUser_TypeAsync(int userTypeId, int userPermissionId,User_Type user_type);
-        Task UpdateUser_TypeAsync(int userTypeId, int userPermissionId,User_Type user_type);
-        Task SoftDeleteUser_TypeAsync(int userTypeId, int userPermissionId, int id);
+        Task CreateUser_TypeAsync(string UserType, User_Type user_type);
+        Task UpdateUser_TypeAsync(int id, string UserType);
+        Task SoftDeleteUser_TypeAsync(int id);
     }
     public class User_TypeService : IUser_TypeService
     {
@@ -33,29 +33,29 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _userTypeRepository.GetUser_TypeByIdAsync(id);
         }
 
-        public async Task CreateUser_TypeAsync(int userTypeId, int userPermissionId,User_Type user_type)
+        public async Task CreateUser_TypeAsync(string UserType, User_Type user_type)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 10); //Crear Tipo de Usuario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 10); //Crear Tipo de Usuario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear tipo de usuario.");
             }
-            await _userTypeRepository.CreateUser_TypeAsync(user_type);
+            await _userTypeRepository.CreateUser_TypeAsync(UserType, user_type);
         }
 
-        public async Task UpdateUser_TypeAsync(int userTypeId, int userPermissionId,User_Type user_type)
+        public async Task UpdateUser_TypeAsync(int id, string UserType)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 10); //Crear Tipo de Usuario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 10); //Crear Tipo de Usuario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para actualizar tipo de usuario.");
             }
-            await _userTypeRepository.UpdateUser_TypeAsync(user_type);
+            await _userTypeRepository.UpdateUser_TypeAsync(id, UserType);
         }
 
-        public async Task SoftDeleteUser_TypeAsync(int userTypeId, int userPermissionId,int id)
+        public async Task SoftDeleteUser_TypeAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 10); //Crear Tipo de Usuario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 10); //Crear Tipo de Usuario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar tipo de usuario.");

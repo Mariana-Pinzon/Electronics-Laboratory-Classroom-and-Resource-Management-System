@@ -7,9 +7,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<Status_Reservation>> GetAllstatus_reservationsAsync();
         Task<Status_Reservation> GetStatus_ReservationByIdAsync(int id);
-        Task CreateStatus_ReservationAsync(int userTypeId, int userPermissionId,Status_Reservation status_reservation);
-        Task UpdateStatus_ReservationAsync(Status_Reservation status_reservation);
-        Task SoftDeleteStatus_ReservationAsync(int userTypeId, int userPermissionId,int id);
+        Task CreateStatus_ReservationAsync(string StatusR, Status_Reservation status_reservation);
+        Task UpdateStatus_ReservationAsync(int id, string StatusR);
+        Task SoftDeleteStatus_ReservationAsync(int id);
     }
     public class Status_ReservationService : IStatus_ReservationService
     {
@@ -32,24 +32,24 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _status_reservationRepository.GetStatus_ReservationByIdAsync(id);
         }
 
-        public async Task CreateStatus_ReservationAsync(int userTypeId, int userPermissionId, Status_Reservation status_reservation)
+        public async Task CreateStatus_ReservationAsync(string StatusR, Status_Reservation status_reservation)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 8); //Crear Status de Reservación/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 8); //Crear Status de Reservación/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear un status de Reservación.");
             }
-            await _status_reservationRepository.CreateStatus_ReservationAsync(status_reservation);
+            await _status_reservationRepository.CreateStatus_ReservationAsync(StatusR,status_reservation);
         }
 
-        public async Task UpdateStatus_ReservationAsync(Status_Reservation status_reservation)
+        public async Task UpdateStatus_ReservationAsync(int id, string StatusR)
         {
-            await _status_reservationRepository.UpdateStatus_ReservationAsync(status_reservation);
+            await _status_reservationRepository.UpdateStatus_ReservationAsync(id, StatusR);
         }
 
-        public async Task SoftDeleteStatus_ReservationAsync(int userTypeId, int userPermissionId, int id)
+        public async Task SoftDeleteStatus_ReservationAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 8); //Crear Status de Reservación/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 8); //Crear Status de Reservación/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar un status de Reservación.");

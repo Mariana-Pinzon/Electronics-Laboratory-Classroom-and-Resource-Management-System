@@ -8,8 +8,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
     {
         Task<IEnumerable<Permission>> GetAllpermissionsAsync();
         Task<Permission> GetPermissionByIdAsync(int id);
-        Task CreatePermissionAsync(Permission permission);
-        Task UpdatePermissionAsync(Permission permission);
+        Task CreatePermissionAsync(string PermissionName, Permission permission);
+        Task UpdatePermissionAsync(int id, string PermissionName);
         Task SoftDeletePermissionAsync(int id);
     }
     public class Permission_Repository : IPermission_Repository
@@ -41,17 +41,28 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
         }
 
-        public async Task CreatePermissionAsync(Permission permission)
+        public async Task CreatePermissionAsync(string PermissionName, Permission permission)
         {
             _context.permissions.Add(permission);
             await _context.SaveChangesAsync();
         }
 
 
-        public async Task UpdatePermissionAsync(Permission permission)
+        public async Task UpdatePermissionAsync(int id, string PermissionName)
         {
-            _context.permissions.Update(permission);
-            await _context.SaveChangesAsync();
+            var Permission = await _context.permissions.FindAsync(id) ?? throw new Exception("Permission not found");
+
+            try
+            {
+                _context.permissions.Update(Permission);
+                await _context.SaveChangesAsync();
+            }
+
+            catch (Exception e)
+            {
+                throw;
+            }
+            
         }
     }
 }

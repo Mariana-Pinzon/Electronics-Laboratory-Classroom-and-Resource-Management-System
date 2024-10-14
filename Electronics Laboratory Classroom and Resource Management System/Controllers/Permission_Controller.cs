@@ -41,19 +41,19 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<ActionResult> CreatePermission([FromQuery] int userTypeId, [FromQuery] int userPermissionId, [FromBody] Permission permission)
+        public async Task<ActionResult> CreatePermission(string PermissionName, [FromBody] Permission permission)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await _permissionService.CreatePermissionAsync(userTypeId, userPermissionId, permission);
+                await _permissionService.CreatePermissionAsync(PermissionName, permission);
                 return CreatedAtAction(nameof(GetPermissionById), new { id = permission.Permission_ID }, permission);
             }
             catch (UnauthorizedAccessException)
             {
-                return Forbid(); // Retorna 403 si no tiene permisos
+                return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
         }
 
@@ -62,10 +62,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<IActionResult> UpdatePermission(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId, [FromBody] Permission permission)
+        public async Task<IActionResult> UpdatePermission(int id, string PermissionName)
         {
-            if (id != permission.Permission_ID)
-                return BadRequest();
 
             var existingPermission = await _permissionService.GetPermissionByIdAsync(id);
             if (existingPermission == null)
@@ -73,12 +71,12 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
             try
             {
-                await _permissionService.UpdatePermissionAsync(userTypeId, userPermissionId, permission);
-                return NoContent();
+                await _permissionService.UpdatePermissionAsync(id, PermissionName);
+                return StatusCode(StatusCodes.Status200OK, "Updated Successfully");
             }
             catch (UnauthorizedAccessException)
             {
-                return Forbid(); // Retorna 403 si no tiene permisos
+                return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
         }
 
@@ -86,7 +84,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<IActionResult> SoftDeletePermission(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId)
+        public async Task<IActionResult> SoftDeletePermission(int id)
         {
             var permission = await _permissionService.GetPermissionByIdAsync(id);
             if (permission == null)
@@ -94,12 +92,12 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
             try
             {
-                await _permissionService.SoftDeletePermissionAsync(userTypeId, userPermissionId, id);
+                await _permissionService.SoftDeletePermissionAsync(id);
                 return NoContent();
             }
             catch (UnauthorizedAccessException)
             {
-                return Forbid(); // Retorna 403 si no tiene permisos
+                return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
         }
     }

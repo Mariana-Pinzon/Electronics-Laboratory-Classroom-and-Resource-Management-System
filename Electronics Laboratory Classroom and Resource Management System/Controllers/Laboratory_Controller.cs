@@ -41,19 +41,19 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<ActionResult> CreateLaboratory([FromQuery] int userTypeId, [FromQuery] int userPermissionId, [FromBody] Laboratory laboratory)
+        public async Task<ActionResult> CreateLaboratory(int Laboratory_Num, int Capacity, [FromBody] Laboratory laboratory)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await _laboratoryService.CreateLaboratoryAsync(userTypeId, userPermissionId, laboratory);
+                await _laboratoryService.CreateLaboratoryAsync(Laboratory_Num, Capacity, laboratory);
                 return CreatedAtAction(nameof(GetLaboratoryById), new { id = laboratory.Laboratory_ID }, laboratory);
             }
             catch (UnauthorizedAccessException)
             {
-                return Forbid(); // Retorna 403 si no tiene permisos
+                return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
         }
 
@@ -62,23 +62,20 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<IActionResult> UpdateLaboratory(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId, [FromBody] Laboratory laboratory)
+        public async Task<IActionResult> UpdateLaboratory(int id, int Laboratory_Num, int Capacity)
         {
-            if (id != laboratory.Laboratory_ID)
-                return BadRequest();
-
             var existingLaboratory = await _laboratoryService.GetLaboratoryByIdAsync(id);
             if (existingLaboratory == null)
                 return NotFound();
 
             try
             {
-                await _laboratoryService.UpdateLaboratoryAsync(userTypeId, userPermissionId, laboratory);
-                return NoContent();
+                await _laboratoryService.UpdateLaboratoryAsync(id,Laboratory_Num, Capacity);
+                return StatusCode(StatusCodes.Status200OK, "Updated Successfully");
             }
             catch (UnauthorizedAccessException)
             {
-                return Forbid(); // Retorna 403 si no tiene permisos
+                return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
         }
 
@@ -86,7 +83,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<IActionResult> SoftDeleteLaboratory(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId)
+        public async Task<IActionResult> SoftDeleteLaboratory(int id)
         {
             var laboratory = await _laboratoryService.GetLaboratoryByIdAsync(id);
             if (laboratory == null)
@@ -94,12 +91,12 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
             try
             {
-                await _laboratoryService.SoftDeleteLaboratoryAsync(userTypeId, userPermissionId, id);
+                await _laboratoryService.SoftDeleteLaboratoryAsync(id);
                 return NoContent();
             }
             catch (UnauthorizedAccessException)
             {
-                return Forbid(); // Retorna 403 si no tiene permisos
+                return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
         }
     }

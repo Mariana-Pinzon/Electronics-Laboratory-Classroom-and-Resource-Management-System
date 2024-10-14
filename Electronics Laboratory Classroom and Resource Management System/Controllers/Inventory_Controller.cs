@@ -41,19 +41,19 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<ActionResult> CreateInventory([FromQuery] int userTypeId, [FromQuery] int userPermissionId, [FromBody] Inventory inventory)
+        public async Task<ActionResult> CreateInventory(int Equipment_ID, int Available_quantity, int Laboratory_ID, [FromBody] Inventory inventory)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await _inventoryService.CreateInventoryAsync(userTypeId, userPermissionId, inventory);
+                await _inventoryService.CreateInventoryAsync(Equipment_ID, Available_quantity, Laboratory_ID, inventory);
                 return CreatedAtAction(nameof(GetInventoryById), new { id = inventory.Inventory_ID }, inventory);
             }
             catch (UnauthorizedAccessException)
             {
-                return Forbid(); // Retorna 403 si no tiene permisos
+                return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
         }
 
@@ -62,23 +62,20 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<IActionResult> UpdateInventory(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId, [FromBody] Inventory inventory)
+        public async Task<IActionResult> UpdateInventory(int id, int Equipment_ID, int Available_quantity, int Laboratory_ID)
         {
-            if (id != inventory.Inventory_ID)
-                return BadRequest();
-
             var existingInventory = await _inventoryService.GetInventoryByIdAsync(id);
             if (existingInventory == null)
                 return NotFound();
 
             try
             {
-                await _inventoryService.UpdateInventoryAsync(userTypeId, userPermissionId, inventory);
-                return NoContent();
+                await _inventoryService.UpdateInventoryAsync(id, Equipment_ID, Available_quantity, Laboratory_ID);
+                return StatusCode(StatusCodes.Status200OK, "Updated Successfully");
             }
             catch (UnauthorizedAccessException)
             {
-                return Forbid(); // Retorna 403 si no tiene permisos
+                return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
         }
 
@@ -86,7 +83,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<IActionResult> SoftDeleteInventory(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId)
+        public async Task<IActionResult> SoftDeleteInventory(int id)
         {
             var inventory = await _inventoryService.GetInventoryByIdAsync(id);
             if (inventory == null)
@@ -94,7 +91,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
             try
             {
-                await _inventoryService.SoftDeleteInventoryAsync(userTypeId, userPermissionId, id);
+                await _inventoryService.SoftDeleteInventoryAsync(id);
                 return NoContent();
             }
             catch (UnauthorizedAccessException)

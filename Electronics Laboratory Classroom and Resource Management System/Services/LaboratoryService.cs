@@ -7,9 +7,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<Laboratory>> GetAlllaboratoriesAsync();
         Task<Laboratory> GetLaboratoryByIdAsync(int id);
-        Task CreateLaboratoryAsync(int userTypeId, int userPermissionId, Laboratory laboratory);
-        Task UpdateLaboratoryAsync(int userTypeId, int userPermissionId, Laboratory laboratory);
-        Task SoftDeleteLaboratoryAsync(int userTypeId, int userPermissionId, int id);
+        Task CreateLaboratoryAsync(int Laboratory_Num, int Capacity, Laboratory laboratory);
+        Task UpdateLaboratoryAsync(int id, int Laboratory_Num, int Capacity);
+        Task SoftDeleteLaboratoryAsync(int id);
     }
     public class LaboratoryService : ILaboratoryService
     {
@@ -32,29 +32,29 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _laboratoryRepository.GetLaboratoryByIdAsync(id);
         }
 
-        public async Task CreateLaboratoryAsync(int userTypeId, int userPermissionId, Laboratory laboratory)
+        public async Task CreateLaboratoryAsync(int Laboratory_Num, int Capacity, Laboratory laboratory)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 3); //Crear Laboratorio/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 3); //Crear Laboratorio/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear laboratorios.");
             }
-            await _laboratoryRepository.CreateLaboratoryAsync(laboratory);
+            await _laboratoryRepository.CreateLaboratoryAsync(Laboratory_Num, Capacity, laboratory);
         }
 
-        public async Task UpdateLaboratoryAsync(int userTypeId, int userPermissionId, Laboratory laboratory)
+        public async Task UpdateLaboratoryAsync(int id, int Laboratory_Num, int Capacity)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 3); //Crear Laboratorio/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 3); //Crear Laboratorio/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para actualizar laboratorios.");
             }
-            await _laboratoryRepository.UpdateLaboratoryAsync(laboratory);
+            await _laboratoryRepository.UpdateLaboratoryAsync(id,Laboratory_Num,Capacity);
         }
 
-        public async Task SoftDeleteLaboratoryAsync(int userTypeId, int userPermissionId, int id)
+        public async Task SoftDeleteLaboratoryAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 3); //Crear Laboratorio/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId: 1, permissionId: 3); //Crear Laboratorio/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar laboratorios.");
