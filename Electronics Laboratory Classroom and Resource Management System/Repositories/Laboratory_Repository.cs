@@ -8,8 +8,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
     {
         Task<IEnumerable<Laboratory>> GetAlllaboratoriesAsync();
         Task<Laboratory> GetLaboratoryByIdAsync(int id);
-        Task CreateLaboratoryAsync(Laboratory laboratory);
-        Task UpdateLaboratoryAsync(Laboratory laboratory);
+        Task CreateLaboratoryAsync(int Laboratory_Num, int Capacity, Laboratory laboratory);
+        Task UpdateLaboratoryAsync(int id, int Laboratory_Num, int Capacity);
         Task SoftDeleteLaboratoryAsync(int id);
     }
     public class Laboratory_Repository : ILaboratory_Repository
@@ -41,17 +41,31 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
         }
 
-        public async Task CreateLaboratoryAsync(Laboratory laboratory)
+        public async Task CreateLaboratoryAsync(int Laboratory_Num, int Capacity, Laboratory laboratory)
         {
+
             _context.laboratories.Add(laboratory);
             await _context.SaveChangesAsync();
         }
 
 
-        public async Task UpdateLaboratoryAsync(Laboratory laboratory)
+        public async Task UpdateLaboratoryAsync(int id, int Laboratory_Num, int Capacity)
         {
-            _context.laboratories.Update(laboratory);
-            await _context.SaveChangesAsync();
+            var Laboratory = await _context.laboratories.FindAsync(id) ?? throw new Exception("Laboratory not found");
+
+            try
+            {
+                _context.laboratories.Update(Laboratory);
+                await _context.SaveChangesAsync();
+            }
+
+            catch (Exception e)
+            {
+                throw;
+            }
+
         }
+
+
     }
 }

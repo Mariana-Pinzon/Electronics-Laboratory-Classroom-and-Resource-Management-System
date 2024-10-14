@@ -7,9 +7,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<Permission>> GetAllpermissionsAsync();
         Task<Permission> GetPermissionByIdAsync(int id);
-        Task CreatePermissionAsync(int userTypeId, int userPermissionId, Permission permission);
-        Task UpdatePermissionAsync(int userTypeId, int userPermissionId, Permission permission);
-        Task SoftDeletePermissionAsync(int userTypeId, int userPermissionId, int id);
+        Task CreatePermissionAsync(string PermissionName, Permission permission);
+        Task UpdatePermissionAsync(int id, string PermissionName);
+        Task SoftDeletePermissionAsync(int id);
     }
     public class PermissionService : IPermissionService
     {
@@ -32,29 +32,29 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _permissionRepository.GetPermissionByIdAsync(id);
         }
 
-        public async Task CreatePermissionAsync(int userTypeId, int userPermissionId, Permission permission)
+        public async Task CreatePermissionAsync(string PermissionName, Permission permission)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 4); //Crear Permiso/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 4); //Crear Permiso/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear permisos.");
             }
-            await _permissionRepository.CreatePermissionAsync(permission);
+            await _permissionRepository.CreatePermissionAsync(PermissionName,permission);
         }
 
-        public async Task UpdatePermissionAsync(int userTypeId, int userPermissionId, Permission permission)
+        public async Task UpdatePermissionAsync(int id, string PermissionName)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 4); //Crear Permiso/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 4); //Crear Permiso/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para actualizar permisos.");
             }
-            await _permissionRepository.UpdatePermissionAsync(permission);
+            await _permissionRepository.UpdatePermissionAsync(id, PermissionName);
         }
 
-        public async Task SoftDeletePermissionAsync(int userTypeId, int userPermissionId, int id)
+        public async Task SoftDeletePermissionAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(userTypeId, permissionId: 4); //Crear Permiso/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId: 1, permissionId: 4); //Crear Permiso/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar permisos.");

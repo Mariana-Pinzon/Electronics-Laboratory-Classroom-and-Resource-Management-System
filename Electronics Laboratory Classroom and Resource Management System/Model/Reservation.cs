@@ -7,9 +7,10 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
         public int Reservation_ID { get; set; }
         public virtual required User User { get; set; }
         public virtual required Laboratory Laboratory { get; set; }
+        public virtual required Reservation_Equipment Reservation_Equipment { get; set; }
 
         [NotPastDate(ErrorMessage = "La fecha elegida no es válida, se encuentra en el pasado.")]
-        public required DateTime Reservation_date { get; set; }
+        public required DateOnly Reservation_date { get; set; }
         public required TimeOnly Start_time { get; set; }
         public required TimeOnly End_time { get; set; }
         public virtual required Status_Reservation Status_Reservation { get; set; }
@@ -24,7 +25,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value is DateTime dateTime && dateTime < DateTime.Now.Date)
+            if (value is DateOnly dateOnly && dateOnly < DateOnly.FromDateTime(DateTime.Now))
             {
                 return new ValidationResult(ErrorMessage);
             }

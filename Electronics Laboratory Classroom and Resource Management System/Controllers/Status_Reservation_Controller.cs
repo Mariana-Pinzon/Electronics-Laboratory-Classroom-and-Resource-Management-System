@@ -40,14 +40,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
-        public async Task<ActionResult> CreateStatus_Reservation([FromQuery] int userTypeId, [FromQuery] int userPermissionId, [FromBody] Status_Reservation status_reservation)
+        public async Task<ActionResult> CreateStatus_Reservation(string StatusR, [FromBody] Status_Reservation status_reservation)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await _status_reservationService.CreateStatus_ReservationAsync(userTypeId, userPermissionId, status_reservation);
+                await _status_reservationService.CreateStatus_ReservationAsync(StatusR, status_reservation);
                 return CreatedAtAction(nameof(GetStatus_ReservationById), new { id = status_reservation.StatusR_ID }, status_reservation);
             }
             catch (UnauthorizedAccessException)
@@ -61,24 +61,22 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<IActionResult> UpdateStatus_Reservationy(int id, [FromBody] Status_Reservation status_reservation)
+        public async Task<IActionResult> UpdateStatus_Reservationy(int id, string StatusR)
         {
-            if (id != status_reservation.StatusR_ID)
-                return BadRequest();
 
             var existingstatus_reservation = await _status_reservationService.GetStatus_ReservationByIdAsync(id);
             if (existingstatus_reservation == null)
                 return NotFound();
 
-            await _status_reservationService.UpdateStatus_ReservationAsync(status_reservation);
-            return NoContent();
+            await _status_reservationService.UpdateStatus_ReservationAsync(id, StatusR);
+            return StatusCode(StatusCodes.Status200OK, "Updated Successfully");
         }
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
-        public async Task<IActionResult> SoftDeleteStatus_Reservation(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId)
+        public async Task<IActionResult> SoftDeleteStatus_Reservation(int id)
         {
             var status_reservation = await _status_reservationService.GetStatus_ReservationByIdAsync(id);
             if (status_reservation == null)
@@ -86,7 +84,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
             try
             {
-                await _status_reservationService.SoftDeleteStatus_ReservationAsync(userTypeId, userPermissionId,id);
+                await _status_reservationService.SoftDeleteStatus_ReservationAsync(id);
                 return NoContent();
             }
             catch (UnauthorizedAccessException)

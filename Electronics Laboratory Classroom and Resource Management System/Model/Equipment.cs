@@ -11,7 +11,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
 
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [FutureDate(ErrorMessage = "La fecha de adquisición no puede ser una fecha futura.")]
-        public DateTime Acquisition_date { get; set; }
+        public DateOnly Acquisition_date { get; set; }
         public virtual required Laboratory Laboratory { get; set; }
         public bool IsDeleted { get; set; } = false;
     }
@@ -20,9 +20,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value is DateTime dateTime)
+            if (value is DateOnly dateOnly)
             {
-                if (dateTime > DateTime.Now)
+                if (dateOnly > DateOnly.FromDateTime(DateTime.Now))
                 {
                     return new ValidationResult(ErrorMessage);
                 }

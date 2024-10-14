@@ -8,10 +8,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
     {
         Task<IEnumerable<Inventory>> GetAllinventoriesAsync();
         Task<Inventory> GetInventoryByIdAsync(int id);
-        Task CreateInventoryAsync(Inventory inventory);
-        Task UpdateInventoryAsync(Inventory inventory);
+        Task CreateInventoryAsync(int Equipment_ID, int Available_quantity, int Laboratory_ID, Inventory inventory);
+        Task UpdateInventoryAsync(int id, int Equipment_ID, int Available_quantity, int Laboratory_ID);
         Task SoftDeleteInventoryAsync(int id);
-        Task<int> GetAvailableQuantityAsync(int equipmentId);
     }
     public class Inventory_Repository : IInventory_Repository
     {
@@ -42,25 +41,43 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
         }
 
-        public async Task CreateInventoryAsync(Inventory inventory)
+        public async Task CreateInventoryAsync(int Equipment_ID, int Available_quantity, int Laboratory_ID, Inventory inventory)
         {
+            var Equipment = await _context.equipments.FindAsync(Equipment_ID) ?? throw new Exception("Equipment not found");
+            var Laboratory = await _context.laboratories.FindAsync(Laboratory_ID) ?? throw new Exception("Laboratory not found");
+
+
+            inventory.Equipment = Equipment;
+            inventory.Available_quantity = Available_quantity;
+            inventory.Laboratory = Laboratory;
+
             _context.inventories.Add(inventory);
             await _context.SaveChangesAsync();
         }
 
 
-        public async Task UpdateInventoryAsync(Inventory inventory)
+        public async Task UpdateInventoryAsync(int id, int Equipment_ID, int Available_quantity, int Laboratory_ID)
         {
-            _context.inventories.Update(inventory);
-            await _context.SaveChangesAsync();
+            var inventory = await _context.inventories.FindAsync(id) ?? throw new Exception("Inventory not found");
+            var Equipment = await _context.equipments.FindAsync(Equipment_ID) ?? throw new Exception("Equipment not found");
+            var Laboratory = await _context.laboratories.FindAsync(Laboratory_ID) ?? throw new Exception("Laboratory not found");
+
+            inventory.Equipment = Equipment;
+            inventory.Available_quantity = Available_quantity;
+            inventory.Laboratory = Laboratory;
+            try
+            {
+                _context.inventories.Update(inventory);
+                await _context.SaveChangesAsync();
+            }
+
+            catch (Exception e)
+            {
+                throw;
+            }
+            
         }
 
-        public async Task<int> GetAvailableQuantityAsync(int equipmentId)
-        {
-            var inventory = await _context.inventories
-                .FirstOrDefaultAsync(i => i.Equipment.Equipment_ID == equipmentId && !i.IsDeleted);
 
-            return inventory?.Available_quantity ?? 0;  // Si no existe el inventario, retorna 0.
-        }
     }
 }

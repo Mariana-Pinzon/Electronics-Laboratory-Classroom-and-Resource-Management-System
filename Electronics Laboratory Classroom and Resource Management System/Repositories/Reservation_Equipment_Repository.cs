@@ -8,8 +8,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
     {
         Task<IEnumerable<Reservation_Equipment>> GetAllreservations_equipmentAsync();
         Task<Reservation_Equipment> GetReservation_EquipmentByIdAsync(int id);
-        Task CreateReservation_EquipmentAsync(Reservation_Equipment reservation_equipment);
-        Task UpdateReservation_EquipmentAsync(Reservation_Equipment reservation_equipment);
+        Task CreateReservation_EquipmentAsync(int Equipment_ID, int Quantity, Reservation_Equipment reservation_equipment);
+        Task UpdateReservation_EquipmentAsync(int id, int Equipment_ID, int Quantity);
         Task SoftDeleteReservation_EquipmentAsync(int id);
     }
     public class Reservation_Equipment_Repository : IReservation_Equipment_Repository
@@ -22,13 +22,13 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         public async Task<IEnumerable<Reservation_Equipment>> GetAllreservations_equipmentAsync()
         {
             return await _context.reservations_equipment
-                .Where(se => !se.IsDeleted)
+                .Where(re => !re.IsDeleted)
                 .ToListAsync();
         }
         public async Task<Reservation_Equipment> GetReservation_EquipmentByIdAsync(int id)
         {
             return await _context.reservations_equipment
-                .FirstOrDefaultAsync(se => se.ReservationE_ID == id && !se.IsDeleted);
+                .FirstOrDefaultAsync(re => re.ReservationE_ID == id && !re.IsDeleted);
         }
 
         public async Task SoftDeleteReservation_EquipmentAsync(int id)
@@ -42,16 +42,50 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         }
 
        
-        public async Task CreateReservation_EquipmentAsync(Reservation_Equipment reservation_equipment)
+        public async Task CreateReservation_EquipmentAsync(int Equipment_ID, int Quantity, Reservation_Equipment reservation_equipment)
         {
+            var Equipment = await _context.equipments.FindAsync(Equipment_ID) ?? throw new Exception("Equipment not found");
+
+            var inventory = await _context.inventories
+            .FirstOrDefaultAsync(i => i.Equipment.Equipment_ID == Equipment_ID)
+            ?? throw new Exception("Inventory not found for the equipment.");
+
+            // Verificar si la cantidad solicitada es menor o igual a la cantidad disponible en Inventory
+            if (Quantity > inventory.Available_quantity)
+            {
+                throw new Exception("The quantity requested exceeds the quantity available in inventory.");
+            }
+
+            reservation_equipment.Equipment = Equipment;
+            reservation_equipment.Quantity = Quantity;
+            
+
             _context.reservations_equipment.Add(reservation_equipment);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateReservation_EquipmentAsync(Reservation_Equipment reservation_equipment)
+        public async Task UpdateReservation_EquipmentAsync(int id, int Equipment_ID, int Quantity)
         {
-            _context.reservations_equipment.Update(reservation_equipment);
+            var ReservationEquipment = await _context.reservations_equipment.FindAsync(id) ?? throw new Exception("ReservationEquipment not found");
+            var Equipment = await _context.equipments.FindAsync(Equipment_ID) ?? throw new Exception("Equipment not found");
+
+            var inventory = await _context.inventories
+            .FirstOrDefaultAsync(i => i.Equipment.Equipment_ID == Equipment_ID)
+            ?? throw new Exception("Inventory not found for the equipment.");
+
+            // Verificar si la cantidad solicitada es menor o igual a la cantidad disponible en Inventory
+            if (Quantity > inventory.Available_quantity)
+            {
+                throw new Exception("The quantity requested exceeds the quantity available in inventory.");
+            }
+
+            ReservationEquipment.Equipment = Equipment;
+            ReservationEquipment.Quantity = Quantity;
+
+
+            _context.reservations_equipment.Add(ReservationEquipment);
             await _context.SaveChangesAsync();
+
         }
     }
 }

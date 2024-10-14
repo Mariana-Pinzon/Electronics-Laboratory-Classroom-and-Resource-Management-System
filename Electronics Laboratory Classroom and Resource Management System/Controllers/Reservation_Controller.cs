@@ -39,12 +39,12 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> CreateReservation([FromBody] Reservation reservation)
+        public async Task<ActionResult> CreateReservation(int User_ID, int Laboratory_ID, int ReservationE_ID, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID, [FromBody] Reservation reservation)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _reservationService.CreateReservationAsync(reservation);
+            await _reservationService.CreateReservationAsync(User_ID, Laboratory_ID, ReservationE_ID, Reservation_date, Start_time, End_time, StatusR_ID, reservation);
             return CreatedAtAction(nameof(GetReservationById), new { id = reservation.Reservation_ID }, reservation);
         }
 
@@ -53,23 +53,20 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
-        public async Task<IActionResult> UpdateReservation(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId, [FromBody] Reservation reservation)
+        public async Task<IActionResult> UpdateReservation(int id, int User_ID, int Laboratory_ID, int ReservationE_ID, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID)
         {
-            if (id != reservation.Reservation_ID)
-                return BadRequest();
-
             var existingReservation = await _reservationService.GetReservationByIdAsync(id);
             if (existingReservation == null)
                 return NotFound();
 
             try
             {
-                await _reservationService.UpdateReservationAsync(userTypeId, userPermissionId, reservation);
-                return NoContent();
+                await _reservationService.UpdateReservationAsync(id, User_ID, Laboratory_ID, ReservationE_ID, Reservation_date, Start_time, End_time, StatusR_ID);
+                return StatusCode(StatusCodes.Status200OK, "Updated Successfully");
             }
             catch (UnauthorizedAccessException)
             {
-                return Forbid(); // Retorna 403 si no tiene permisos
+                return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
         }
 
@@ -77,7 +74,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
-        public async Task<IActionResult> SoftDeleteReservation(int id, [FromQuery] int userTypeId, [FromQuery] int userPermissionId)
+        public async Task<IActionResult> SoftDeleteReservation(int id)
         {
             var reservation = await _reservationService.GetReservationByIdAsync(id);
             if (reservation == null)
@@ -85,12 +82,12 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
             try
             {
-                await _reservationService.SoftDeleteReservationAsync(userTypeId, userPermissionId, id);
+                await _reservationService.SoftDeleteReservationAsync( id);
                 return NoContent();
             }
             catch (UnauthorizedAccessException)
             {
-                return Forbid(); // Retorna 403 si no tiene permisos
+                return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
         }
     }

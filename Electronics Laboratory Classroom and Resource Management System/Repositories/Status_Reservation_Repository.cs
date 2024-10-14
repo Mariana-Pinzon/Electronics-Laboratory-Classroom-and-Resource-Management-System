@@ -8,8 +8,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
     {
         Task<IEnumerable<Status_Reservation>> GetAllstatus_reservationsAsync();
         Task<Status_Reservation> GetStatus_ReservationByIdAsync(int id);
-        Task CreateStatus_ReservationAsync(Status_Reservation status_reservation);
-        Task UpdateStatus_ReservationAsync(Status_Reservation status_reservation);
+        Task CreateStatus_ReservationAsync(string StatusR, Status_Reservation status_reservation);
+        Task UpdateStatus_ReservationAsync(int id, string StatusR);
         Task SoftDeleteStatus_ReservationAsync(int id);
     }
         public class Status_Reservation_Repository : IStatus_Reservation_Repository
@@ -42,16 +42,26 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
 
 
-            public async Task CreateStatus_ReservationAsync(Status_Reservation status_reservation)
+            public async Task CreateStatus_ReservationAsync(string StatusR, Status_Reservation status_reservation)
             {
                 _context.status_reservations.Add(status_reservation);
                 await _context.SaveChangesAsync();
             }
 
-            public async Task UpdateStatus_ReservationAsync(Status_Reservation status_reservation)
+            public async Task UpdateStatus_ReservationAsync(int id, string StatusR)
             {
-                _context.status_reservations.Update(status_reservation);
+                var StatusRe = await _context.status_reservations.FindAsync(id) ?? throw new Exception("Status not found");
+
+                try
+                {
+                _context.status_reservations.Update(StatusRe);
                 await _context.SaveChangesAsync();
+                }
+
+                catch (Exception e)
+                {
+                throw;
+                }
             }
         }
  }
