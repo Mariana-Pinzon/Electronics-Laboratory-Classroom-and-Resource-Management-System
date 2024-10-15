@@ -14,6 +14,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
         public required TimeOnly Start_time { get; set; }
         public required TimeOnly End_time { get; set; }
         public virtual required Status_Reservation Status_Reservation { get; set; }
+
+        public ICollection<Reservation_Equipment> Reservation_Equipments { get; set; } = new List<Reservation_Equipment>();
         public bool IsDeleted { get; set; } = false;
 
         public bool IsValidTime()
