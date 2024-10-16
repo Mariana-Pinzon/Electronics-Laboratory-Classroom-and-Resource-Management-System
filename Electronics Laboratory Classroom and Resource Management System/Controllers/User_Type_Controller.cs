@@ -41,20 +41,21 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<ActionResult> CreateUserType(string UserType ,[FromBody] User_Type user_type)
+        public async Task<ActionResult> CreateUserType(string UserType)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await _user_typeService.CreateUser_TypeAsync(UserType,user_type);
-                return CreatedAtAction(nameof(GetUserTypeById), new { id = user_type.User_Type_ID }, user_type);
+                await _user_typeService.CreateUser_TypeAsync(UserType);
+                
             }
             catch (UnauthorizedAccessException)
             {
                 return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
+            return StatusCode(StatusCodes.Status201Created, "UserType created succesfully");
         }
 
         [HttpPut("{id}")]

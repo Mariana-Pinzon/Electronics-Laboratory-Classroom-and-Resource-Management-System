@@ -59,6 +59,22 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contex
             modelBuilder.Entity<Status_Reservation_History>()
             .HasKey(srh => srh.Status_Reservation_History_ID);
 
+            modelBuilder.Entity<Match>()
+            .HasKey(m => m.Match_ID);
+
+            modelBuilder.Entity<Level>()
+            .HasKey(le => le.Level_ID);
+
+            modelBuilder.Entity<Level>()
+            .HasKey(le => le.Level_ID);
+
+            modelBuilder.Entity<MatchLevel>()
+            .HasKey(ml => ml.MatchLevel_ID);
+
+            modelBuilder.Entity<User>().ToTable(tb => tb.UseSqlOutputClause(false));
+            modelBuilder.Entity<Status_Equipment>().ToTable(tb => tb.UseSqlOutputClause(false));
+            modelBuilder.Entity<Status_Reservation>().ToTable(tb => tb.UseSqlOutputClause(false));
+            modelBuilder.Entity<Inventory>().ToTable(tb => tb.UseSqlOutputClause(false));
         }
 
         public DbSet<User> users { get; set; }
@@ -76,6 +92,10 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contex
         public DbSet<Inventory_History> inventories_history { get; set; }
         public DbSet<Status_Equipment_History> status_equipments_history { get; set; }
         public DbSet<Status_Reservation_History> status_reservations_history { get; set; }
+        public DbSet<Match> matches { get; set; }
+        public DbSet<Level> levels { get; set; }
+        public DbSet<MatchLevel> MatchesLevel { get; set; }
+
 
     }
 }

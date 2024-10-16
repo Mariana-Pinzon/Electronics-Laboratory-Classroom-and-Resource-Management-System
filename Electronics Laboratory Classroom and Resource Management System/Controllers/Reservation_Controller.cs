@@ -39,21 +39,21 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> CreateReservation(int User_ID, int Laboratory_ID, int ReservationE_ID, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID, [FromBody] Reservation reservation)
+        public async Task<ActionResult> CreateReservation(int User_ID, int Laboratory_ID, [FromQuery] List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _reservationService.CreateReservationAsync(User_ID, Laboratory_ID, ReservationE_ID, Reservation_date, Start_time, End_time, StatusR_ID, reservation);
-            return CreatedAtAction(nameof(GetReservationById), new { id = reservation.Reservation_ID }, reservation);
-        }
+            await _reservationService.CreateReservationAsync(User_ID, Laboratory_ID, Reservation_Equipments, Reservation_date, Start_time, End_time, StatusR_ID);
+            return StatusCode(StatusCodes.Status201Created, "Reservation created succesfully");
+        } 
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
-        public async Task<IActionResult> UpdateReservation(int id, int User_ID, int Laboratory_ID, int ReservationE_ID, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID)
+        public async Task<IActionResult> UpdateReservation(int id, int User_ID, int Laboratory_ID, [FromQuery] List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID)
         {
             var existingReservation = await _reservationService.GetReservationByIdAsync(id);
             if (existingReservation == null)
@@ -61,7 +61,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
 
             try
             {
-                await _reservationService.UpdateReservationAsync(id, User_ID, Laboratory_ID, ReservationE_ID, Reservation_date, Start_time, End_time, StatusR_ID);
+                await _reservationService.UpdateReservationAsync(id, User_ID, Laboratory_ID, Reservation_Equipments, Reservation_date, Start_time, End_time, StatusR_ID);
                 return StatusCode(StatusCodes.Status200OK, "Updated Successfully");
             }
             catch (UnauthorizedAccessException)

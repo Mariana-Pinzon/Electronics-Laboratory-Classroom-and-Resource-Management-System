@@ -41,15 +41,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<ActionResult> CreateEquipment(string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID, [FromBody] Equipment equipment)
+        public async Task<ActionResult> CreateEquipment(string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await _equipmentService.CreateEquipmentAsync(Equipment_Name, Description, StatusE_ID, Acquisition_date, Laboratory_ID, equipment);
-                return CreatedAtAction(nameof(GetEquipmentById), new { id = equipment.Equipment_ID }, equipment);
+                await _equipmentService.CreateEquipmentAsync(Equipment_Name, Description, StatusE_ID, Acquisition_date, Laboratory_ID);
             }
             catch (UnauthorizedAccessException)
             {
@@ -59,6 +58,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
             {
                 return StatusCode(404, e.Message);
             }
+            return StatusCode(StatusCodes.Status201Created, "Equipment created succesfully");
         }
 
         [HttpPut("{id}")]

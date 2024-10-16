@@ -7,7 +7,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<Status_Equipment>> GetAllstatus_equipmentsAsync();
         Task<Status_Equipment> GetStatus_EquipmentByIdAsync(int id);
-        Task CreateStatus_EquipmentAsync(string Status, Status_Equipment status_equipment);
+        Task CreateStatus_EquipmentAsync(string Status);
         Task UpdateStatus_EquipmentAsync(int id, string Status);
         Task SoftDeleteStatus_EquipmentAsync(int id);
     }
@@ -32,14 +32,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _status_equipmentRepository.GetStatus_EquipmentByIdAsync(id);
         }
 
-        public async Task CreateStatus_EquipmentAsync(string Status, Status_Equipment status_equipment)
+        public async Task CreateStatus_EquipmentAsync(string Status)
         {
             bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 7); //Crear Status de Equipo/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear un status de equipo.");
             }
-            await _status_equipmentRepository.CreateStatus_EquipmentAsync(Status, status_equipment);
+            await _status_equipmentRepository.CreateStatus_EquipmentAsync(Status);
         }
 
         public async Task UpdateStatus_EquipmentAsync(int id, string Status)

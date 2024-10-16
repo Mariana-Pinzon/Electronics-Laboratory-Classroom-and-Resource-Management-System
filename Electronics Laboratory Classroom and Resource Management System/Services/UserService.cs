@@ -11,7 +11,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<User>> GetAllusersAsync();
         Task<User> GetUserByIdAsync(int id);
-        Task CreateUserAsync(string First_Name, string Last_Name, string Email, string Password, int User_Type_ID, User user);
+        Task CreateUserAsync(string First_Name, string Last_Name, string Email, string Password, int User_Type_ID);
         Task UpdateUserAsync(int id, string First_Name, string Last_Name, string Email, string Password, int User_Type_ID);
         Task SoftDeleteUserAsync(int id);
         Task<bool> ValidateUserAsync(string Email, string Password);
@@ -48,9 +48,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _userRepository.GetUserByIdAsync(id);
         }
 
-        public async Task CreateUserAsync(string First_Name, string Last_Name, string Email, string Password, int User_Type_ID, User user)
+        public async Task CreateUserAsync(string First_Name, string Last_Name, string Email, string Password, int User_Type_ID)
         {
-            await _userRepository.CreateUserAsync(First_Name,Last_Name, Email, Password, User_Type_ID, user);
+            await _userRepository.CreateUserAsync(First_Name,Last_Name, Email, Password, User_Type_ID);
         }
 
         public async Task UpdateUserAsync(int id, string First_Name, string Last_Name, string Email, string Password, int User_Type_ID)

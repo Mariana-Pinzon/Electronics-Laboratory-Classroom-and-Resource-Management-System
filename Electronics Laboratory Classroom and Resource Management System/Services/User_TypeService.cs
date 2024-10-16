@@ -8,7 +8,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<User_Type>> GetAlluser_typesAsync();
         Task<User_Type> GetUser_TypeByIdAsync(int id);
-        Task CreateUser_TypeAsync(string UserType, User_Type user_type);
+        Task CreateUser_TypeAsync(string UserType);
         Task UpdateUser_TypeAsync(int id, string UserType);
         Task SoftDeleteUser_TypeAsync(int id);
     }
@@ -33,14 +33,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _userTypeRepository.GetUser_TypeByIdAsync(id);
         }
 
-        public async Task CreateUser_TypeAsync(string UserType, User_Type user_type)
+        public async Task CreateUser_TypeAsync(string UserType)
         {
             bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 10); //Crear Tipo de Usuario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear tipo de usuario.");
             }
-            await _userTypeRepository.CreateUser_TypeAsync(UserType, user_type);
+            await _userTypeRepository.CreateUser_TypeAsync(UserType);
         }
 
         public async Task UpdateUser_TypeAsync(int id, string UserType)

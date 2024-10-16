@@ -4,6 +4,7 @@ using Electronics_Laboratory_Classroom_and_Resource_Management_System.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrations
 {
     [DbContext(typeof(ElectronicsLaboratoryClassroomandResourceDBContext))]
-    partial class ElectronicsLaboratoryClassroomandResourceDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241015162130_Simulator")]
+    partial class Simulator
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -274,6 +277,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                     b.Property<int>("Laboratory_ID")
                         .HasColumnType("int");
 
+                    b.Property<int>("Reservation_EquipmentReservationE_ID")
+                        .HasColumnType("int");
+
                     b.Property<DateOnly>("Reservation_date")
                         .HasColumnType("date");
 
@@ -289,6 +295,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                     b.HasKey("Reservation_ID");
 
                     b.HasIndex("Laboratory_ID");
+
+                    b.HasIndex("Reservation_EquipmentReservationE_ID");
 
                     b.HasIndex("Status_ReservationStatusR_ID");
 
@@ -314,14 +322,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Reservation_ID")
-                        .HasColumnType("int");
-
                     b.HasKey("ReservationE_ID");
 
                     b.HasIndex("Equipment_ID");
-
-                    b.HasIndex("Reservation_ID");
 
                     b.ToTable("reservations_equipment");
                 });
@@ -626,6 +629,12 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation_Equipment", "Reservation_Equipment")
+                        .WithMany()
+                        .HasForeignKey("Reservation_EquipmentReservationE_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Status_Reservation", "Status_Reservation")
                         .WithMany()
                         .HasForeignKey("Status_ReservationStatusR_ID")
@@ -640,6 +649,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
 
                     b.Navigation("Laboratory");
 
+                    b.Navigation("Reservation_Equipment");
+
                     b.Navigation("Status_Reservation");
 
                     b.Navigation("User");
@@ -652,10 +663,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                         .HasForeignKey("Equipment_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation", null)
-                        .WithMany("Reservation_Equipments")
-                        .HasForeignKey("Reservation_ID");
 
                     b.Navigation("Equipment");
                 });
@@ -688,11 +695,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Migrat
                     b.Navigation("Permission");
 
                     b.Navigation("User_Type");
-                });
-
-            modelBuilder.Entity("Electronics_Laboratory_Classroom_and_Resource_Management_System.Model.Reservation", b =>
-                {
-                    b.Navigation("Reservation_Equipments");
                 });
 #pragma warning restore 612, 618
         }

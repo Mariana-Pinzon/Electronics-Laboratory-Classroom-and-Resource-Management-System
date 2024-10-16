@@ -8,7 +8,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
     {
         Task<IEnumerable<User_Type>> GetAlluser_typesAsync();
         Task<User_Type> GetUser_TypeByIdAsync(int id);
-        Task CreateUser_TypeAsync(string UserType, User_Type user_type);
+        Task CreateUser_TypeAsync(string UserType);
         Task UpdateUser_TypeAsync(int id, string UserType);
         Task SoftDeleteUser_TypeAsync(int id);
     }
@@ -40,8 +40,10 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task CreateUser_TypeAsync(string UserType, User_Type user_type)
+        public async Task CreateUser_TypeAsync(string UserType)
         {
+            var user_type = new User_Type
+            { UserType = UserType };
             _context.user_types.Add(user_type);
             await _context.SaveChangesAsync();
         }
@@ -50,7 +52,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         public async Task UpdateUser_TypeAsync(int id, string UserType)
         {
             var UserT = await _context.user_types.FindAsync(id) ?? throw new Exception("UserType not found");
-
+            UserT.UserType = UserType;
             try
             {
                 _context.user_types.Update(UserT);

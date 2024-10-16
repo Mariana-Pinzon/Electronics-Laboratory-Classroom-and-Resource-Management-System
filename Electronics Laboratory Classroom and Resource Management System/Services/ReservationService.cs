@@ -7,8 +7,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<Reservation>> GetAllreservationsAsync();
         Task<Reservation> GetReservationByIdAsync(int id);
-        Task CreateReservationAsync(int User_ID, int Laboratory_ID, int ReservationE_ID, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID, Reservation reservation);
-        Task UpdateReservationAsync(int id, int User_ID, int Laboratory_ID, int ReservationE_ID, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID);
+        Task CreateReservationAsync(int User_ID, int Laboratory_ID, List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID);
+        Task UpdateReservationAsync(int id, int User_ID, int Laboratory_ID, List<int> rRservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID);
         Task SoftDeleteReservationAsync(int id);
     }
     public class ReservationService : IReservationService
@@ -32,19 +32,19 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _reservationRepository.GetReservationByIdAsync(id);
         }
 
-        public async Task CreateReservationAsync(int User_ID, int Laboratory_ID, int ReservationE_ID, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID, Reservation reservation)
+        public async Task CreateReservationAsync(int User_ID, int Laboratory_ID, List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID)
         {
-            await _reservationRepository.CreateReservationAsync(User_ID, Laboratory_ID, ReservationE_ID, Reservation_date, Start_time, End_time, StatusR_ID, reservation);
+            await _reservationRepository.CreateReservationAsync(User_ID, Laboratory_ID, Reservation_Equipments, Reservation_date, Start_time, End_time, StatusR_ID);
         }
 
-        public async Task UpdateReservationAsync(int id, int User_ID, int Laboratory_ID, int ReservationE_ID, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID)
+        public async Task UpdateReservationAsync(int id, int User_ID, int Laboratory_ID, List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID)
         {
             bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 6); //Actualizar Reservación/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para actualizar la reservación.");
             }
-            await _reservationRepository.UpdateReservationAsync(id, User_ID, Laboratory_ID, ReservationE_ID, Reservation_date, Start_time, End_time, StatusR_ID);
+            await _reservationRepository.UpdateReservationAsync(id, User_ID, Laboratory_ID, Reservation_Equipments, Reservation_date, Start_time, End_time, StatusR_ID);
         }
 
         public async Task SoftDeleteReservationAsync(int id)

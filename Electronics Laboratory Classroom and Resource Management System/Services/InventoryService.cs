@@ -7,7 +7,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<Inventory>> GetAllinventoriesAsync();
         Task<Inventory> GetInventoryByIdAsync(int id);
-        Task CreateInventoryAsync(int Equipment_ID, int Available_quantity, int Laboratory_ID, Inventory inventory);
+        Task CreateInventoryAsync(int Equipment_ID, int Available_quantity, int Laboratory_ID);
         Task UpdateInventoryAsync(int id, int Equipment_ID, int Available_quantity, int Laboratory_ID);
         Task SoftDeleteInventoryAsync(int id);
     }
@@ -33,14 +33,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _inventoryRepository.GetInventoryByIdAsync(id);
         }
 
-        public async Task CreateInventoryAsync(int Equipment_ID, int Available_quantity, int Laboratory_ID, Inventory inventory)
+        public async Task CreateInventoryAsync(int Equipment_ID, int Available_quantity, int Laboratory_ID)
         {
             bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 2); //Crear Inventario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear inventarios.");
             }
-            await _inventoryRepository.CreateInventoryAsync(Equipment_ID, Available_quantity, Laboratory_ID, inventory);
+            await _inventoryRepository.CreateInventoryAsync(Equipment_ID, Available_quantity, Laboratory_ID);
         }
 
         public async Task UpdateInventoryAsync(int id, int Equipment_ID, int Available_quantity, int Laboratory_ID)

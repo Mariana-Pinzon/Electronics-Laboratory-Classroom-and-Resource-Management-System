@@ -41,15 +41,15 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<ActionResult> CreateUserPermission(int UserTypeId, int permissionId, [FromBody] User_Permission user_permission)
+        public async Task<ActionResult> CreateUserPermission(int UserTypeId, int permissionId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await _user_permissionService.CreateUser_PermissionAsync(UserTypeId, permissionId, user_permission);
-                return CreatedAtAction(nameof(GetUserPermissionById), new { id = user_permission.UserP_ID }, user_permission);
+                await _user_permissionService.CreateUser_PermissionAsync(UserTypeId, permissionId);
+                
             }
 
             catch (UnauthorizedAccessException)
@@ -60,6 +60,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
             {
                 return StatusCode(404, e.Message);
             }
+            return StatusCode(StatusCodes.Status201Created, "UserPermission created succesfully");
         }
 
         [HttpPut("{id}")]

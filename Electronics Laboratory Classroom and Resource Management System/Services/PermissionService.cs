@@ -7,7 +7,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<Permission>> GetAllpermissionsAsync();
         Task<Permission> GetPermissionByIdAsync(int id);
-        Task CreatePermissionAsync(string PermissionName, Permission permission);
+        Task CreatePermissionAsync(string PermissionName);
         Task UpdatePermissionAsync(int id, string PermissionName);
         Task SoftDeletePermissionAsync(int id);
     }
@@ -32,14 +32,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _permissionRepository.GetPermissionByIdAsync(id);
         }
 
-        public async Task CreatePermissionAsync(string PermissionName, Permission permission)
+        public async Task CreatePermissionAsync(string PermissionName)
         {
             bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 4); //Crear Permiso/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear permisos.");
             }
-            await _permissionRepository.CreatePermissionAsync(PermissionName,permission);
+            await _permissionRepository.CreatePermissionAsync(PermissionName);
         }
 
         public async Task UpdatePermissionAsync(int id, string PermissionName)

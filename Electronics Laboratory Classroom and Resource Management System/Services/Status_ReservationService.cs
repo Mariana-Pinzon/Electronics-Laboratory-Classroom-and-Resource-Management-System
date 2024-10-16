@@ -7,7 +7,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<Status_Reservation>> GetAllstatus_reservationsAsync();
         Task<Status_Reservation> GetStatus_ReservationByIdAsync(int id);
-        Task CreateStatus_ReservationAsync(string StatusR, Status_Reservation status_reservation);
+        Task CreateStatus_ReservationAsync(string StatusR);
         Task UpdateStatus_ReservationAsync(int id, string StatusR);
         Task SoftDeleteStatus_ReservationAsync(int id);
     }
@@ -32,14 +32,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _status_reservationRepository.GetStatus_ReservationByIdAsync(id);
         }
 
-        public async Task CreateStatus_ReservationAsync(string StatusR, Status_Reservation status_reservation)
+        public async Task CreateStatus_ReservationAsync(string StatusR)
         {
             bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 8); //Crear Status de Reservación/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear un status de Reservación.");
             }
-            await _status_reservationRepository.CreateStatus_ReservationAsync(StatusR,status_reservation);
+            await _status_reservationRepository.CreateStatus_ReservationAsync(StatusR);
         }
 
         public async Task UpdateStatus_ReservationAsync(int id, string StatusR)

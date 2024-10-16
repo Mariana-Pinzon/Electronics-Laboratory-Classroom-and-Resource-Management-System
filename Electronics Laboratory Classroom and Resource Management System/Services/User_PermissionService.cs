@@ -8,7 +8,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<User_Permission>> GetAlluser_permissionsAsync();
         Task<User_Permission> GetUser_PermissionByIdAsync(int id);
-        Task CreateUser_PermissionAsync(int UserTypeId, int permissionId, User_Permission user_permission);
+        Task CreateUser_PermissionAsync(int UserTypeId, int permissionId);
         Task UpdateUser_PermissionAsync(int id, int UserTypeId, int permissionId);
         Task SoftDeleteUser_PermissionAsync(int id);
         Task<bool> HasPermissionsAsync(int UserTypeId, int permissionId);
@@ -32,7 +32,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _userPermissionRepository.GetUser_PermissionByIdAsync(id);
         }
 
-        public async Task CreateUser_PermissionAsync(int UserTypeId, int permissionId, User_Permission user_permission)
+        public async Task CreateUser_PermissionAsync(int UserTypeId, int permissionId)
         {
             bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 9); //Crear Permiso de Usuario/Actualizar/Borrar
             if (!hasPermission)

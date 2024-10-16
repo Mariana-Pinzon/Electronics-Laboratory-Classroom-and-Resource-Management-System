@@ -39,13 +39,13 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> CreateReservation_Equipment(int Equipment_ID, int Quantity, [FromBody] Reservation_Equipment reservation_equipment)
+        public async Task<ActionResult> CreateReservation_Equipment(int Equipment_ID, int Quantity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _reservation_equipmentService.CreateReservation_EquipmentAsync(Equipment_ID, Quantity, reservation_equipment);
-            return CreatedAtAction(nameof(GetReservation_EquipmentById), new { id = reservation_equipment.ReservationE_ID }, reservation_equipment);
+            await _reservation_equipmentService.CreateReservation_EquipmentAsync(Equipment_ID, Quantity);
+            return StatusCode(StatusCodes.Status201Created, "Reservation created succesfully");
         }
 
         [HttpPut("{id}")]

@@ -40,20 +40,21 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Manejo de errores de autorización
-        public async Task<ActionResult> CreateStatus_Reservation(string StatusR, [FromBody] Status_Reservation status_reservation)
+        public async Task<ActionResult> CreateStatus_Reservation(string StatusR)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await _status_reservationService.CreateStatus_ReservationAsync(StatusR, status_reservation);
-                return CreatedAtAction(nameof(GetStatus_ReservationById), new { id = status_reservation.StatusR_ID }, status_reservation);
+                await _status_reservationService.CreateStatus_ReservationAsync(StatusR);
+                
             }
             catch (UnauthorizedAccessException)
             {
                 return Forbid(); // Retorna 403 si no tiene permisos
             }
+            return StatusCode(StatusCodes.Status201Created, "StatusReservation created succesfully");
         }
 
         [HttpPut("{id}")]

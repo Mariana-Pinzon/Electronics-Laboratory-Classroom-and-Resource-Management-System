@@ -7,7 +7,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<Equipment>> GetAllequipmentsAsync();
         Task<Equipment> GetEquipmentByIdAsync(int id);
-        Task CreateEquipmentAsync(string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID, Equipment equipment);
+        Task CreateEquipmentAsync(string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID);
         Task UpdateEquipmentAsync(int id, string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID);
         Task SoftDeleteEquipmentAsync(int id);
     }
@@ -33,7 +33,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _equipmentRepository.GetEquipmentByIdAsync(id);
         }
 
-        public async Task CreateEquipmentAsync(string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID, Equipment equipment)
+        public async Task CreateEquipmentAsync(string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID)
         {
             bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 1); //Crear Equipo/Actualizar/Borrar
             if (!hasPermission)
@@ -41,7 +41,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
                 throw new UnauthorizedAccessException("No tienes permiso para crear equipos.");
             }
 
-                await _equipmentRepository.CreateEquipmentAsync(Equipment_Name, Description, StatusE_ID, Acquisition_date, Laboratory_ID, equipment);
+                await _equipmentRepository.CreateEquipmentAsync(Equipment_Name, Description, StatusE_ID, Acquisition_date, Laboratory_ID);
         }
 
         public async Task UpdateEquipmentAsync(int id, string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID)

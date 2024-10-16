@@ -8,7 +8,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
     {
         Task<IEnumerable<Laboratory>> GetAlllaboratoriesAsync();
         Task<Laboratory> GetLaboratoryByIdAsync(int id);
-        Task CreateLaboratoryAsync(int Laboratory_Num, int Capacity, Laboratory laboratory);
+        Task CreateLaboratoryAsync(int Laboratory_Num, int Capacity);
         Task UpdateLaboratoryAsync(int id, int Laboratory_Num, int Capacity);
         Task SoftDeleteLaboratoryAsync(int id);
     }
@@ -41,9 +41,13 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
         }
 
-        public async Task CreateLaboratoryAsync(int Laboratory_Num, int Capacity, Laboratory laboratory)
+        public async Task CreateLaboratoryAsync(int Laboratory_Num, int Capacity)
         {
-
+            var laboratory = new Laboratory
+            {
+                Laboratory_Num = Laboratory_Num,
+                Capacity = Capacity,
+            };
             _context.laboratories.Add(laboratory);
             await _context.SaveChangesAsync();
         }
@@ -52,6 +56,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         public async Task UpdateLaboratoryAsync(int id, int Laboratory_Num, int Capacity)
         {
             var Laboratory = await _context.laboratories.FindAsync(id) ?? throw new Exception("Laboratory not found");
+
+            Laboratory.Laboratory_Num = Laboratory_Num;
+            Laboratory.Capacity = Capacity;
 
             try
             {

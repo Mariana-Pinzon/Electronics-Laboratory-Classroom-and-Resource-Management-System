@@ -41,20 +41,21 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<ActionResult> CreateLaboratory(int Laboratory_Num, int Capacity, [FromBody] Laboratory laboratory)
+        public async Task<ActionResult> CreateLaboratory(int Laboratory_Num, int Capacity)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await _laboratoryService.CreateLaboratoryAsync(Laboratory_Num, Capacity, laboratory);
-                return CreatedAtAction(nameof(GetLaboratoryById), new { id = laboratory.Laboratory_ID }, laboratory);
+                 await _laboratoryService.CreateLaboratoryAsync(Laboratory_Num, Capacity);
+                
             }
             catch (UnauthorizedAccessException)
             {
                 return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
+            return StatusCode(StatusCodes.Status201Created, "Laboratory created succesfully");
         }
 
         [HttpPut("{id}")]
