@@ -7,7 +7,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<Reservation>> GetAllreservationsAsync();
         Task<Reservation> GetReservationByIdAsync(int id);
-        Task CreateReservationAsync(int User_ID, int Laboratory_ID, List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID, Reservation reservation);
+        Task CreateReservationAsync(int User_ID, int Laboratory_ID, List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID);
         Task UpdateReservationAsync(int id, int User_ID, int Laboratory_ID, List<int> rRservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID);
         Task SoftDeleteReservationAsync(int id);
     }
@@ -32,9 +32,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _reservationRepository.GetReservationByIdAsync(id);
         }
 
-        public async Task CreateReservationAsync(int User_ID, int Laboratory_ID, List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID, Reservation reservation)
+        public async Task CreateReservationAsync(int User_ID, int Laboratory_ID, List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID)
         {
-            await _reservationRepository.CreateReservationAsync(User_ID, Laboratory_ID, Reservation_Equipments, Reservation_date, Start_time, End_time, StatusR_ID, reservation);
+            await _reservationRepository.CreateReservationAsync(User_ID, Laboratory_ID, Reservation_Equipments, Reservation_date, Start_time, End_time, StatusR_ID);
         }
 
         public async Task UpdateReservationAsync(int id, int User_ID, int Laboratory_ID, List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID)

@@ -59,19 +59,20 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> CreateUser(string First_Name, string Last_Name, string Email, string Password, int User_Type_ID, [FromBody] User user)
+        public async Task<ActionResult> CreateUser(string First_Name, string Last_Name, string Email, string Password, int User_Type_ID)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             try
             {
-                await _userService.CreateUserAsync(First_Name, Last_Name, Email, Password, User_Type_ID, user);
-                return CreatedAtAction(nameof(GetUserById), new { id = user.User_ID }, user);
+                await _userService.CreateUserAsync(First_Name, Last_Name, Email, Password, User_Type_ID);
+                
             }
             catch (Exception ex)
             {
                 return NotFound(ex.Message);
             }
+            return StatusCode(StatusCodes.Status201Created, "User created succesfully");
         }
 
         [HttpPut("{id}")]

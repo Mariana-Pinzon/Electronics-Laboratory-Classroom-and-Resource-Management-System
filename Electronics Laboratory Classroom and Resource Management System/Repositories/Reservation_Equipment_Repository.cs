@@ -8,7 +8,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
     {
         Task<IEnumerable<Reservation_Equipment>> GetAllreservations_equipmentAsync();
         Task<Reservation_Equipment> GetReservation_EquipmentByIdAsync(int id);
-        Task CreateReservation_EquipmentAsync(int Equipment_ID, int Quantity, Reservation_Equipment reservation_equipment);
+        Task CreateReservation_EquipmentAsync(int Equipment_ID, int Quantity);
         Task UpdateReservation_EquipmentAsync(int id, int Equipment_ID, int Quantity);
         Task SoftDeleteReservation_EquipmentAsync(int id);
     }
@@ -42,7 +42,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         }
 
        
-        public async Task CreateReservation_EquipmentAsync(int Equipment_ID, int Quantity, Reservation_Equipment reservation_equipment)
+        public async Task CreateReservation_EquipmentAsync(int Equipment_ID, int Quantity)
         {
             var Equipment = await _context.equipments.FindAsync(Equipment_ID) ?? throw new Exception("Equipment not found");
 
@@ -55,10 +55,11 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             {
                 throw new Exception("The quantity requested exceeds the quantity available in inventory.");
             }
-
-            reservation_equipment.Equipment = Equipment;
-            reservation_equipment.Quantity = Quantity;
-            
+            var reservation_equipment = new Reservation_Equipment
+            {
+                Equipment = Equipment,
+                Quantity = Quantity,
+            };
 
             _context.reservations_equipment.Add(reservation_equipment);
             await _context.SaveChangesAsync();

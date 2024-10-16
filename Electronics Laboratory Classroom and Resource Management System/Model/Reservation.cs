@@ -7,7 +7,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
         public int Reservation_ID { get; set; }
         public virtual required User User { get; set; }
         public virtual required Laboratory Laboratory { get; set; }
-        public virtual required Reservation_Equipment Reservation_Equipment { get; set; }
 
         [NotPastDate(ErrorMessage = "La fecha elegida no es válida, se encuentra en el pasado.")]
         public required DateOnly Reservation_date { get; set; }

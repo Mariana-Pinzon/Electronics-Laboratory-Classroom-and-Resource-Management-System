@@ -70,6 +70,11 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contex
 
             modelBuilder.Entity<MatchLevel>()
             .HasKey(ml => ml.MatchLevel_ID);
+
+            modelBuilder.Entity<User>().ToTable(tb => tb.UseSqlOutputClause(false));
+            modelBuilder.Entity<Status_Equipment>().ToTable(tb => tb.UseSqlOutputClause(false));
+            modelBuilder.Entity<Status_Reservation>().ToTable(tb => tb.UseSqlOutputClause(false));
+            modelBuilder.Entity<Inventory>().ToTable(tb => tb.UseSqlOutputClause(false));
         }
 
         public DbSet<User> users { get; set; }
@@ -90,6 +95,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contex
         public DbSet<Match> matches { get; set; }
         public DbSet<Level> levels { get; set; }
         public DbSet<MatchLevel> MatchesLevel { get; set; }
+
+
     }
 }
 

@@ -8,7 +8,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
     {
         Task<IEnumerable<Equipment>> GetAllequipmentsAsync();
         Task<Equipment> GetEquipmentByIdAsync(int id);
-        Task CreateEquipmentAsync(string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID, Equipment equipment);
+        Task CreateEquipmentAsync(string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID);
         Task UpdateEquipmentAsync(int id,string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID);
         Task SoftDeleteEquipmentAsync(int id);
 
@@ -42,17 +42,20 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
         }
 
-        public async Task CreateEquipmentAsync(string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID, Equipment equipment)
+        public async Task CreateEquipmentAsync(string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID)
         {
             var Status = await _context.status_equipments.FindAsync(StatusE_ID) ?? throw new Exception("Status not found");
             var Laboratory = await _context.laboratories.FindAsync(Laboratory_ID) ?? throw new Exception("Laboratory not found");
 
-            equipment.Equipment_Name = Equipment_Name;
-            equipment.Description = Description;
-            equipment.Status_Equipment = Status;
-            equipment.Acquisition_date = Acquisition_date;
-            equipment.Laboratory = Laboratory;
-           
+            var equipment = new Equipment
+
+            {
+                Equipment_Name = Equipment_Name,
+                Description = Description,
+                Status_Equipment = Status,
+                Acquisition_date = Acquisition_date,
+                Laboratory = Laboratory,
+            };
           
             _context.equipments.Add(equipment);
              await _context.SaveChangesAsync();

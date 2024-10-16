@@ -8,7 +8,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
     {
         Task<IEnumerable<Inventory>> GetAllinventoriesAsync();
         Task<Inventory> GetInventoryByIdAsync(int id);
-        Task CreateInventoryAsync(int Equipment_ID, int Available_quantity, int Laboratory_ID, Inventory inventory);
+        Task CreateInventoryAsync(int Equipment_ID, int Available_quantity, int Laboratory_ID);
         Task UpdateInventoryAsync(int id, int Equipment_ID, int Available_quantity, int Laboratory_ID);
         Task SoftDeleteInventoryAsync(int id);
     }
@@ -41,16 +41,17 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
         }
 
-        public async Task CreateInventoryAsync(int Equipment_ID, int Available_quantity, int Laboratory_ID, Inventory inventory)
+        public async Task CreateInventoryAsync(int Equipment_ID, int Available_quantity, int Laboratory_ID)
         {
             var Equipment = await _context.equipments.FindAsync(Equipment_ID) ?? throw new Exception("Equipment not found");
             var Laboratory = await _context.laboratories.FindAsync(Laboratory_ID) ?? throw new Exception("Laboratory not found");
 
-
-            inventory.Equipment = Equipment;
-            inventory.Available_quantity = Available_quantity;
-            inventory.Laboratory = Laboratory;
-
+            var inventory = new Inventory
+            {
+                Equipment = Equipment,
+                Available_quantity = Available_quantity,
+                Laboratory = Laboratory,
+            };
             _context.inventories.Add(inventory);
             await _context.SaveChangesAsync();
         }

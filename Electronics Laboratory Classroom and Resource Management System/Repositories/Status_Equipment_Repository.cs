@@ -8,7 +8,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
     {
         Task<IEnumerable<Status_Equipment>> GetAllstatus_equipmentsAsync();
         Task<Status_Equipment> GetStatus_EquipmentByIdAsync(int id);
-        Task CreateStatus_EquipmentAsync(string Status, Status_Equipment status_equipment);
+        Task CreateStatus_EquipmentAsync(string Status);
         Task UpdateStatus_EquipmentAsync(int id, string Status);
         Task SoftDeleteStatus_EquipmentAsync(int id);
     }
@@ -41,8 +41,10 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
         }
 
-        public async Task CreateStatus_EquipmentAsync(string Status, Status_Equipment status_equipment)
+        public async Task CreateStatus_EquipmentAsync(string Status)
         {
+            var status_equipment = new Status_Equipment
+            { Status = Status };
             _context.status_equipments.Add(status_equipment);
             await _context.SaveChangesAsync();
         }
@@ -51,6 +53,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         public async Task UpdateStatus_EquipmentAsync(int id, string Status)
         {
             var StatusE = await _context.status_equipments.FindAsync(id) ?? throw new Exception("Status not found");
+
+            StatusE.Status = Status;
 
             try
             {

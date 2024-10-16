@@ -8,7 +8,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
     {
         Task<IEnumerable<Reservation>> GetAllreservationsAsync();
         Task<Reservation> GetReservationByIdAsync(int id);
-        Task CreateReservationAsync(int User_ID, int Laboratory_ID, List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID, Reservation reservation);
+        Task CreateReservationAsync(int User_ID, int Laboratory_ID, List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID);
         Task UpdateReservationAsync(int id, int User_ID, int Laboratory_ID, List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID);
         Task SoftDeleteReservationAsync(int id);
     }
@@ -42,7 +42,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             }
         }
 
-        public async Task CreateReservationAsync(int User_ID, int Laboratory_ID, List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID, Reservation reservation)
+        public async Task CreateReservationAsync(int User_ID, int Laboratory_ID, List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID)
         {
             var User = await _context.users.FindAsync(User_ID) ?? throw new Exception("User not found");
             var Laboratory = await _context.laboratories.FindAsync(Laboratory_ID) ?? throw new Exception("Laboratory not found");
@@ -55,15 +55,16 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
                 var equipment = await _context.reservations_equipment.FindAsync(equipmentId) ?? throw new Exception($"Equipment with ID {equipmentId} not found");
                 reservationEquipment.Add(equipment);
             }
-
-            reservation.User = User;
-            reservation.Laboratory = Laboratory;
-            reservation.Reservation_Equipments = reservationEquipment;
-            reservation.Reservation_date = Reservation_date;
-            reservation.Start_time = Start_time;
-            reservation.End_time = End_time;
-            reservation.Status_Reservation = Status;
-
+            var reservation = new Reservation
+            {
+                User = User,
+                Laboratory = Laboratory,
+                Reservation_Equipments = reservationEquipment,
+                Reservation_date = Reservation_date,
+                Start_time = Start_time,
+                End_time = End_time,
+                Status_Reservation = Status,
+            };
 
             _context.reservations.Add(reservation);
             await _context.SaveChangesAsync();

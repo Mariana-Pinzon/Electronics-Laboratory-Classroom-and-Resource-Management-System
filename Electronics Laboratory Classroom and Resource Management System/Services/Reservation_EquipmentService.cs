@@ -7,7 +7,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<Reservation_Equipment>> GetAllreservations_equipmentAsync();
         Task<Reservation_Equipment> GetReservation_EquipmentByIdAsync(int id);
-        Task CreateReservation_EquipmentAsync(int Equipment_ID, int Quantity, Reservation_Equipment reservation_equipment);//Todos los usuarios pueden crear la reserva de equipos
+        Task CreateReservation_EquipmentAsync(int Equipment_ID, int Quantity);//Todos los usuarios pueden crear la reserva de equipos
         Task UpdateReservation_EquipmentAsync(int id, int Equipment_ID, int Quantity);
         Task SoftDeleteReservation_EquipmentAsync( int id);
     }
@@ -33,9 +33,9 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _reservation_equipmentRepository.GetReservation_EquipmentByIdAsync(id);
         }
 
-        public async Task CreateReservation_EquipmentAsync(int Equipment_ID, int Quantity, Reservation_Equipment reservation_equipment)
+        public async Task CreateReservation_EquipmentAsync(int Equipment_ID, int Quantity)
         {
-            await _reservation_equipmentRepository.CreateReservation_EquipmentAsync(Equipment_ID, Quantity, reservation_equipment);
+            await _reservation_equipmentRepository.CreateReservation_EquipmentAsync(Equipment_ID, Quantity);
         }
 
         public async Task UpdateReservation_EquipmentAsync(int id, int Equipment_ID, int Quantity)

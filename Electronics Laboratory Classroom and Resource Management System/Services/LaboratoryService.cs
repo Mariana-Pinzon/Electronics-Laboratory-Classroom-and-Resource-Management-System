@@ -7,7 +7,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
     {
         Task<IEnumerable<Laboratory>> GetAlllaboratoriesAsync();
         Task<Laboratory> GetLaboratoryByIdAsync(int id);
-        Task CreateLaboratoryAsync(int Laboratory_Num, int Capacity, Laboratory laboratory);
+        Task CreateLaboratoryAsync(int Laboratory_Num, int Capacity);
         Task UpdateLaboratoryAsync(int id, int Laboratory_Num, int Capacity);
         Task SoftDeleteLaboratoryAsync(int id);
     }
@@ -32,14 +32,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
             return await _laboratoryRepository.GetLaboratoryByIdAsync(id);
         }
 
-        public async Task CreateLaboratoryAsync(int Laboratory_Num, int Capacity, Laboratory laboratory)
+        public async Task CreateLaboratoryAsync(int Laboratory_Num, int Capacity)
         {
             bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 3); //Crear Laboratorio/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear laboratorios.");
             }
-            await _laboratoryRepository.CreateLaboratoryAsync(Laboratory_Num, Capacity, laboratory);
+            await _laboratoryRepository.CreateLaboratoryAsync(Laboratory_Num, Capacity);
         }
 
         public async Task UpdateLaboratoryAsync(int id, int Laboratory_Num, int Capacity)

@@ -41,21 +41,22 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<ActionResult> CreateInventory(int Equipment_ID, int Available_quantity, int Laboratory_ID, [FromBody] Inventory inventory)
+        public async Task<ActionResult> CreateInventory(int Equipment_ID, int Available_quantity, int Laboratory_ID)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await _inventoryService.CreateInventoryAsync(Equipment_ID, Available_quantity, Laboratory_ID, inventory);
-                return CreatedAtAction(nameof(GetInventoryById), new { id = inventory.Inventory_ID }, inventory);
+                await _inventoryService.CreateInventoryAsync(Equipment_ID, Available_quantity, Laboratory_ID);
+                
             }
             catch (UnauthorizedAccessException)
             {
                 return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
-        }
+            return StatusCode(StatusCodes.Status201Created, "Inventory created succesfully");
+        }   
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

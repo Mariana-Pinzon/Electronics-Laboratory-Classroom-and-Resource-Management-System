@@ -41,20 +41,21 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] // Para manejo de errores de autorización
-        public async Task<ActionResult> CreatePermission(string PermissionName, [FromBody] Permission permission)
+        public async Task<ActionResult> CreatePermission(string PermissionName)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                await _permissionService.CreatePermissionAsync(PermissionName, permission);
-                return CreatedAtAction(nameof(GetPermissionById), new { id = permission.Permission_ID }, permission);
+                await _permissionService.CreatePermissionAsync(PermissionName);
+                
             }
             catch (UnauthorizedAccessException)
             {
                 return Forbid("You do not have permission to perform this action"); // Retorna 403 si no tiene permisos
             }
+            return StatusCode(StatusCodes.Status201Created, "Permission created succesfully");
         }
 
         [HttpPut("{id}")]
