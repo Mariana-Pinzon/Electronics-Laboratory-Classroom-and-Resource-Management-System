@@ -9,7 +9,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Model
         public required string Description { get; set; }
         public virtual required Status_Equipment Status_Equipment { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [FutureDate(ErrorMessage = "La fecha de adquisición no puede ser una fecha futura.")]
         public DateOnly Acquisition_date { get; set; }
         public virtual required Laboratory Laboratory { get; set; }

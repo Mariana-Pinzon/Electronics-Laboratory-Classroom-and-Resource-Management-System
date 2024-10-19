@@ -21,8 +21,17 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contro
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Laboratory>>> GetAlllaboratories()
         {
-            var laboratories = await _laboratoryService.GetAlllaboratoriesAsync();
-            return Ok(laboratories);
+            try
+            {
+                var laboratories = await _laboratoryService.GetAlllaboratoriesAsync();
+                return Ok(laboratories);
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+            
         }
 
         [HttpGet("{id}")]

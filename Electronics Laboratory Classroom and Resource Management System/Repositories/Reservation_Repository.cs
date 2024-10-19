@@ -22,6 +22,10 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         public async Task<IEnumerable<Reservation>> GetAllreservationsAsync()
         {
             return await _context.reservations
+                .Include(r => r.User)
+                .Include(r => r.Laboratory)
+                .Include(r => r.Reservation_Equipments)
+                .Include(r => r.Status_Reservation)
                 .Where(r => !r.IsDeleted)
                 .ToListAsync();
                 
@@ -29,6 +33,10 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         public async Task<Reservation> GetReservationByIdAsync(int id)
         {
             return await _context.reservations
+                .Include(r => r.User)
+                .Include(r => r.Laboratory)
+                .Include(r => r.Reservation_Equipments)
+                .Include(r => r.Status_Reservation)
                 .FirstOrDefaultAsync(r => r.Reservation_ID == id && !r.IsDeleted);
         }
 

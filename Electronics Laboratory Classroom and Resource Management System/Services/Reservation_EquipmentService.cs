@@ -40,7 +40,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task UpdateReservation_EquipmentAsync(int id, int Equipment_ID, int Quantity)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 5); //Actualizar Reserva de Equipos/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,5); //Actualizar Reserva de Equipos/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para actualizar la reserva de equipos.");
@@ -50,7 +50,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task SoftDeleteReservation_EquipmentAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 5); //Actualizar Reserva de Equipos/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,5); //Actualizar Reserva de Equipos/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar la reserva de equipos.");

@@ -23,12 +23,16 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         public async Task<IEnumerable<Equipment>> GetAllequipmentsAsync()
         {
             return await _context.equipments
+                .Include(e => e.Status_Equipment)
+                .Include(e => e.Laboratory)
                 .Where(e => !e.IsDeleted)
                 .ToListAsync();
         }
         public async Task<Equipment> GetEquipmentByIdAsync(int id)
         {
             return await _context.equipments
+                .Include(e => e.Status_Equipment)
+                .Include(e => e.Laboratory)
                 .FirstOrDefaultAsync(e => e.Equipment_ID == id && !e.IsDeleted);
         }
 
