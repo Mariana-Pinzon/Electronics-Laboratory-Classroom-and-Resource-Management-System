@@ -35,7 +35,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task CreateInventoryAsync(int Equipment_ID, int Available_quantity, int Laboratory_ID)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1,2); //Crear Inventario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,2)
+                || await _userPermissionRepository.HasPermissions(2, 2);//Crear Inventario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear inventarios.");
@@ -45,7 +46,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task UpdateInventoryAsync(int id, int Equipment_ID, int Available_quantity, int Laboratory_ID)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1, 2); //Crear Inventario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1, 2)
+                || await _userPermissionRepository.HasPermissions(2, 2);//Crear Inventario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para actualizar inventarios.");
@@ -55,7 +57,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task SoftDeleteInventoryAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1,2); //Crear Inventario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,2)
+                || await _userPermissionRepository.HasPermissions(2, 2);//Crear Inventario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar inventarios.");

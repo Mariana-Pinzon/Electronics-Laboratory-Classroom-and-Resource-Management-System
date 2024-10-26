@@ -43,7 +43,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task CreateLaboratoryAsync(int Laboratory_Num, int Capacity)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1, 3); //Crear Laboratorio/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1, 3)
+                || await _userPermissionRepository.HasPermissions(2, 3);//Crear Laboratorio/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear laboratorios.");
@@ -53,7 +54,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task UpdateLaboratoryAsync(int id, int Laboratory_Num, int Capacity)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1,3); //Crear Laboratorio/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,3)
+                || await _userPermissionRepository.HasPermissions(2, 3);//Crear Laboratorio/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para actualizar laboratorios.");
@@ -63,7 +65,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task SoftDeleteLaboratoryAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1,3); //Crear Laboratorio/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,3)
+                || await _userPermissionRepository.HasPermissions(2, 3);//Crear Laboratorio/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar laboratorios.");

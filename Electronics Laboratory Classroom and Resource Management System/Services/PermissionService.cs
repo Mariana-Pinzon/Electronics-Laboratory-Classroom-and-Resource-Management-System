@@ -34,7 +34,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task CreatePermissionAsync(string PermissionName)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1,4); //Crear Permiso/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1, 4)
+                || await _userPermissionRepository.HasPermissions(2, 4);//Crear Permiso/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear permisos.");
@@ -44,7 +45,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task UpdatePermissionAsync(int id, string PermissionName)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1,4); //Crear Permiso/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,4)
+                || await _userPermissionRepository.HasPermissions(2, 4);//Crear Permiso/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para actualizar permisos.");
@@ -54,7 +56,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task SoftDeletePermissionAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1,4); //Crear Permiso/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,4)
+                || await _userPermissionRepository.HasPermissions(2, 4);//Crear Permiso/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar permisos.");

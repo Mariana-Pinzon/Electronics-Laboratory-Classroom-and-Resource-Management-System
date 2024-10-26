@@ -25,6 +25,9 @@ internal class Program
         builder.Services.AddScoped<IUser_Permission_Repository, User_Permission_Repository>();
         builder.Services.AddScoped<IUser_Repository, User_Repository>();
         builder.Services.AddScoped<IUser_Type_Repository, User_Type_Repository>();
+        builder.Services.AddScoped<IMatch_Repository, Match_Repository>();
+        builder.Services.AddScoped<ILevel_Repository, Level_Repository>();
+        builder.Services.AddScoped<IMatchLevel_Repository, MatchLevel_Repository>();
         #endregion
 
         #region Services
@@ -39,7 +42,9 @@ internal class Program
         builder.Services.AddScoped<IUser_PermissionService, User_PermissionService>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IUser_TypeService, User_TypeService>();
-
+        builder.Services.AddScoped<IMatchService, MatchService>();
+        builder.Services.AddScoped<ILevelService, LevelService>();
+        builder.Services.AddScoped<IMatchLevelService, MatchLevelService>();
         #endregion
 
         // Add controllers
@@ -49,12 +54,24 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        // Cors Policy
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll",
+            builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+        });
         var app = builder.Build();
 
+        // Use Cors
+        app.UseCors("AllowAll");
+
         // Configure the HTTP request pipeline.
-       
-        
-            app.UseSwagger();
+
+
+        app.UseSwagger();
             app.UseSwaggerUI();
         
 

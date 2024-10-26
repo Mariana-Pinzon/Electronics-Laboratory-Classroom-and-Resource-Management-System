@@ -34,7 +34,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task CreateUser_PermissionAsync(int UserTypeId, int permissionId)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1,9); //Crear Permiso de Usuario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,9)
+                || await _userPermissionRepository.HasPermissions(2, 9);//Crear Permiso de Usuario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear permiso de Usuario.");
@@ -44,7 +45,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task UpdateUser_PermissionAsync(int id,int UserTypeId, int permissionId)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1, 9); //Crear Permiso de Usuario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1, 9)
+                || await _userPermissionRepository.HasPermissions(2, 9);//Crear Permiso de Usuario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para actualizar permiso de Usuario.");
@@ -54,7 +56,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task SoftDeleteUser_PermissionAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1,9); //Crear Permiso de Usuario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,9)
+                || await _userPermissionRepository.HasPermissions(2, 9);//Crear Permiso de Usuario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar permiso de Usuario.");

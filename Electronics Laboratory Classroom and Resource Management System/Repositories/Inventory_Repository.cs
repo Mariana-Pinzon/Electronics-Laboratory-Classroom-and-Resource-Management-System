@@ -56,8 +56,18 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
                 Available_quantity = Available_quantity,
                 Laboratory = Laboratory,
             };
-            _context.inventories.Add(inventory);
-            await _context.SaveChangesAsync();
+
+            try
+            {
+                _context.inventories.Add(inventory);
+                await _context.SaveChangesAsync();
+            }
+
+            catch (Exception e)
+            {
+                throw;
+            }
+
         }
 
 

@@ -34,7 +34,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task CreateStatus_ReservationAsync(string StatusR)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1,8); //Crear Status de Reservación/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,8)
+                || await _userPermissionRepository.HasPermissions(2, 8);//Crear Status de Reservación/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear un status de Reservación.");
@@ -49,7 +50,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task SoftDeleteStatus_ReservationAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1,8); //Crear Status de Reservación/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,8)
+                || await _userPermissionRepository.HasPermissions(2, 8);//Crear Status de Reservación/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar un status de Reservación.");

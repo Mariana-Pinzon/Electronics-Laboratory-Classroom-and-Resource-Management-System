@@ -35,7 +35,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task CreateUser_TypeAsync(string UserType)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1,10); //Crear Tipo de Usuario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,10)
+                || await _userPermissionRepository.HasPermissions(2, 10);//Crear Tipo de Usuario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear tipo de usuario.");
@@ -45,7 +46,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task UpdateUser_TypeAsync(int id, string UserType)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1,10); //Crear Tipo de Usuario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,10)
+                || await _userPermissionRepository.HasPermissions(2, 10);//Crear Tipo de Usuario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para actualizar tipo de usuario.");
@@ -55,7 +57,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task SoftDeleteUser_TypeAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(1,10); //Crear Tipo de Usuario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,10)
+                || await _userPermissionRepository.HasPermissions(2, 10);//Crear Tipo de Usuario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar tipo de usuario.");
