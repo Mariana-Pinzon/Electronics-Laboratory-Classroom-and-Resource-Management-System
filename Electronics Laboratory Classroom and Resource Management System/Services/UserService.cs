@@ -30,7 +30,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task<IEnumerable<User>> GetAllusersAsync()
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 11); //Ver Usuario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,11)
+                || await _userPermissionRepository.HasPermissions(2, 11);//Ver Usuario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para ver los demás usuarios.");
@@ -40,7 +41,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task<User> GetUserByIdAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 11); //Ver Usuario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,11)
+                || await _userPermissionRepository.HasPermissions(2, 11);//Ver Usuario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para ver los demás usuarios.");
@@ -55,7 +57,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task UpdateUserAsync(int id, string First_Name, string Last_Name, string Email, string Password, int User_Type_ID)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId: 1, permissionId: 11); //Ver Usuario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,11)
+                || await _userPermissionRepository.HasPermissions(2, 11);//Ver Usuario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para actualizar usuarios.");
@@ -65,7 +68,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task SoftDeleteUserAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId: 1, permissionId: 11); //Ver Usuario/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,11)
+                || await _userPermissionRepository.HasPermissions(2, 11);//Ver Usuario/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar usuarios.");

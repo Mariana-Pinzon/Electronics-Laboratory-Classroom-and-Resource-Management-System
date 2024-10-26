@@ -22,12 +22,16 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         public async Task<IEnumerable<Inventory>> GetAllinventoriesAsync()
         {
             return await _context.inventories
+                .Include(i => i.Equipment)
+                .Include(i => i.Laboratory)
                 .Where(i => !i.IsDeleted)
                 .ToListAsync();
         }
         public async Task<Inventory> GetInventoryByIdAsync(int id)
         {
             return await _context.inventories
+                .Include(i => i.Equipment)
+                .Include(i => i.Laboratory)
                 .FirstOrDefaultAsync(i => i.Inventory_ID == id && !i.IsDeleted);
         }
 
@@ -52,8 +56,18 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
                 Available_quantity = Available_quantity,
                 Laboratory = Laboratory,
             };
-            _context.inventories.Add(inventory);
-            await _context.SaveChangesAsync();
+
+            try
+            {
+                _context.inventories.Add(inventory);
+                await _context.SaveChangesAsync();
+            }
+
+            catch (Exception e)
+            {
+                throw;
+            }
+
         }
 
 

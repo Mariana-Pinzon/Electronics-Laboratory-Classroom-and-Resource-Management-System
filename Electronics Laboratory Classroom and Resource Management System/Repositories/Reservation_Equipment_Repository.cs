@@ -22,6 +22,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         public async Task<IEnumerable<Reservation_Equipment>> GetAllreservations_equipmentAsync()
         {
             return await _context.reservations_equipment
+                .Include(re => re.Equipment)
                 .Where(re => !re.IsDeleted)
                 .ToListAsync();
         }
@@ -46,8 +47,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         {
             var Equipment = await _context.equipments.FindAsync(Equipment_ID) ?? throw new Exception("Equipment not found");
 
-            var inventory = await _context.inventories
-            .FirstOrDefaultAsync(i => i.Equipment.Equipment_ID == Equipment_ID)
+            var inventory = await _context.inventories.FirstOrDefaultAsync(i => i.Equipment.Equipment_ID == Equipment_ID)
             ?? throw new Exception("Inventory not found for the equipment.");
 
             // Verificar si la cantidad solicitada es menor o igual a la cantidad disponible en Inventory
@@ -71,6 +71,7 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
             var Equipment = await _context.equipments.FindAsync(Equipment_ID) ?? throw new Exception("Equipment not found");
 
             var inventory = await _context.inventories
+                .Include(re => re.Equipment)
             .FirstOrDefaultAsync(i => i.Equipment.Equipment_ID == Equipment_ID)
             ?? throw new Exception("Inventory not found for the equipment.");
 

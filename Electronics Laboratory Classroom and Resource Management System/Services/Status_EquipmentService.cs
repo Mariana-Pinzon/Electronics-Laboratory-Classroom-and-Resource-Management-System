@@ -34,7 +34,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task CreateStatus_EquipmentAsync(string Status)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 7); //Crear Status de Equipo/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,7)
+                || await _userPermissionRepository.HasPermissions(2, 7);//Crear Status de Equipo/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear un status de equipo.");
@@ -49,7 +50,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task SoftDeleteStatus_EquipmentAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 7); //Crear Status de Equipo/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,7)
+                || await _userPermissionRepository.HasPermissions(2, 7);//Crear Status de Equipo/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar un status de equipo.");

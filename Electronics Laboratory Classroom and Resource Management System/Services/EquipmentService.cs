@@ -35,7 +35,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task CreateEquipmentAsync(string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 1); //Crear Equipo/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1, 1)
+                || await _userPermissionRepository.HasPermissions(2, 1);//Crear Equipo/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para crear equipos.");
@@ -46,7 +47,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task UpdateEquipmentAsync(int id, string Equipment_Name, string Description, int StatusE_ID, DateOnly Acquisition_date, int Laboratory_ID)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 1); //Crear Equipo/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1, 1)
+                || await _userPermissionRepository.HasPermissions(2, 1); //Crear Equipo/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para actualizar equipos.");
@@ -56,7 +58,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task SoftDeleteEquipmentAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 1); //Crear Equipo/Actualizar/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,1)
+            || await _userPermissionRepository.HasPermissions(2, 1);//Crear Equipo/Actualizar/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar equipos.");

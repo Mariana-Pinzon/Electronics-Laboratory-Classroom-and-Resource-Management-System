@@ -65,9 +65,6 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Contex
             modelBuilder.Entity<Level>()
             .HasKey(le => le.Level_ID);
 
-            modelBuilder.Entity<Level>()
-            .HasKey(le => le.Level_ID);
-
             modelBuilder.Entity<MatchLevel>()
             .HasKey(ml => ml.MatchLevel_ID);
 

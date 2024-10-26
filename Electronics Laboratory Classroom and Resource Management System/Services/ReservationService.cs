@@ -39,7 +39,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task UpdateReservationAsync(int id, int User_ID, int Laboratory_ID, List<int> Reservation_Equipments, DateOnly Reservation_date, TimeOnly Start_time, TimeOnly End_time, int StatusR_ID)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 6); //Actualizar Reservación/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,6)
+                || await _userPermissionRepository.HasPermissions(2, 6);//Actualizar Reservación/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para actualizar la reservación.");
@@ -49,7 +50,8 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Servic
 
         public async Task SoftDeleteReservationAsync(int id)
         {
-            bool hasPermission = await _userPermissionRepository.HasPermissions(UserTypeId:1, permissionId: 6); //Actualizar Reservación/Borrar
+            bool hasPermission = await _userPermissionRepository.HasPermissions(1,6)
+            || await _userPermissionRepository.HasPermissions(2, 6);//Actualizar Reservación/Borrar
             if (!hasPermission)
             {
                 throw new UnauthorizedAccessException("No tienes permiso para eliminar la reservación.");

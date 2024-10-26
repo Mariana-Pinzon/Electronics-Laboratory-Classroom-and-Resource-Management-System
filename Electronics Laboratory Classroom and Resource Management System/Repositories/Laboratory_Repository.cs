@@ -21,9 +21,18 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         }
         public async Task<IEnumerable<Laboratory>> GetAlllaboratoriesAsync()
         {
-            return await _context.laboratories
+            try
+            {
+                return await _context.laboratories
                 .Where(l => !l.IsDeleted)
                 .ToListAsync();
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+            
         }
         public async Task<Laboratory> GetLaboratoryByIdAsync(int id)
         {

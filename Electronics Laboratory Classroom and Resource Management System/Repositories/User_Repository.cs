@@ -28,12 +28,14 @@ namespace Electronics_Laboratory_Classroom_and_Resource_Management_System.Reposi
         public async Task<IEnumerable<User>> GetAllusersAsync()
         {
             return await _context.users
+                .Include(u => u.User_Type)
                 .Where(u => !u.IsDeleted)
                 .ToListAsync();
         }
         public async Task<User> GetUserByIdAsync(int id)
         {
             return await _context.users
+                .Include(u => u.User_Type)
                 .FirstOrDefaultAsync(u => u.User_ID == id && !u.IsDeleted);
         }
 
